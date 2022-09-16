@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 pos, Vector3 v, Vector3 a,Vector4 c, double d = 0.5) : _vel(v), _acceleration(a), _dumping(d), _color(c)
+Particle::Particle(Vector3 pos, Vector3 v, Vector3 a,Vector4 c, double d) : _vel(v), _acceleration(a), _dumping(d), _color(c)
 {
 	_transform = Transform(pos);
 	_renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(1.0)), &_transform, _color);
