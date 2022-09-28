@@ -23,10 +23,16 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="Projectile_Pistol.h">
+      <Filter>Projectiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Projectiles">
+      <UniqueIdentifier>{d1d13227-f86f-4778-951a-7b1a51c67985}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

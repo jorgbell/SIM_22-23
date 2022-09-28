@@ -8,6 +8,7 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include "Particle.h"
+#include "Projectile_Pistol.h"
 
 #include <iostream>
 
@@ -35,7 +36,10 @@ ContactReportCallback gContactReportCallback;
 //VARIABLES
 //+++++++++++++++++++PRACTICA 1+++++++++++++++++++++++
 #pragma region Practica_1
-Particle* _p;
+//Particle* _p;
+std::vector<Projectile_Pistol*> pistol;
+Projectile_Pistol* p;
+int MAX_CURRENT_PROJECTILES = 20;
 #pragma endregion
 
 
@@ -66,8 +70,11 @@ void initPhysics(bool interactive)
 
 	//+++++++++++++++++PRACTICA 1++++++++++++++++++++++++++++
 #pragma region Practica_1
-	_p = new Particle(Vector3(0, 0, 0), Vector3(1,8,1), Vector3(1,9,1), Vector4(0.5, 0.5, 0, 1), 0.5);
+	//_p = new Particle(Vector3(0, 0, 0), Vector3(1,8,1), Vector3(1,9,1), Vector4(0.5, 0.5, 0, 1), 0.5);
+
 #pragma endregion
+
+
 }
 
 
@@ -80,7 +87,7 @@ void stepPhysics(bool interactive, double t)
 	//INTEGRATE SCENE OBJECTS
 		//+++++++++++++PRACTICA 1+++++++++++++++++++++
 #pragma region Practica_1
-	_p->integrate(t);
+	//_p->integrate(t);
 #pragma endregion
 
 	gScene->simulate(t);
@@ -94,7 +101,12 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 #pragma region Practica_1
-	delete _p;
+	//delete _p;
+	for (auto p : pistol) {
+		delete p;
+	}
+	pistol.clear();
+
 #pragma endregion
 
 
@@ -120,10 +132,20 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		//case 'B': break;
 		//case ' ':	break;
+	case 'P': 
+		/*
+			si llega al maximo generados definidos previamente, elimina el ultimo.
+			hecho de manera previa al generador de particulas, lo ideal seria darles un tiempo de vida
+		*/
+		if (pistol.size() >= MAX_CURRENT_PROJECTILES) {
+			auto a = pistol[pistol.size() - 1];
+			pistol.pop_back();
+			delete a;
+		}
+		//p = new Projectile_Pistol(GetCamera()->getEye(), GetCamera()->getDir(), Vector4(0.5, 0.5, 0, 1));
+		pistol.push_back(new Projectile_Pistol(Vector3(0.0f, 1.5f, 0.0), Vector3(0,1,0), Vector4(0.5, 0.5, 0, 1)));
 	case ' ':
-	{
 		break;
-	}
 	default:
 		break;
 	}
