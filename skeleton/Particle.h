@@ -1,6 +1,5 @@
 #pragma once
 #include <PxPhysicsAPI.h>
-
 #include <vector>
 
 #include "core.hpp"
@@ -16,7 +15,7 @@ public:
 private:
 	Vector3 _vel;
 	Vector3 _acceleration;
-	double _dumping;
+	double _damping;
 	Transform _transform;
 	RenderItem* _renderItem;
 	Vector4 _color;

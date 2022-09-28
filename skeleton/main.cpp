@@ -66,7 +66,7 @@ void initPhysics(bool interactive)
 
 	//+++++++++++++++++PRACTICA 1++++++++++++++++++++++++++++
 #pragma region Practica_1
-	_p = new Particle(Vector3(0, 0, 0), Vector3(0, 2, 0), Vector3(0, 0, 0), Vector4(0.5, 0.5, 0, 1), 0.5);
+	_p = new Particle(Vector3(0, 0, 0), Vector3(1,8,1), Vector3(1,9,1), Vector4(0.5, 0.5, 0, 1), 0.5);
 #pragma endregion
 }
 
