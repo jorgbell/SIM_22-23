@@ -14,6 +14,7 @@ public:
 	~Particle();
 	void integrate(double t);
 protected:
+	void init(Vector3 pos);
 	Vector3 _vel;
 	Vector3 _acceleration;
 	double _damping;

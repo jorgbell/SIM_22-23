@@ -3,6 +3,7 @@
 #include <PxPhysicsAPI.h>
 
 #include <vector>
+#include <queue>
 
 #include "core.hpp"
 #include "RenderUtils.hpp"
@@ -37,9 +38,12 @@ ContactReportCallback gContactReportCallback;
 //+++++++++++++++++++PRACTICA 1+++++++++++++++++++++++
 #pragma region Practica_1
 //Particle* _p;
-std::vector<Projectile_Pistol*> pistol;
-Projectile_Pistol* p;
+std::queue<Projectile_Pistol*> pistol; //cola de proyectiles. Uso una cola para eliminar el primero que entre cuando llegue al maximo de proyectiles en pantalla
 int MAX_CURRENT_PROJECTILES = 20;
+//datos del plano usado como referencia
+RenderItem* ground;
+Transform boxt = { 200, -0, 0 };
+
 #pragma endregion
 
 
@@ -65,13 +69,14 @@ void initPhysics(bool interactive)
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
-	gScene = gPhysics->createScene(sceneDesc);
 
+	gScene = gPhysics->createScene(sceneDesc);
 
 	//+++++++++++++++++PRACTICA 1++++++++++++++++++++++++++++
 #pragma region Practica_1
-	//_p = new Particle(Vector3(0, 0, 0), Vector3(1,8,1), Vector3(1,9,1), Vector4(0.5, 0.5, 0, 1), 0.5);
 
+	ground = new RenderItem(CreateShape(physx::PxBoxGeometry(100.0,0.5,100.0)),&boxt, Vector4(0.5, 0.5, 0.5, 1));
+	RegisterRenderItem(ground);
 #pragma endregion
 
 
@@ -88,6 +93,12 @@ void stepPhysics(bool interactive, double t)
 		//+++++++++++++PRACTICA 1+++++++++++++++++++++
 #pragma region Practica_1
 	//_p->integrate(t);
+	//para integrar usando la estructura de datos de la cola, debemos realizar una copia de la cola original
+	//para poder iterar sobre ella
+	std::queue<Projectile_Pistol*> q_copy = pistol;
+	while (!q_copy.empty()){
+			q_copy.front()->integrate(t); q_copy.pop();
+}
 #pragma endregion
 
 	gScene->simulate(t);
@@ -102,10 +113,11 @@ void cleanupPhysics(bool interactive)
 
 #pragma region Practica_1
 	//delete _p;
-	for (auto p : pistol) {
+	while (!pistol.empty()) {
+		auto p = pistol.front();
+		pistol.pop();
 		delete p;
 	}
-	pistol.clear();
 
 #pragma endregion
 
@@ -134,16 +146,15 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//case ' ':	break;
 	case 'P': 
 		/*
-			si llega al maximo generados definidos previamente, elimina el ultimo.
+			si llega al maximo generados definidos previamente, elimina el primero creado.
 			hecho de manera previa al generador de particulas, lo ideal seria darles un tiempo de vida
 		*/
 		if (pistol.size() >= MAX_CURRENT_PROJECTILES) {
-			auto a = pistol[pistol.size() - 1];
-			pistol.pop_back();
-			delete a;
+			auto p = pistol.front();
+			pistol.pop();
+			delete p;
 		}
-		//p = new Projectile_Pistol(GetCamera()->getEye(), GetCamera()->getDir(), Vector4(0.5, 0.5, 0, 1));
-		pistol.push_back(new Projectile_Pistol(Vector3(0.0f, 1.5f, 0.0), Vector3(0,1,0), Vector4(0.5, 0.5, 0, 1)));
+		pistol.push(new Projectile_Pistol(GetCamera()->getEye(), GetCamera()->getDir(), Vector4(0.5, 0.5, 0, 1)));
 	case ' ':
 		break;
 	default:
