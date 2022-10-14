@@ -10,6 +10,8 @@
 #include "callbacks.hpp"
 #include "Particle.h"
 #include "Projectile_Pistol.h"
+#include "ParticleSystem.h"
+#include "GaussianParticleGenerator.h"
 
 #include <iostream>
 
@@ -43,8 +45,13 @@ int MAX_CURRENT_PROJECTILES = 20;
 //datos del plano usado como referencia
 RenderItem* ground;
 Transform boxt = { 200, -0, 0 };
-
 #pragma endregion
+
+#pragma region Practica_2
+ParticleSystem* sys;
+GaussianParticleGenerator* gen;
+#pragma endregion
+
 
 
 // Initialize physics engine
@@ -74,9 +81,13 @@ void initPhysics(bool interactive)
 
 	//+++++++++++++++++PRACTICA 1++++++++++++++++++++++++++++
 #pragma region Practica_1
-
-	ground = new RenderItem(CreateShape(physx::PxBoxGeometry(100.0,0.5,100.0)),&boxt, Vector4(0.5, 0.5, 0.5, 1));
+	ground = new RenderItem(CreateShape(physx::PxBoxGeometry(100.0, 0.5, 100.0)), &boxt, Vector4(0.5, 0.5, 0.5, 1));
 	RegisterRenderItem(ground);
+#pragma endregion
+
+#pragma region Practica_2
+	sys = new ParticleSystem();
+	gen = new GaussianParticleGenerator();
 #pragma endregion
 
 
@@ -92,13 +103,18 @@ void stepPhysics(bool interactive, double t)
 	//INTEGRATE SCENE OBJECTS
 		//+++++++++++++PRACTICA 1+++++++++++++++++++++
 #pragma region Practica_1
+	/*
 	//_p->integrate(t);
 	//para integrar usando la estructura de datos de la cola, debemos realizar una copia de la cola original
 	//para poder iterar sobre ella
 	std::queue<Projectile_Pistol*> q_copy = pistol;
-	while (!q_copy.empty()){
-			q_copy.front()->integrate(t); q_copy.pop();
-}
+	while (!q_copy.empty()) {
+		q_copy.front()->integrate(t); q_copy.pop();
+	}
+	*/
+#pragma endregion
+#pragma region Practica_2
+
 #pragma endregion
 
 	gScene->simulate(t);
@@ -112,13 +128,14 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 #pragma region Practica_1
-	//delete _p;
+	/*
 	while (!pistol.empty()) {
 		auto p = pistol.front();
 		pistol.pop();
 		delete p;
 	}
-
+	*/
+	//delete _p;
 #pragma endregion
 
 
@@ -144,17 +161,20 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		//case 'B': break;
 		//case ' ':	break;
-	case 'P': 
+	case 'P':
 		/*
-			si llega al maximo generados definidos previamente, elimina el primero creado.
-			hecho de manera previa al generador de particulas, lo ideal seria darles un tiempo de vida
-		*/
+			//si llega al maximo generados definidos previamente, elimina el primero creado.
+			//hecho de manera previa al generador de particulas, lo ideal seria darles un tiempo de vida
+
 		if (pistol.size() >= MAX_CURRENT_PROJECTILES) {
 			auto p = pistol.front();
 			pistol.pop();
 			delete p;
 		}
 		pistol.push(new Projectile_Pistol(GetCamera()->getEye(), GetCamera()->getDir(), Vector4(0.5, 0.5, 0, 1)));
+		*/
+		break;
+
 	case ' ':
 		break;
 	default:

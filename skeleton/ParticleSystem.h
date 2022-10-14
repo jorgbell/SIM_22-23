@@ -12,6 +12,7 @@ public:
 	ParticleSystem();
 	void update(double t);
 	ParticleGenerator* getParticleGenerator(string name);
+	void add(ParticleGenerator* p) { _generatorsPool.push_back(p); }
 protected:
 
 private:

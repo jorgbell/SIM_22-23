@@ -2,15 +2,21 @@
 
 ParticleSystem::ParticleSystem()
 {
+
 }
 
 void ParticleSystem::update(double t)
 {
-	checkParticles(); 
+	checkParticles();
+	for (auto g : _generatorsPool) {
+		auto l = g->generateParticles();
+		for (auto p : l)
+			_particlePool.push_back(p);
+	}
+
 	for (auto p : _particlePool)
 		p->integrate(t);
-	for (auto g : _generatorsPool)
-		g->generateParticles();
+	
 }
 
 /*
@@ -21,11 +27,19 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
 {
 	bool encontrado = false;
 	list<ParticleGenerator*>::iterator it = _generatorsPool.begin();
+	ParticleGenerator* g;
 
 	while (!encontrado && it != _generatorsPool.end()) {
-		if()
+		g = (*it);
+		if (g->getGeneratorName() == name)
+			encontrado = true;
+		else
+			it++;
 	}
-	return nullptr;
+
+	if (!encontrado)
+		return nullptr;
+	return g;
 }
 
 /*

@@ -9,13 +9,12 @@
 class Particle
 {
 public:
-	Particle(Vector3 pos, Vector3 v, Vector3 a,Vector4 c, double d = 0, float ml = -1);
+	Particle(Vector3 pos, Vector3 v, Vector3 a, Vector4 c, double d = 0, float ml = -1, float dY = 0);
 	Particle(){};
 	~Particle();
 	void integrate(double t);
-	float getMaxTime() { return _maxLifetime; }
-	float getLifeTime() { return _lifeTime; }
 	bool isDead() { return _kill; }
+	virtual Particle* clone() const { return new Particle(*this); }
 protected:
 	void init(Vector3 pos);
 	Vector3 _vel;
@@ -27,6 +26,7 @@ protected:
 	Vector4 _color;
 	float _maxLifetime;
 	float _lifeTime = 0;
+	float _limitY;
 private:
 	bool _kill = false;
 };
