@@ -26,6 +26,7 @@
     <ClInclude Include="Projectile_Pistol.h">
       <Filter>Projectiles</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -33,6 +34,9 @@
     </Filter>
     <Filter Include="Projectiles">
       <UniqueIdentifier>{d1d13227-f86f-4778-951a-7b1a51c67985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generators">
+      <UniqueIdentifier>{0f7c64cf-b24b-4e5c-b0d3-07aa990cce05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 pos, Vector3 v, Vector3 a,Vector4 c, double d) : _vel(v), _acceleration(a), _damping(d), _color(c)
+Particle::Particle(Vector3 pos, Vector3 v, Vector3 a,Vector4 c, double d, float l) : _vel(v), _acceleration(a), _damping(d), _color(c), _maxLifetime(ml)
 {
 	init(pos);
 }
@@ -15,6 +15,11 @@ void Particle::integrate(double t)
 	_vel += _acceleration * t;
 	_vel *= powf(_damping, t);
 	_transform.p += _vel * t;
+	_lifeTime += t;
+
+	if (_maxLifetime > 0 && _lifeTime > _maxLifetime)
+		_kill = true;
+
 }
 
 void Particle::init(Vector3 pos)
