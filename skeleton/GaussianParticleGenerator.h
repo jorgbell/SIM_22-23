@@ -1,10 +1,12 @@
 #pragma once
 #include "ParticleGenerator.h"
+#include <vector>
 class GaussianParticleGenerator :
     public ParticleGenerator
 {
 public:
-    GaussianParticleGenerator(Vector3 pos, Vector3 vel, int n, Particle* b, double prob, string t = " "/*to_string(generatorID++)*/);
+    GaussianParticleGenerator(string Name, Vector3 pos, Vector3 vel, int n, Particle* b, Vector3 deviationPos, Vector3 deviationVel, double life = -1, double prob = 0.5):
+        ParticleGenerator(Name, pos, vel, n, b, life, prob), std_dev_pos(deviationPos), std_dev_vel(deviationVel){}
     virtual list<Particle*> generateParticles();
 private:
     Vector3 std_dev_pos, std_dev_vel;

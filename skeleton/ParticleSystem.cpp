@@ -1,8 +1,11 @@
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem()
-{
-
+ParticleSystem::~ParticleSystem() {
+	while (!_particlePool.empty()) {
+		auto p = _particlePool.back();
+		_particlePool.pop_back();
+		delete p;
+	}
 }
 
 void ParticleSystem::update(double t)
@@ -40,6 +43,28 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
 	if (!encontrado)
 		return nullptr;
 	return g;
+}
+
+/*
+	elimina de la lista de generadores para que no siga generando más de dicho generador.
+	no borra memoria, simplemente dejará de hacer el integrate con dicho generador.
+*/
+void ParticleSystem::erase(string name)
+{
+	bool encontrado = false;
+	list<ParticleGenerator*>::iterator it = _generatorsPool.begin();
+	ParticleGenerator* g;
+
+	while (!encontrado && it != _generatorsPool.end()) {
+		g = (*it);
+		if (g->getGeneratorName() == name)
+			encontrado = true;
+		else
+			it++;
+	}
+
+	if (encontrado)
+		_generatorsPool.erase(it);
 }
 
 /*

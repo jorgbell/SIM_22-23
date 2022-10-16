@@ -9,17 +9,18 @@ using namespace std;
 
 class ParticleSystem {
 public:
-	ParticleSystem();
+	ParticleSystem(){};
+	~ParticleSystem();
 	void update(double t);
 	ParticleGenerator* getParticleGenerator(string name);
 	void add(ParticleGenerator* p) { _generatorsPool.push_back(p); }
+	void erase(string name);
 protected:
 
 private:
 	list<Particle*> _particlePool;
 	list<ParticleGenerator*> _generatorsPool;
 	//void generateFireworkSystem();
-
 	void checkParticles();
 
 };

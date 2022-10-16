@@ -44,7 +44,7 @@ std::queue<Projectile_Pistol*> pistol; //cola de proyectiles. Uso una cola para 
 int MAX_CURRENT_PROJECTILES = 20;
 //datos del plano usado como referencia
 RenderItem* ground;
-Transform boxt = { 200, -0, 0 };
+Transform boxt = { 200, 100, 0 };
 #pragma endregion
 
 #pragma region Practica_2
@@ -87,7 +87,10 @@ void initPhysics(bool interactive)
 
 #pragma region Practica_2
 	sys = new ParticleSystem();
-	gen = new GaussianParticleGenerator();
+	Vector3 deviationPos = Vector3(5, 0.01, 5);
+	Vector3 deviationVel = Vector3(8, 8,8);
+	gen = new GaussianParticleGenerator("Fuente", boxt.p, Vector3(5, 30, 5), 10, new Particle(), deviationPos, deviationVel, 10, 0.01);
+	sys->add(gen);
 #pragma endregion
 
 
@@ -114,7 +117,7 @@ void stepPhysics(bool interactive, double t)
 	*/
 #pragma endregion
 #pragma region Practica_2
-
+	sys->update(t);
 #pragma endregion
 
 	gScene->simulate(t);
@@ -136,6 +139,9 @@ void cleanupPhysics(bool interactive)
 	}
 	*/
 	//delete _p;
+#pragma endregion
+#pragma region Practica_2
+	delete sys;
 #pragma endregion
 
 

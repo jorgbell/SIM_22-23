@@ -11,15 +11,9 @@ public:
 	*/
 	Projectile_Pistol(Vector3 p, Vector3 dir, Vector4 c)
 	{
-		_color = c;
-		init(p);
 		if (!dir.isNormalized())	
 			dir.normalize();
-		_color = c;
-		_vel = dir * 35.f;
-		_damping = 0.99f;
-		_acceleration = Vector3(0.0, -1.0, 0.0);
-		_mass = 2.0;
+		init(p, dir * 35.f, Vector3(0.0, -1.0, 0.0),c,0.99f, 2.0);
 	};
 	~Projectile_Pistol() {};
 
