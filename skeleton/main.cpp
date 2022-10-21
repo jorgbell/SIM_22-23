@@ -50,6 +50,7 @@ Transform boxt = { 200, 100, 0 };
 #pragma region Practica_2
 ParticleSystem* sys;
 GaussianParticleGenerator* gen;
+GaussianParticleGenerator* gen2;
 #pragma endregion
 
 
@@ -89,8 +90,10 @@ void initPhysics(bool interactive)
 	sys = new ParticleSystem();
 	Vector3 deviationPos = Vector3(5, 0.01, 5);
 	Vector3 deviationVel = Vector3(8, 8,8);
-	gen = new GaussianParticleGenerator("Fuente", boxt.p, Vector3(5, 30, 5), 10, new Particle(), deviationPos, deviationVel, 10, 0.01);
-	sys->add(gen);
+	Particle* base2 = new Particle();
+	gen2 = new GaussianParticleGenerator("FuenteNormal", boxt.p, Vector3(5, 30, 5), 10, base2, deviationPos, deviationVel, 10, 0.6);
+	Projectile_Pistol* base = new Projectile_Pistol(GetCamera()->getEye(), GetCamera()->getDir(), Vector4(0.5, 0.5, 0, 1));
+	gen = new GaussianParticleGenerator("FuentePistol", GetCamera()->getEye(), base->getVel(), 10, base, deviationPos, deviationVel, 10, 0.6);
 #pragma endregion
 
 
@@ -168,6 +171,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//case 'B': break;
 		//case ' ':	break;
 	case 'P':
+#pragma region Practica_1
 		/*
 			//si llega al maximo generados definidos previamente, elimina el primero creado.
 			//hecho de manera previa al generador de particulas, lo ideal seria darles un tiempo de vida
@@ -179,6 +183,29 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}
 		pistol.push(new Projectile_Pistol(GetCamera()->getEye(), GetCamera()->getDir(), Vector4(0.5, 0.5, 0, 1)));
 		*/
+#pragma endregion
+#pragma region Practica_2
+		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+			if (sys->getParticleGenerator("FuentePistol")) {
+				sys->erase("FuentePistol");
+			}
+		}
+		else {
+			sys->add(gen);
+		}
+#pragma endregion
+		break;
+	case 'O':
+#pragma region Practica_2
+		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+			if (sys->getParticleGenerator("FuenteNormal")) {
+				sys->erase("FuenteNormal");
+			}
+		}
+		else {
+			sys->add(gen2);
+		}
+#pragma endregion
 		break;
 
 	case ' ':

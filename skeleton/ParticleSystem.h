@@ -15,6 +15,7 @@ public:
 	ParticleGenerator* getParticleGenerator(string name);
 	void add(ParticleGenerator* p) { _generatorsPool.push_back(p); }
 	void erase(string name);
+	int getNumGenerators() { return _generatorsPool.size(); }
 protected:
 
 private:

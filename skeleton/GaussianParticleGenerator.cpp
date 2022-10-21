@@ -26,7 +26,7 @@ list<Particle*> GaussianParticleGenerator::generateParticles()
 			//siguiente valor de velocidad y posicion origen segun la distribucion gaussiana
 			Vector3 newpos = Vector3(posXDist(gen), posYDist(gen), posZDist(gen));
 			Vector3 newVel = Vector3(velXDist(gen), velYDist(gen), velZDist(gen));
-			p->init(newpos, newVel, Vector3(1, -10, 1), Vector4(0.5, 1, 0.5, 1), 0.99, _lifetime_media);
+			p->setVel(newVel); p->setPos(newpos); p->setAcc(Vector3(1, -10, 1)); p->setColor(Vector4(0.5, 1, 0.5, 1)); p->setmaxLifeTime(_lifetime_media);
 			particles.push_back(p);
 		}
 	}

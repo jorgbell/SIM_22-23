@@ -15,6 +15,8 @@ public:
 			dir.normalize();
 		init(p, dir * 35.f, Vector3(0.0, -1.0, 0.0),c,0.99f, 2.0);
 	};
+	virtual Projectile_Pistol* clone() const { return new Projectile_Pistol(*this); }
+
 	~Projectile_Pistol() {};
 
 };
