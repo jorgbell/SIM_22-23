@@ -13,7 +13,7 @@ public:
 	{
 		if (!dir.isNormalized())	
 			dir.normalize();
-		init(p, dir * 35.f, Vector3(0.0, -1.0, 0.0),c,0.99f, 2.0);
+		setPos(p); setVel(dir * 35.f); setAcc(Vector3(0.0, -1.0, 0.0)); setColor(c); setDamp(0.99f); setMass(2.0);
 	};
 	virtual Projectile_Pistol* clone() const { return new Projectile_Pistol(*this); }
 
