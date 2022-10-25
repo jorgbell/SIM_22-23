@@ -12,6 +12,7 @@
 #include "Projectile_Pistol.h"
 #include "ParticleSystem.h"
 #include "GaussianParticleGenerator.h"
+#include "UniformParticleGenerator.h"
 
 #include <iostream>
 
@@ -50,6 +51,7 @@ Transform boxt = { 200, 100, 0 };
 #pragma region Practica_2
 ParticleSystem* sys;
 GaussianParticleGenerator* gen;
+UniformParticleGenerator* gen2;
 #pragma endregion
 
 
@@ -91,6 +93,8 @@ void initPhysics(bool interactive)
 	Vector3 deviationVel = Vector3(8, 8,8);
 	Particle* base = new Particle();
 	gen = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(5, 30, 5), 10, base, deviationPos, deviationVel, 10, 0.6);
+
+	gen2 = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(5, 30, 5), 10, base, deviationPos, deviationVel, 10, 0.6);
 
 #pragma endregion
 
@@ -143,6 +147,8 @@ void cleanupPhysics(bool interactive)
 #pragma endregion
 #pragma region Practica_2
 	delete sys;
+	delete gen;
+	delete gen2;
 #pragma endregion
 
 
@@ -182,6 +188,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		pistol.push(new Projectile_Pistol(GetCamera()->getEye(), GetCamera()->getDir(), Vector4(0.5, 0.5, 0, 1)));
 		*/
 #pragma endregion
+#pragma region Practica2
+		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+			if (sys->getParticleGenerator("FuenteUniforme")) {
+				sys->erase("FuenteUniforme");
+			}
+		}
+		else {
+			sys->add(gen2);
+		}
+#pragma endregion
+
 		break;
 	case 'O':
 #pragma region Practica_2
