@@ -1,10 +1,7 @@
 #include <ctype.h>
-
 #include <PxPhysicsAPI.h>
-
 #include <vector>
 #include <queue>
-
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
@@ -13,7 +10,6 @@
 #include "ParticleSystem.h"
 #include "GaussianParticleGenerator.h"
 #include "UniformParticleGenerator.h"
-
 #include <iostream>
 
 
@@ -50,8 +46,8 @@ Transform boxt = { 200, 100, 0 };
 
 #pragma region Practica_2
 ParticleSystem* sys;
-GaussianParticleGenerator* gen;
-UniformParticleGenerator* gen2;
+GaussianParticleGenerator* FuenteGaussiana;
+UniformParticleGenerator* FuenteUniforme;
 #pragma endregion
 
 
@@ -90,11 +86,11 @@ void initPhysics(bool interactive)
 #pragma region Practica_2
 	sys = new ParticleSystem();
 	Vector3 deviationPos = Vector3(5, 0.01, 5);
-	Vector3 deviationVel = Vector3(8, 8,8);
+	Vector3 deviationVel = Vector3(3, 8, 3);
 	Particle* base = new Particle();
-	gen = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(5, 30, 5), 10, base, deviationPos, deviationVel, 10, 0.6);
-
-	gen2 = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(5, 30, 5), 10, base, deviationPos, deviationVel, 10, 0.6);
+	base->DeregisterParticle();
+	FuenteGaussiana = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
+	FuenteUniforme = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
 
 #pragma endregion
 
@@ -147,8 +143,8 @@ void cleanupPhysics(bool interactive)
 #pragma endregion
 #pragma region Practica_2
 	delete sys;
-	delete gen;
-	delete gen2;
+	delete FuenteGaussiana;
+	delete FuenteUniforme;
 #pragma endregion
 
 
@@ -195,7 +191,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			}
 		}
 		else {
-			sys->add(gen2);
+			sys->add(FuenteUniforme);
 		}
 #pragma endregion
 
@@ -208,7 +204,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			}
 		}
 		else {
-			sys->add(gen);
+			sys->add(FuenteGaussiana);
 		}
 #pragma endregion
 		break;

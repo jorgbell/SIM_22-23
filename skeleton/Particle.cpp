@@ -9,7 +9,14 @@ Particle::Particle(Vector3 pos, Vector3 v, Vector3 a,Vector4 c, double d, float 
 
 Particle::~Particle()
 {
+	DeregisterParticle();
+}
+
+void Particle::DeregisterParticle() {
+	if (_renderItem == nullptr)
+		return;
 	DeregisterRenderItem(_renderItem);
+	delete _renderItem;
 }
 
 void Particle::integrate(double t)

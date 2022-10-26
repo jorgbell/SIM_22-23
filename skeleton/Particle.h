@@ -18,6 +18,8 @@ public:
 		auto p = new Particle(*this);
 		p->initRenderItem();
 		return p; }
+
+	void DeregisterParticle();
 	//SETTERS
 	void setPos(Vector3 p) { _transform= Transform(p); }
 	void setVel(Vector3 v) { _vel = v; }

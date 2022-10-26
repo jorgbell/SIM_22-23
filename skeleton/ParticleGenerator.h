@@ -7,10 +7,12 @@ using namespace std;
 class ParticleGenerator {
 public:
 	ParticleGenerator(string Name, Vector3 pos, Vector3 vel, int n, Particle* b, double lifetime = -1, double prob = 1.0) :
-		_origin(pos), _velMedia(vel), _nParticles(n), _baseParticle(b), _name(Name), _probability(prob), _lifetime_media(lifetime)
-	{}
+		_origin(pos), _velMedia(vel), _nParticles(n), _name(Name), _probability(prob), _lifetime_media(lifetime)
+	{
+		setBaseParticle(b);
+	}
 
-	void setBaseParticle(Particle* model) { _baseParticle = model; }
+	void setBaseParticle(Particle* model) { _baseParticle = model;}
 
 	virtual list<Particle*> generateParticles() = 0;
 	string getGeneratorName() { return _name; }
