@@ -20,6 +20,13 @@
     <ClCompile Include="UniformParticleGenerator.cpp">
       <Filter>Generators</Filter>
     </ClCompile>
+    <ClCompile Include="FireworksSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="FireworksGenerator.cpp">
+      <Filter>Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="Firework.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -47,6 +54,13 @@
     <ClInclude Include="UniformParticleGenerator.h">
       <Filter>Generators</Filter>
     </ClInclude>
+    <ClInclude Include="FireworksSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="FireworksGenerator.h">
+      <Filter>Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Firework.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -57,6 +71,9 @@
     </Filter>
     <Filter Include="Generators">
       <UniqueIdentifier>{0f7c64cf-b24b-4e5c-b0d3-07aa990cce05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{2d3a15f3-ab14-4c7d-8328-b4be06a8f803}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

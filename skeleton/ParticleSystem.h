@@ -11,17 +11,16 @@ class ParticleSystem {
 public:
 	ParticleSystem(){};
 	~ParticleSystem();
-	void update(double t);
+	virtual void update(double t);
 	ParticleGenerator* getParticleGenerator(string name);
-	void add(ParticleGenerator* p) { _generatorsPool.push_back(p); }
-	void erase(string name);
+	virtual void add(ParticleGenerator* p) { _generatorsPool.push_back(p); }
+	virtual void erase(string name);
 	int getNumGenerators() { return _generatorsPool.size(); }
 protected:
-
-private:
 	list<Particle*> _particlePool;
 	list<ParticleGenerator*> _generatorsPool;
-	//void generateFireworkSystem();
-	void checkParticles();
+	virtual void checkParticles();
+
+private:
 
 };

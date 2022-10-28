@@ -13,7 +13,7 @@ public:
 	Particle(Vector3 pos = Vector3(0,0,0), Vector3 v = Vector3(1,1,1), Vector3 a = Vector3(1,1,1), Vector4 c = Vector4(1,1,1,1), double d = 0.99, float ml = -1, float dY = 0, float mass = 1.0);
 	~Particle();
 	//virtual void init(Vector3 pos, Vector3 v, Vector3 a, Vector4 c, double d = 1, float ml = -1, float dY = 0, float mass = 1.0);
-	void integrate(double t);
+	virtual void integrate(double t);
 	virtual Particle* clone() const { 
 		auto p = new Particle(*this);
 		p->initRenderItem();

@@ -11,12 +11,6 @@ ParticleSystem::~ParticleSystem() {
 void ParticleSystem::update(double t)
 {
 	checkParticles();
-	for (auto g : _generatorsPool) {
-		auto l = g->generateParticles();
-		for (auto p : l)
-			_particlePool.push_back(p);
-	}
-
 	for (auto p : _particlePool)
 		p->integrate(t);
 	
@@ -83,5 +77,12 @@ void ParticleSystem::checkParticles()
 		}
 		else
 			it++;
+	}
+
+	//creacion de las nuevas particulas
+	for (auto g : _generatorsPool) {
+		auto l = g->generateParticles();
+		for (auto p : l)
+			_particlePool.push_back(p);
 	}
 }
