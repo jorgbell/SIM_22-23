@@ -2,47 +2,55 @@
 
 Firework::Firework(FireworksType t) : _type(t)
 {
-	Vector4 color;
-	double dump;
-	float mass, maxlife, groundlim;
+	//valores de una particula generica
+	Vector4 color = Vector4(1, 1, 0, 1);
+	double dump = 0.999f;
+	float mass = 1.0f; float groundlim = -1;
+	//valores para calcular las medias de la particula Firework
 
 	switch (_type)
 	{
 	case FIREWORK_0:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ; _cargas = ;
+		_cargas = {}; _minVelocity = { -1,-2,-1 };
+		_maxVelocity = { 1,5,1 }; _minAge = 0; _maxAge = 2;
 		break;
 	case FIREWORK_1:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
+		_cargas.push_back({ 5, FIREWORK_0 });
+		_minVelocity = { -3,0,-3 }; _maxVelocity = { 3,0,3 }; _minAge = 1; _maxAge = 3;
 		break;
 	case FIREWORK_2:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
+		_cargas.push_back({ 5, FIREWORK_1 }); _cargas.push_back({ 3, FIREWORK_0 });
+		_minVelocity = { -7,0,-10 }; _maxVelocity = { 7,5,10 }; _minAge = 2; _maxAge = 4;
 		break;
 	case FIREWORK_3:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
+		_cargas.push_back({ 5,FIREWORK_2 }); _cargas.push_back({ 3,FIREWORK_1 }); _cargas.push_back({ 2,FIREWORK_0 });
+		_minVelocity = {-5,-2,-5}; _maxVelocity = {5,3,5}; _minAge = 3; _maxAge = 4;
 		break;
 	case FIREWORK_4:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
+		_cargas.push_back({ 5,FIREWORK_2 }); _cargas.push_back({ 3,FIREWORK_1 }); _cargas.push_back({ 2,FIREWORK_0 }); _cargas.push_back({ 3,FIREWORK_0 });
+		_minVelocity = {-5,3,0}; _maxVelocity = {5,5,0}; _minAge = 0; _maxAge = 0;
 		break;
 	case FIREWORK_5:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
+		_cargas.push_back({ 5,FIREWORK_0 }); _cargas.push_back({ 3,FIREWORK_1 }); _cargas.push_back({ 2,FIREWORK_2 }); _cargas.push_back({ 3,FIREWORK_1 }); _cargas.push_back({ 5,FIREWORK_4 });
+		_minVelocity = {-10,-1,0}; _maxVelocity = {10,4,0}; _minAge = 0; _maxAge = 1;
 		break;
 	case FIREWORK_6:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
+		_cargas.push_back({ 5,FIREWORK_0 });
+		_minVelocity = {-3,-0.5,0}; _maxVelocity = {3,0.25,0}; _minAge = 0.5; _maxAge = 1.5;
 		break;
 	case FIREWORK_7:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
-		break;
-	case FIREWORK_8:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
-		break;
-	case FIREWORK_9:
-		color = ; dump = ; mass = ; maxlife = ; groundlim = ;
+		_cargas.push_back({ 25,FIREWORK_6 });
+		_minVelocity = { -5,-0.5,0 }; _maxVelocity = { 5,0,0 }; _minAge = 4; _maxAge = 6;
 		break;
 	}
 
-	setDamp(dump); setMass(mass); setColor(color); setmaxLifeTime(maxlife); setGroundLimit(groundlim);
-	initRenderItem();
+	Vector3 velMedia = Vector3(
+		(_maxVelocity.x + _minVelocity.x)/2,
+		(_maxVelocity.y + _minVelocity.y)/2, 
+		(_maxVelocity.z + _minVelocity.z)/2);
 
+	float lifeMedia = (_maxAge + _minAge) / 2;
+	setVel(velMedia); setmaxLifeTime(lifeMedia); setDamp(dump); setMass(mass); setColor(color); setGroundLimit(groundlim);
 }
 
 void Firework::integrate(double t)

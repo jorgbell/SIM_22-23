@@ -5,7 +5,7 @@
 list<Particle*> UniformParticleGenerator::generateParticles()
 {
 	std::random_device rd{};
-	std::mt19937 FuenteGaussiana{ rd() };
+	std::mt19937 gen{ rd() };
 
 	list<Particle*> particles;
 
@@ -20,8 +20,8 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 			_baseParticle->setColor(Vector4(1, 0.5, 0, 1));
 			auto p = _baseParticle->clone();
 			//siguiente valor de velocidad y posicion origen segun la distribucion gaussiana
-			Vector3 newPos = Vector3(_poswidth.x * dist(FuenteGaussiana), _poswidth.y * dist(FuenteGaussiana), _poswidth.z* dist(FuenteGaussiana));
-			Vector3 newVel = Vector3(_velwidth.x * dist(FuenteGaussiana), _velwidth.y * dist(FuenteGaussiana), _velwidth.z* dist(FuenteGaussiana));
+			Vector3 newPos = Vector3(_poswidth.x * dist(gen), _poswidth.y * dist(gen), _poswidth.z* dist(gen));
+			Vector3 newVel = Vector3(_velwidth.x * dist(gen), _velwidth.y * dist(gen), _velwidth.z* dist(gen));
 			p->setPos(newPos+_origin); p->setVel(newVel+_velMedia); p->setAcc(Vector3(1, -10, 1)); p->setmaxLifeTime(_lifetime_media);
 			particles.push_back(p);
 		}

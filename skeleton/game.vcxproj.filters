@@ -13,7 +13,6 @@
     <ClCompile Include="Particle.cpp">
       <Filter>Projectiles</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp">
       <Filter>Generators</Filter>
     </ClCompile>
@@ -26,7 +25,12 @@
     <ClCompile Include="FireworksGenerator.cpp">
       <Filter>Generators</Filter>
     </ClCompile>
-    <ClCompile Include="Firework.cpp" />
+    <ClCompile Include="Firework.cpp">
+      <Filter>Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -47,7 +51,6 @@
     <ClInclude Include="ParticleGenerator.h">
       <Filter>Generators</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="GaussianParticleGenerator.h">
       <Filter>Generators</Filter>
     </ClInclude>
@@ -60,7 +63,12 @@
     <ClInclude Include="FireworksGenerator.h">
       <Filter>Generators</Filter>
     </ClInclude>
-    <ClInclude Include="Firework.h" />
+    <ClInclude Include="Firework.h">
+      <Filter>Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
