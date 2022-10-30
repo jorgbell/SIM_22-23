@@ -32,6 +32,7 @@ public:
 	void setColor(Vector4 c) { _color = c; }
 	void setmaxLifeTime(float l) { _maxLifetime = l; }
 	void setGroundLimit(float l) { _limitY = l; }
+	void setDead(bool b) { _kill = b; }
 	//GETTERS
 	Vector3 getPos() { return _transform.p; }
 	Vector3 getVel() { return _vel; }
@@ -50,7 +51,7 @@ protected:
 	double _damping;
 	float _mass;
 	Transform _transform;
-	RenderItem* _renderItem;
+	RenderItem* _renderItem = nullptr;
 	Vector4 _color;
 	float _maxLifetime;
 	float _lifeTime = 0;

@@ -94,13 +94,11 @@ void initPhysics(bool interactive)
 	Vector3 deviationPos = Vector3(5, 0.01, 5);
 	Vector3 deviationVel = Vector3(3, 8, 3);
 	Particle* base = new Particle();
-	base->DeregisterParticle();
 	FuenteGaussiana = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
 	FuenteUniforme = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
 	
 	//EJERCICIO 2
-	Firework* baseF = new Firework(boxt.p, Vector3(0, 20, 0));
-	fSys = new FireworksSystem(baseF);
+	fSys = new FireworksSystem();
 #pragma endregion
 
 
@@ -220,7 +218,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 #pragma endregion
 		break;
 
-	case ' ':
+	case 'F':
+#pragma region Practica_2
+		fSys->startFire(boxt.p, Vector3(0,20,0), FIREWORK_5);
+#pragma endregion
+
 		break;
 	default:
 		break;

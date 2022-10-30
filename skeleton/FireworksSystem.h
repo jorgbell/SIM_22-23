@@ -5,9 +5,10 @@ class FireworksSystem : public ParticleSystem
 {
 public:
 	//la posición será para asignarla a la primera partícula
-	FireworksSystem(Firework* first, int maxExplosions = INT_MAX);
+	FireworksSystem(int maxExplosions = INT_MAX);
 	~FireworksSystem();
 	virtual void update(double t);
+	void startFire(Vector3 initPos, Vector3 initVel, FireworksType type = FIREWORK_5);
 private:
 	virtual void checkParticles() override;
 

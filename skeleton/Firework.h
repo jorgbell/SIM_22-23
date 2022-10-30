@@ -30,11 +30,11 @@ public:
 
 	Vector3 getVarianzaVel() {
 		return Vector3(
-			std::pow(_maxVelocity.x - _minVelocity.x,2),
-			std::pow(_maxVelocity.y - _minVelocity.y, 2),
-			std::pow(_maxVelocity.z - _minVelocity.z, 2));
+			_maxVelocity.x - _minVelocity.x,
+			_maxVelocity.y - _minVelocity.y,
+			_maxVelocity.z - _minVelocity.z);
 	}
-	float getVarianzaLife() { return std::pow(_maxAge - _minAge,2); }
+	float getVarianzaLife() { return _maxAge - _minAge; }
 
 private:
 	//vector de cargas. indica cuantos Fireworks crear de cada tipo. 

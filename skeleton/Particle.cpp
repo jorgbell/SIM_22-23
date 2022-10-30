@@ -17,6 +17,7 @@ void Particle::DeregisterParticle() {
 		return;
 	DeregisterRenderItem(_renderItem);
 	delete _renderItem;
+	_renderItem = nullptr;
 }
 
 void Particle::integrate(double t)

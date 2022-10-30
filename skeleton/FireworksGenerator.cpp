@@ -2,7 +2,7 @@
 #include <random>
 
 
-FireworksGenerator::FireworksGenerator(Firework* first, int nParticles) : ParticleGenerator("fireworksGen", Vector3(0,0,0), Vector3(0,0,0), nParticles, first), _lastExploded()
+FireworksGenerator::FireworksGenerator() : ParticleGenerator("fireworksGen", Vector3(0, 0, 0), Vector3(0, 0, 0), 0, new Particle())
 {
 	
 }
@@ -30,30 +30,20 @@ list<Particle*> FireworksGenerator::generateParticles()
 		//accede a los valores de la tupla del payload
 		int nFireworks = v._Myfirst._Val;
 		FireworksType t = v._Get_rest()._Myfirst._Val;
-		//genera una nueva particula base, diciendole el tipo de firework para que tenga los valores correspondientes
-		Firework* f = dynamic_cast<Firework*>(_baseParticle->clone());
-		f->setType(t);
 		//crea las n particulas de la carga actual con los valores calculados previamente
 		//todas las particulas tendrán la misma magnitud y la posicion será la posicion en la que ha explotado la particula que esta generando esta explosion
 		for (int i = 0; i < nFireworks; i++) {
+			//genera una nueva particula base, diciendole el tipo de firework para que tenga los valores correspondientes
+			if (!dynamic_cast<Firework*>(_baseParticle))
+				return fireworks;
+			Firework* f = dynamic_cast<Firework*>(_baseParticle->clone());
+			f->setType(t);
 			//generamos un vector aleatorio normalizado
 			Vector3 randomVector = Vector3(dist(gen), dist(gen), dist(gen)).getNormalized();
 			float vlife = mediaLife + varLife * dist(gen);
-			f->setPos(_lastExploded->getPos()); f->setVel(randomVector*magnitude); f->setmaxLifeTime(vlife);
+			f->setPos(_lastExploded->getPos()); f->setVel(randomVector*magnitude); f->setmaxLifeTime(abs(vlife));
 			fireworks.push_back(f);
 		}
-	}
-	//despues, genera el resto de particulas
-	//todas las particulas tendrán la misma magnitud y la posicion será la posicion en la que ha explotado la particula que esta generando esta explosion
-	for (int i = 0; i < _nParticles-fireworks.size(); i++) {
-		Firework* f = dynamic_cast<Firework*>(_baseParticle->clone());
-		f->setType(FIREWORK_0);//las particulas que no generan otras son las de tipo 0
-		//generamos un vector aleatorio normalizado
-		//codigo repetido, TODO abstraer a un metodo
-		Vector3 randomVector = Vector3(dist(gen), dist(gen), dist(gen)).getNormalized();
-		float vlife = mediaLife + varLife * dist(gen);
-		f->setPos(_lastExploded->getPos()); f->setVel(randomVector * magnitude); f->setmaxLifeTime(vlife);
-		fireworks.push_back(f);
 	}
 
 	return fireworks;

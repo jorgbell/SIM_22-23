@@ -1,11 +1,23 @@
 #include "FireworksSystem.h"
+#include <iostream>
 
-FireworksSystem::FireworksSystem(Firework* first, int maxExplosions) : maxFireworksGeneration(maxExplosions), nExplosions(0)
+FireworksSystem::FireworksSystem(int maxExplosions) : maxFireworksGeneration(maxExplosions), nExplosions(0)
 {
 	nExplosions = 0;
+	_fireworksGen = new FireworksGenerator();
+}
+
+void FireworksSystem::startFire(Vector3 initPos, Vector3 initVel, FireworksType type) {
 	//generación de la primera particula. Actuará de base para el generador.
-	_particlePool.push_back(first);
-	_fireworksGen = new FireworksGenerator(first);
+	//solo funcionará si no hay particulas en pantalla
+	if (_particlePool.size() == 0) {
+		if (!dynamic_cast<Firework*>(_fireworksGen->getBaseParticle())) {
+			_fireworksGen->setBaseParticle(new Firework());
+		}
+		Firework* first = dynamic_cast<Firework*>(_fireworksGen->getBaseParticle()->clone());
+		first->setType(type); first->setPos(initPos); first->setVel(initVel);
+		_particlePool.push_back(first);
+	}
 }
 
 FireworksSystem::~FireworksSystem()
@@ -21,7 +33,6 @@ void FireworksSystem::update(double t)
 	//no obstante, cabe la posibilidad de que se pueda
 	for (auto p : _particlePool)
 		p->integrate(t);
-
 }
 
 void FireworksSystem::checkParticles()
@@ -31,7 +42,7 @@ void FireworksSystem::checkParticles()
 	std::list<Particle*> explosions;
 	//comprueba si han muerto fireworks. En caso de morir, podrá generar nuevas particulas.
 	for (it = _particlePool.begin(); it != _particlePool.end();) {
-		Firework* f = static_cast<Firework*>(*it);
+		Firework* f = dynamic_cast<Firework*>(*it);
 		if (f != nullptr && f->isDead()) {
 			//GENERARA UNA EXPLOSION SI ES UN FIREWORK DE TIPO >0 Y SI QUEDAN EXPLOSIONES POSIBLES
 			if (f->getFireworkType() != FIREWORK_0 && nExplosions <= maxFireworksGeneration) {
@@ -44,10 +55,11 @@ void FireworksSystem::checkParticles()
 				}
 				nExplosions += 1;
 			}
-			
+
 			//eliminará la particula en cualquier caso
 			it = _particlePool.erase(it);
 			delete(f);
+			f = nullptr;
 		}
 		else //si no ha muerto comprueba la siguiente
 			it++;
@@ -57,6 +69,5 @@ void FireworksSystem::checkParticles()
 	for (Particle* p : explosions) {
 		_particlePool.push_back(p);
 	}
-
 }
 

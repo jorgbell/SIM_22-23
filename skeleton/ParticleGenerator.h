@@ -12,7 +12,13 @@ public:
 		setBaseParticle(b);
 	}
 
-	void setBaseParticle(Particle* model) { _baseParticle = model;}
+	void setBaseParticle(Particle* model) {
+		if(_baseParticle != nullptr) 
+			delete _baseParticle; 
+		_baseParticle = model;
+		_baseParticle->DeregisterParticle();
+	}
+	Particle* getBaseParticle() { return _baseParticle;}
 
 	virtual list<Particle*> generateParticles() = 0;
 	string getGeneratorName() { return _name; }
@@ -24,7 +30,7 @@ protected:
 	double _probability;
 	double _lifetime_media;
 	int _nParticles;
-	Particle* _baseParticle;
+	Particle* _baseParticle = nullptr;
 
 
 };
