@@ -10,6 +10,8 @@
 #include "ParticleSystem.h"
 #include "GaussianParticleGenerator.h"
 #include "UniformParticleGenerator.h"
+#include "FireworksSystem.h"
+#include "Firework.h"
 #include <iostream>
 
 
@@ -45,9 +47,12 @@ Transform boxt = { 200, 100, 0 };
 #pragma endregion
 
 #pragma region Practica_2
+//ejercicio 1
 ParticleSystem* sys;
 GaussianParticleGenerator* FuenteGaussiana;
 UniformParticleGenerator* FuenteUniforme;
+//ejercicio 2
+FireworksSystem* fSys;
 #pragma endregion
 
 
@@ -84,6 +89,7 @@ void initPhysics(bool interactive)
 #pragma endregion
 
 #pragma region Practica_2
+	//EJERCICIO 1
 	sys = new ParticleSystem();
 	Vector3 deviationPos = Vector3(5, 0.01, 5);
 	Vector3 deviationVel = Vector3(3, 8, 3);
@@ -91,7 +97,10 @@ void initPhysics(bool interactive)
 	base->DeregisterParticle();
 	FuenteGaussiana = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
 	FuenteUniforme = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
-
+	
+	//EJERCICIO 2
+	Firework* baseF = new Firework(boxt.p, Vector3(0, 20, 0));
+	fSys = new FireworksSystem(baseF);
 #pragma endregion
 
 
@@ -119,6 +128,7 @@ void stepPhysics(bool interactive, double t)
 #pragma endregion
 #pragma region Practica_2
 	sys->update(t);
+	fSys->update(t);
 #pragma endregion
 
 	gScene->simulate(t);
@@ -145,6 +155,7 @@ void cleanupPhysics(bool interactive)
 	delete sys;
 	delete FuenteGaussiana;
 	delete FuenteUniforme;
+	delete fSys;
 #pragma endregion
 
 

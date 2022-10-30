@@ -4,12 +4,12 @@
 class FireworksGenerator : public ParticleGenerator
 {
 public:
-	FireworksGenerator(int nParticles = 40);
+	FireworksGenerator(Firework* first, int nParticles = 40);
 
 	//este generateParticles vendría a ser el explode(), generia particulas normales
 	virtual list<Particle*> generateParticles();
-	list<Firework*> generateFireworks(vector<payload> p);
+	void setLastExploded(Firework* lastExploded) { _lastExploded = lastExploded; }
 private:
-
+	Firework* _lastExploded;
 };
 

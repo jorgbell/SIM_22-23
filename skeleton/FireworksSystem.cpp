@@ -1,18 +1,15 @@
 #include "FireworksSystem.h"
 
-FireworksSystem::FireworksSystem(int maxExplosions) : maxFireworksGeneration(maxExplosions)
+FireworksSystem::FireworksSystem(Firework* first, int maxExplosions) : maxFireworksGeneration(maxExplosions), nExplosions(0)
 {
-	_fireworksGen = new FireworksGenerator();
 	nExplosions = 0;
+	//generación de la primera particula. Actuará de base para el generador.
+	_particlePool.push_back(first);
+	_fireworksGen = new FireworksGenerator(first);
 }
 
 FireworksSystem::~FireworksSystem()
 {
-	while (!_fireworksPool.empty()) {
-		auto f = _fireworksPool.back();
-		_fireworksPool.pop_back();
-		delete f;
-	}
 	delete _fireworksGen;
 }
 
@@ -29,31 +26,36 @@ void FireworksSystem::update(double t)
 
 void FireworksSystem::checkParticles()
 {
-	//este metodo realizara el funcionamiento del update
-	//comprueba si los fireworks han muerto para explotar
-	//si explota, devuelve fireworks en caso de poder hacerlo (quedan iteraciones)
-	//cuando explota, devuelve un vector de fireworks y de particulas normales
-	//las particulas normales las añade al vector normal y las fireworks al de fireworks
 
 	list<Particle*>::iterator it;
-
+	std::list<Particle*> explosions;
+	//comprueba si han muerto fireworks. En caso de morir, podrá generar nuevas particulas.
 	for (it = _particlePool.begin(); it != _particlePool.end();) {
-		//TODO: Hacer casteo a firework
-		Particle* f = (*it);
+		Firework* f = static_cast<Firework*>(*it);
 		if (f != nullptr && f->isDead()) {
-			//si el firework se ha muerto, explota antes de morir, creando nuevos fireworks y nuevas particulas
-			//añade los fireworks nuevos a la lista
-			if (nExplosions <= maxFireworksGeneration) {
-				for (auto f : _fireworksGen->generateFireworks(f->getPayloads()))
-					_particlePool.push_back(f);
+			//GENERARA UNA EXPLOSION SI ES UN FIREWORK DE TIPO >0 Y SI QUEDAN EXPLOSIONES POSIBLES
+			if (f->getFireworkType() != FIREWORK_0 && nExplosions <= maxFireworksGeneration) {
+				//indicamos al generador cual ha sido la particula que ha explotado, para conseguir sus payloads y posicion actual
+				_fireworksGen->setLastExploded(f);
+				//generamos particulas nuevas, algunas serán de tipo >0, el resto, de tipo 0
+				auto list = _fireworksGen->generateParticles();
+				for (auto a : list) {
+					explosions.push_back(a);
+				}
 				nExplosions += 1;
 			}
-			//eliminará la particula en caso de que o haya pasado su tiempo de vida o haya salido de la zona de interes
+			
+			//eliminará la particula en cualquier caso
 			it = _particlePool.erase(it);
 			delete(f);
 		}
-		else
+		else //si no ha muerto comprueba la siguiente
 			it++;
+	}
+
+	//añadira todas las nuevas particulas
+	for (Particle* p : explosions) {
+		_particlePool.push_back(p);
 	}
 
 }

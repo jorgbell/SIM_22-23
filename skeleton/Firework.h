@@ -2,6 +2,7 @@
 #include "Particle.h"
 #include <tuple>
 #include <vector>
+#include <cmath>
 
 enum FireworksType {
 	FIREWORK_0,
@@ -18,24 +19,22 @@ using payload = std::tuple<int, FireworksType>;
 class Firework : public Particle
 {
 public:
-	Firework(FireworksType t);
+	Firework(Vector3 initPos = Vector3(0,0,0), Vector3 initVel = Vector3(1,1,1), FireworksType t = FIREWORK_5);
 
-	virtual void integrate(double t);
 	virtual Firework* clone() const;
+	void setType(FireworksType t);
 	FireworksType getFireworkType() { return _type; }
 	std::vector<payload> getPayloads() { return _cargas; }
-	float getMinAge() { return _minAge; }
-	float getMaxAge() { return _maxAge; }
 	Vector3 getMinVel() { return _minVelocity; }
 	Vector3 getMaxVel() { return _maxVelocity; }
 
 	Vector3 getVarianzaVel() {
 		return Vector3(
-			_maxVelocity.x - _minVelocity.x,
-			_maxVelocity.y - _minVelocity.y,
-			_maxVelocity.z - _minVelocity.z);
+			std::pow(_maxVelocity.x - _minVelocity.x,2),
+			std::pow(_maxVelocity.y - _minVelocity.y, 2),
+			std::pow(_maxVelocity.z - _minVelocity.z, 2));
 	}
-	float getVarianzaLife() { return _maxAge - _minAge; }
+	float getVarianzaLife() { return std::pow(_maxAge - _minAge,2); }
 
 private:
 	//vector de cargas. indica cuantos Fireworks crear de cada tipo. 
