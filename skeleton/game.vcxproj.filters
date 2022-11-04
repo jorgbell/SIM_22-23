@@ -31,11 +31,9 @@
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="ForceGenerator.cpp">
+    <ClCompile Include="GravityForceGenerator.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleForceRegistry.cpp" />
-    <ClCompile Include="GravityForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -77,9 +75,13 @@
     <ClInclude Include="ForceGenerator.h">
       <Filter>Forces</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleForceRegistry.h" />
-    <ClInclude Include="GravityForceGenerator.h" />
     <ClInclude Include="checkML.h" />
+    <ClInclude Include="GravityForceGenerator.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceRegistry.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

@@ -34,6 +34,7 @@ public:
 		else if (_damping > 1) _damping = 1;
 		_damping = d; }
 	void setMass(float m) { _mass = m; }
+	void setInverseMass(float m) { _inverseMass = m; }
 	void setColor(Vector4 c) { _color = c; }
 	void setmaxLifeTime(float l) { _maxLifetime = l; }
 	void setGroundLimit(float l) { _limitY = l; }
@@ -44,6 +45,7 @@ public:
 	Vector3 getAcc() { return _acceleration; }
 	double getDamp() { return _damping; }
 	float getMass() { return _mass; }
+	float getInverseMass() { return _inverseMass; }
 	Vector4 getColor() { return _color; }
 	float getMaxLifeTime() { return _maxLifetime; }
 	float getActualLifeTime() { return _lifeTime; }
@@ -55,6 +57,7 @@ protected:
 	Vector3 _acceleration;
 	double _damping;
 	float _mass;
+	float _inverseMass;
 	Transform _transform;
 	RenderItem* _renderItem = nullptr;
 	Vector4 _color;

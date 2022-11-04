@@ -14,11 +14,17 @@ public:
 	}
 
 	void addRegistry(ForceGenerator* fg, Particle* p) {
-
+		insert(FRPair( fg, p ));
 	}
 
 	void deleteParticleRegistry(Particle* p) {
-
+		for (auto it = begin(); it != end(); it++) {
+			if (it->second == p) {
+				auto r = (*it);
+				erase(it);
+				//delete de la fuerza? TODO
+			}
+		}
 	}
 
 };

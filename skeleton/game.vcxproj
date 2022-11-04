@@ -257,12 +257,10 @@
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="FireworksGenerator.cpp" />
     <ClCompile Include="FireworksSystem.cpp" />
-    <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleForceRegistry.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
