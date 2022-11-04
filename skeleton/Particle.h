@@ -20,6 +20,11 @@ public:
 		return p; }
 
 	void DeregisterParticle();
+	//Clears accumulated force
+	void clearForce();
+	//Add force to apply in next integration only
+	void addForce(const Vector3& f);
+
 	//SETTERS
 	void setPos(Vector3 p) { _transform= Transform(p); }
 	void setVel(Vector3 v) { _vel = v; }
@@ -56,6 +61,9 @@ protected:
 	float _maxLifetime;
 	float _lifeTime = 0;
 	float _limitY;
+
+	//Accumulated force
+	Vector3 force;
 private:
 	bool _kill = false;
 };

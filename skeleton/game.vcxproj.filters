@@ -31,6 +31,11 @@
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
+    <ClCompile Include="ForceGenerator.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleForceRegistry.cpp" />
+    <ClCompile Include="GravityForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -69,6 +74,12 @@
     <ClInclude Include="ParticleSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="ForceGenerator.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceRegistry.h" />
+    <ClInclude Include="GravityForceGenerator.h" />
+    <ClInclude Include="checkML.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -82,6 +93,9 @@
     </Filter>
     <Filter Include="Systems">
       <UniqueIdentifier>{2d3a15f3-ab14-4c7d-8328-b4be06a8f803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Forces">
+      <UniqueIdentifier>{42fb4a85-ec3d-4a19-b710-2c1b8af0948b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

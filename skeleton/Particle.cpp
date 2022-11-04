@@ -20,12 +20,41 @@ void Particle::DeregisterParticle() {
 	_renderItem = nullptr;
 }
 
+void Particle::clearForce()
+{
+	force *= 0;
+}
+
+void Particle::addForce(const Vector3& f)
+{
+	force += f;
+}
+
 void Particle::integrate(double t)
 {
+	
+#pragma region Practica_2
 	_vel += _acceleration * t;
 	_vel *= powf(_damping, t);
 	_transform.p += _vel * t;
 	_lifeTime += t;
+#pragma endregion
+#pragma region Practica_3
+	////Trivial case, inifinite mass --> do nothing
+	//if (_inverse_mass <= 0.0f)
+	//	return;
+	//_transform.p = _vel * t;
+	//Vector3 totalAcceleration = _acceleration;
+	//totalAcceleration += force * _inverse_mass;
+
+	////update linear velocity
+	//v += totalAcceleration * t;
+
+	////impose drag (damping)
+	//v *= powf(_damping, t);
+
+	//clearForce();
+#pragma endregion
 
 	if (_maxLifetime > 0 && _lifeTime > _maxLifetime || _transform.p.y < _limitY)
 		_kill = true;

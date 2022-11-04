@@ -56,9 +56,9 @@ void FireworksSystem::checkParticles()
 				nExplosions += 1;
 			}
 
+			delete (*it);
 			//eliminará la particula en cualquier caso
 			it = _particlePool.erase(it);
-			delete(f);
 			f = nullptr;
 		}
 		else //si no ha muerto comprueba la siguiente

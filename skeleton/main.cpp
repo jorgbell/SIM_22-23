@@ -2,6 +2,7 @@
 #include <PxPhysicsAPI.h>
 #include <vector>
 #include <queue>
+//#include "checkML.h"
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
@@ -48,6 +49,7 @@ Transform boxt = { 200, 100, 0 };
 
 #pragma region Practica_2
 //ejercicio 1
+Particle* base;
 ParticleSystem* sys;
 GaussianParticleGenerator* FuenteGaussiana;
 UniformParticleGenerator* FuenteUniforme;
@@ -93,7 +95,7 @@ void initPhysics(bool interactive)
 	sys = new ParticleSystem();
 	Vector3 deviationPos = Vector3(5, 0.01, 5);
 	Vector3 deviationVel = Vector3(3, 8, 3);
-	Particle* base = new Particle();
+	base = new Particle();
 	FuenteGaussiana = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
 	FuenteUniforme = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
 	
@@ -154,6 +156,8 @@ void cleanupPhysics(bool interactive)
 	delete FuenteGaussiana;
 	delete FuenteUniforme;
 	delete fSys;
+	delete base;
+	delete ground;
 #pragma endregion
 
 
@@ -239,6 +243,8 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 int main(int, const char* const*)
 {
 #ifndef OFFLINE_EXECUTION 
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // Check Memory Leaks
+	//_CrtSetBreakAlloc(16999);
 	extern void renderLoop();
 	renderLoop();
 #else
