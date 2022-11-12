@@ -22,6 +22,12 @@ void FireworksSystem::startFire(Vector3 initPos, Vector3 initVel, FireworksType 
 
 FireworksSystem::~FireworksSystem()
 {
+	auto lfg = _fireworksGen->getForceGenerators();
+	while (!lfg.empty()) {
+		auto fg = lfg.back();
+		lfg.pop_back();
+		delete fg;
+	}
 	delete _fireworksGen;
 }
 
@@ -31,6 +37,7 @@ void FireworksSystem::update(double t)
 	//idealmente, este sistema de particulas no tendrá otros sistemas asociados
 	//por lo tanto, en el update de ParticleSystem no se generarán nuevas particulas por no tener esos sistemas
 	//no obstante, cabe la posibilidad de que se pueda
+	_particleForceRegistry.updateForces(t);
 	for (auto p : _particlePool)
 		p->integrate(t);
 }
@@ -56,18 +63,25 @@ void FireworksSystem::checkParticles()
 				nExplosions += 1;
 			}
 
+			_particleForceRegistry.deleteParticleRegistry(*it);
 			delete (*it);
-			//eliminará la particula en cualquier caso
 			it = _particlePool.erase(it);
+			//eliminará la particula en cualquier caso
 			f = nullptr;
 		}
 		else //si no ha muerto comprueba la siguiente
 			it++;
 	}
 
+	auto lfg = _fireworksGen->getForceGenerators();
 	//añadira todas las nuevas particulas
 	for (Particle* p : explosions) {
 		_particlePool.push_back(p);
+		//añade las particulas al registro de fuerzas.
+		//cada generador de particulas tiene generadores de fuerzas asociados, y añadira todas sus particulas generadas junto con esos generadores de particulas
+		for (auto fg : lfg) {
+			_particleForceRegistry.addRegistry(fg, p);
+		}
 	}
 }
 

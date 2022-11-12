@@ -58,6 +58,10 @@ UniformParticleGenerator* FuenteUniforme;
 FireworksSystem* fSys;
 #pragma endregion
 
+#pragma region Practica_3
+GravityForceGenerator* earthGravity;
+GravityForceGenerator* moonGravity;
+#pragma endregion
 
 
 // Initialize physics engine
@@ -97,17 +101,18 @@ void initPhysics(bool interactive)
 	Vector3 deviationPos = Vector3(5, 0.01, 5);
 	Vector3 deviationVel = Vector3(3, 8, 3);
 	base = new Particle();
-	FuenteGaussiana = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
-	FuenteUniforme = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(0, 30, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
-	
+	FuenteGaussiana = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(0, 10, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
+	FuenteUniforme = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(0, 15, 0), 10, base, deviationPos, deviationVel, 10, 0.6);
+
 	//EJERCICIO 2
 	fSys = new FireworksSystem();
 #pragma endregion
 
 #pragma region Practica_3
-	GravityForceGenerator* gfg = new GravityForceGenerator(Vector3(0,-9.8,0)); //9.8m/s2
-	FuenteGaussiana->addForceGenerator(gfg);
-	FuenteUniforme->addForceGenerator(gfg);
+	earthGravity = new GravityForceGenerator(Vector3(0, -9.8, 0));
+	moonGravity = new GravityForceGenerator(Vector3(0, -1.62, 0));
+	FuenteGaussiana->addForceGenerator(earthGravity);
+	FuenteUniforme->addForceGenerator(moonGravity);
 #pragma endregion
 
 
@@ -165,6 +170,8 @@ void cleanupPhysics(bool interactive)
 	delete fSys;
 	delete base;
 	delete ground;
+	delete earthGravity;
+	delete moonGravity;
 #pragma endregion
 
 
@@ -231,7 +238,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	case 'F':
 #pragma region Practica_2
-		fSys->startFire(boxt.p, Vector3(0,20,0), FIREWORK_5);
+		fSys->startFire(boxt.p, Vector3(0, 20, 0), FIREWORK_5);
 #pragma endregion
 
 		break;
@@ -250,8 +257,6 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 int main(int, const char* const*)
 {
 #ifndef OFFLINE_EXECUTION 
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // Check Memory Leaks
-	//_CrtSetBreakAlloc(16999);
 	extern void renderLoop();
 	renderLoop();
 #else

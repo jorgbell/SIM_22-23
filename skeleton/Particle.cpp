@@ -35,27 +35,27 @@ void Particle::integrate(double t)
 {
 	
 #pragma region Practica_2
-	_vel += _acceleration * t;
+	/*_vel += _acceleration * t;
 	_vel *= powf(_damping, t);
 	_transform.p += _vel * t;
-	_lifeTime += t;
+	_lifeTime += t;*/
 #pragma endregion
 #pragma region Practica_3
 	//Trivial case, inifinite mass --> do nothing
-	//if (getInverseMass() <= 0.0f)
-	//	return;
-	//_transform.p = _vel * t;
-	//Vector3 totalAcceleration = _acceleration;
-	//totalAcceleration += force * getInverseMass();
+	if (getInverseMass() <= 0.0f)
+		return;
+	_transform.p += _vel * t;
+	Vector3 totalAcceleration = _acceleration;
+	totalAcceleration += force * getInverseMass();
 
-	////update linear velocity
-	//_vel += totalAcceleration * t;
+	//update linear velocity
+	_vel += totalAcceleration * t;
 
-	////impose drag (damping)
-	//_vel *= powf(_damping, t);
+	//impose drag (damping)
+	_vel *= powf(_damping, t);
 
-	//clearForce();
-	//_lifeTime += t;
+	clearForce();
+	_lifeTime += t;
 #pragma endregion
 
 	if (_maxLifetime > 0 && _lifeTime > _maxLifetime || _transform.p.y < _limitY)

@@ -19,12 +19,18 @@ public:
 
 	void deleteParticleRegistry(Particle* p) {
 		//borra una particula concreta de la lista de generadores de fuerzas, para que no se le aplique más
-		for (auto it = begin(); it != end(); it++) {
+		bool encontrado = false;
+		auto it = begin();
+
+		while (!encontrado && it != end()) {
 			if (it->second == p) {
 				auto r = (*it);
 				erase(it);
 				//delete de la fuerza? TODO
+				encontrado = true;
 			}
+			else
+				it++;
 		}
 	}
 

@@ -73,6 +73,7 @@ void ParticleSystem::checkParticles()
 		Particle* p = (*it);
 		if (p != nullptr && p->isDead()) {
 			//eliminará la particula en caso de que o haya pasado su tiempo de vida o haya salido de la zona de interes
+			_particleForceRegistry.deleteParticleRegistry(p);
 			it = _particlePool.erase(it);
 			delete(p);
 		}

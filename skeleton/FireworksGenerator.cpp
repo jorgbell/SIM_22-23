@@ -1,10 +1,12 @@
 #include "FireworksGenerator.h"
+#include "GravityForceGenerator.h"
 #include <random>
 
 
 FireworksGenerator::FireworksGenerator() : ParticleGenerator("fireworksGen", Vector3(0, 0, 0), Vector3(0, 0, 0), 0, new Particle())
 {
-	
+	GravityForceGenerator* earth = new GravityForceGenerator({ 0,-9.8,0 });
+	addForceGenerator(earth);
 }
 
 //la formula que seguiremos para crear una circunferencia con las velocidades es:
