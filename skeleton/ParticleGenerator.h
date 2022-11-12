@@ -1,5 +1,6 @@
 #pragma once
 #include "Particle.h"
+#include "ForceGenerator.h"
 #include <string>
 #include <list>
 using namespace std;
@@ -21,8 +22,29 @@ public:
 	Particle* getBaseParticle() { return _baseParticle;}
 
 	virtual list<Particle*> generateParticles() = 0;
-	string getGeneratorName() { return _name; }
+	string getParticleGeneratorName() { return _name; }
 
+	void addForceGenerator(ForceGenerator* fg) {
+		_forceGeneratorsPool.push_back(fg);
+	}
+	void eraseForceGenerator(string name) {
+		bool encontrado = false;
+		list<ForceGenerator*>::iterator it = _forceGeneratorsPool.begin();
+		ForceGenerator* fg;
+
+		while (!encontrado && it != _forceGeneratorsPool.end()) {
+			fg = (*it);
+			if (fg->_name == name)
+				encontrado = true;
+			else
+				it++;
+		}
+
+		if (encontrado)
+			_forceGeneratorsPool.erase(it);
+	}
+
+	list<ForceGenerator*> getForceGenerators() { return _forceGeneratorsPool; }
 protected:
 	string _name;
 	Vector3 _origin;
@@ -31,6 +53,7 @@ protected:
 	double _lifetime_media;
 	int _nParticles;
 	Particle* _baseParticle = nullptr;
+	list<ForceGenerator*> _forceGeneratorsPool;
 
 
 };

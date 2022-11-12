@@ -14,16 +14,16 @@
       <Filter>Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="GaussianParticleGenerator.cpp">
-      <Filter>Generators</Filter>
+      <Filter>Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="UniformParticleGenerator.cpp">
-      <Filter>Generators</Filter>
+      <Filter>Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="FireworksSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
     <ClCompile Include="FireworksGenerator.cpp">
-      <Filter>Generators</Filter>
+      <Filter>Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="Firework.cpp">
       <Filter>Projectiles</Filter>
@@ -32,7 +32,7 @@
       <Filter>Systems</Filter>
     </ClCompile>
     <ClCompile Include="GravityForceGenerator.cpp">
-      <Filter>Forces</Filter>
+      <Filter>Force Generators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,19 +52,19 @@
       <Filter>Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="ParticleGenerator.h">
-      <Filter>Generators</Filter>
+      <Filter>Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="GaussianParticleGenerator.h">
-      <Filter>Generators</Filter>
+      <Filter>Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="UniformParticleGenerator.h">
-      <Filter>Generators</Filter>
+      <Filter>Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="FireworksSystem.h">
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="FireworksGenerator.h">
-      <Filter>Generators</Filter>
+      <Filter>Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="Firework.h">
       <Filter>Projectiles</Filter>
@@ -73,14 +73,14 @@
       <Filter>Systems</Filter>
     </ClInclude>
     <ClInclude Include="ForceGenerator.h">
-      <Filter>Forces</Filter>
+      <Filter>Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="checkML.h" />
     <ClInclude Include="GravityForceGenerator.h">
-      <Filter>Forces</Filter>
+      <Filter>Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="ParticleForceRegistry.h">
-      <Filter>Forces</Filter>
+      <Filter>Force Generators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -90,13 +90,13 @@
     <Filter Include="Projectiles">
       <UniqueIdentifier>{d1d13227-f86f-4778-951a-7b1a51c67985}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Generators">
-      <UniqueIdentifier>{0f7c64cf-b24b-4e5c-b0d3-07aa990cce05}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Systems">
       <UniqueIdentifier>{2d3a15f3-ab14-4c7d-8328-b4be06a8f803}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Forces">
+    <Filter Include="Particle Generators">
+      <UniqueIdentifier>{0f7c64cf-b24b-4e5c-b0d3-07aa990cce05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Force Generators">
       <UniqueIdentifier>{42fb4a85-ec3d-4a19-b710-2c1b8af0948b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

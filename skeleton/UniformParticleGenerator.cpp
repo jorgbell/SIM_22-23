@@ -22,7 +22,7 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 			//siguiente valor de velocidad y posicion origen segun la distribucion gaussiana
 			Vector3 newPos = Vector3(_poswidth.x * dist(gen), _poswidth.y * dist(gen), _poswidth.z* dist(gen));
 			Vector3 newVel = Vector3(_velwidth.x * dist(gen), _velwidth.y * dist(gen), _velwidth.z* dist(gen));
-			p->setPos(newPos+_origin); p->setVel(newVel+_velMedia); p->setAcc(Vector3(1, -10, 1)); p->setmaxLifeTime(_lifetime_media);
+			p->setPos(newPos+_origin); p->setVel(newVel+_velMedia); p->setAcc(Vector3(1,1,1)); p->setmaxLifeTime(_lifetime_media);
 			particles.push_back(p);
 		}
 	}

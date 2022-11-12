@@ -3,6 +3,7 @@
 #include <string>
 #include "Particle.h"
 #include "ParticleGenerator.h"
+#include "ParticleForceRegistry.h"
 using namespace std;
 
 //ParticleSystem es el sistema que guarda los distintos generadores que haya y todas las particulas que haya en el sistema.
@@ -20,7 +21,7 @@ protected:
 	list<Particle*> _particlePool;
 	list<ParticleGenerator*> _generatorsPool;
 	virtual void checkParticles();
-
+	ParticleForceRegistry _particleForceRegistry;
 private:
 
 };

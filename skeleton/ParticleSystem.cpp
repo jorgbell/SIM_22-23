@@ -11,6 +11,7 @@ ParticleSystem::~ParticleSystem() {
 void ParticleSystem::update(double t)
 {
 	checkParticles();
+	_particleForceRegistry.updateForces(t);
 	for (auto p : _particlePool)
 		p->integrate(t);
 	
@@ -28,7 +29,7 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(string name)
 
 	while (!encontrado && it != _generatorsPool.end()) {
 		g = (*it);
-		if (g->getGeneratorName() == name)
+		if (g->getParticleGeneratorName() == name)
 			encontrado = true;
 		else
 			it++;
@@ -51,7 +52,7 @@ void ParticleSystem::erase(string name)
 
 	while (!encontrado && it != _generatorsPool.end()) {
 		g = (*it);
-		if (g->getGeneratorName() == name)
+		if (g->getParticleGeneratorName() == name)
 			encontrado = true;
 		else
 			it++;
@@ -82,7 +83,15 @@ void ParticleSystem::checkParticles()
 	//creacion de las nuevas particulas
 	for (auto g : _generatorsPool) {
 		auto l = g->generateParticles();
-		for (auto p : l)
+		auto lfg = g->getForceGenerators();
+		for (auto p : l) {
 			_particlePool.push_back(p);
+			//añade las particulas al registro de fuerzas.
+			//cada generador de particulas tiene generadores de fuerzas asociados, y añadira todas sus particulas generadas junto con esos generadores de particulas
+			for (auto fg : lfg) {
+				_particleForceRegistry.addRegistry(fg, p);
+			}
+		}
 	}
+	
 }

@@ -13,6 +13,7 @@
 #include "UniformParticleGenerator.h"
 #include "FireworksSystem.h"
 #include "Firework.h"
+#include "GravityForceGenerator.h"
 #include <iostream>
 
 
@@ -101,6 +102,12 @@ void initPhysics(bool interactive)
 	
 	//EJERCICIO 2
 	fSys = new FireworksSystem();
+#pragma endregion
+
+#pragma region Practica_3
+	GravityForceGenerator* gfg = new GravityForceGenerator(Vector3(0,-9.8,0)); //9.8m/s2
+	FuenteGaussiana->addForceGenerator(gfg);
+	FuenteUniforme->addForceGenerator(gfg);
 #pragma endregion
 
 
