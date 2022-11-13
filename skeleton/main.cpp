@@ -16,6 +16,7 @@
 #include "GravityForceGenerator.h"
 #include "WindForceGenerator.h"
 #include "WhirlwindForceGenerator.h"
+#include "ExplosionForceGenerator.h"
 #include <iostream>
 
 
@@ -56,6 +57,7 @@ Particle* base;
 ParticleSystem* sys;
 UniformParticleGenerator* FuenteWind;
 UniformParticleGenerator* FuenteWhirlWind;
+UniformParticleGenerator* FuenteExplosion;
 //ejercicio 2
 FireworksSystem* fSys;
 #pragma endregion
@@ -65,6 +67,8 @@ GravityForceGenerator* earthGravity;
 GravityForceGenerator* moonGravity;
 WindForceGenerator* wind;
 WhirlwindForceGenerator* whirlwind;
+ExplosionForceGenerator* explosion;
+bool exploded;
 #pragma endregion
 
 
@@ -105,8 +109,9 @@ void initPhysics(bool interactive)
 	Vector3 deviationPos = Vector3(5, 0.01, 5);
 	Vector3 deviationVel = Vector3(3, 1, 3);
 	base = new Particle();
-	FuenteWind = new UniformParticleGenerator("FuenteWind", boxt.p, Vector3(0, 20, 0), {0,1,0,1},3, base, deviationPos, deviationVel, 10, 0.6);
-	FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", boxt.p, Vector3(0, 2, 0), {1,0,0,1},3, base, deviationPos, deviationVel, 10, 0.6);
+	FuenteWind = new UniformParticleGenerator("FuenteWind", boxt.p, Vector3(0, 20, 0), { 0,1,0,1 }, 3, base, deviationPos, deviationVel, 10, 0.6);
+	FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", boxt.p, Vector3(0, 2, 0), { 1,0,0,1 }, 3, base, deviationPos, deviationVel, 10, 0.6);
+	FuenteExplosion = new UniformParticleGenerator("FuenteExplosion", boxt.p, Vector3(0, 20, 0), { 0,0,1,1 }, 1, base, deviationPos, deviationVel, 10, 0.6);
 
 	//EJERCICIO 2
 	fSys = new FireworksSystem();
@@ -115,16 +120,22 @@ void initPhysics(bool interactive)
 #pragma region Practica_3
 	earthGravity = new GravityForceGenerator(Vector3(0, -9.8, 0));
 	moonGravity = new GravityForceGenerator(Vector3(0, -1.62, 0));
-	Vector3 windRegion = { boxt.p.x, boxt.p.y+55, boxt.p.z };
-	
-	wind = new WindForceGenerator({15,10,30 }, windRegion, 40, {0,1,0,0}, 7);
-	whirlwind = new WhirlwindForceGenerator(boxt.p, 100, {1,0,0,0}, 2);
-	
+	Vector3 windRegion = { boxt.p.x, boxt.p.y + 55, boxt.p.z };
+
+	wind = new WindForceGenerator({ 15,10,30 }, windRegion, 40, { 0,1,0,0 }, 7);
+	whirlwind = new WhirlwindForceGenerator(boxt.p, 100, { 1,0,0,0 }, 2);
+
+	explosion = new ExplosionForceGenerator(windRegion, { 0,0,1,0 }, 50, 50, 200, &exploded);
+
 	FuenteWind->addForceGenerator(earthGravity);
 	FuenteWind->addForceGenerator(wind);
-	
+
 	FuenteWhirlWind->addForceGenerator(earthGravity);
 	FuenteWhirlWind->addForceGenerator(whirlwind);
+
+	FuenteExplosion->addForceGenerator(explosion);
+	//FuenteExplosion->addForceGenerator(earthGravity);
+	exploded = false;
 #pragma endregion
 
 
@@ -186,6 +197,7 @@ void cleanupPhysics(bool interactive)
 	delete moonGravity;
 	delete wind;
 	delete whirlwind;
+	delete explosion;
 #pragma endregion
 
 
@@ -209,8 +221,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch (toupper(key))
 	{
-		//case 'B': break;
-		//case ' ':	break;
 	case 'P':
 #pragma region Practica_1
 		/*
@@ -235,7 +245,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			sys->add(FuenteWind);
 		}
 #pragma endregion
-
 		break;
 	case 'O':
 #pragma region Practica_2
@@ -249,12 +258,25 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		}
 #pragma endregion
 		break;
-
 	case 'F':
 #pragma region Practica_2
 		fSys->startFire(boxt.p, Vector3(0, 20, 0), FIREWORK_5);
 #pragma endregion
-
+		break;
+	case 'I':
+#pragma region Practica_3
+		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+			if (sys->getParticleGenerator("FuenteExplosion")) {
+				sys->erase("FuenteExplosion");
+			}
+		}
+		else {
+			sys->add(FuenteExplosion);
+		}
+		break;
+#pragma endregion
+	case 'E':
+		exploded = !exploded;
 		break;
 	default:
 		break;

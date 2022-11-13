@@ -254,6 +254,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="ExplosionForceGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="FireworksGenerator.cpp" />
     <ClCompile Include="FireworksSystem.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="checkML.h" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="ExplosionForceGenerator.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="FireworksGenerator.h" />
     <ClInclude Include="FireworksSystem.h" />

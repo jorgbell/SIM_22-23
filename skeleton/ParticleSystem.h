@@ -22,6 +22,7 @@ protected:
 	list<ParticleGenerator*> _generatorsPool;
 	virtual void checkParticles();
 	ParticleForceRegistry _particleForceRegistry;
+
 private:
 
 };

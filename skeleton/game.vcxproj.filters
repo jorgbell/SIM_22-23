@@ -40,6 +40,9 @@
     <ClCompile Include="WindForceGenerator.cpp">
       <Filter>Force Generators</Filter>
     </ClCompile>
+    <ClCompile Include="ExplosionForceGenerator.cpp">
+      <Filter>Force Generators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -92,6 +95,9 @@
       <Filter>Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="WhirlwindForceGenerator.h">
+      <Filter>Force Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionForceGenerator.h">
       <Filter>Force Generators</Filter>
     </ClInclude>
   </ItemGroup>
