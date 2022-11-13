@@ -15,6 +15,7 @@
 #include "Firework.h"
 #include "GravityForceGenerator.h"
 #include "WindForceGenerator.h"
+#include "WhirlwindForceGenerator.h"
 #include <iostream>
 
 
@@ -63,6 +64,7 @@ FireworksSystem* fSys;
 GravityForceGenerator* earthGravity;
 GravityForceGenerator* moonGravity;
 WindForceGenerator* wind;
+WhirlwindForceGenerator* wind2;
 #pragma endregion
 
 
@@ -101,10 +103,10 @@ void initPhysics(bool interactive)
 	//EJERCICIO 1
 	sys = new ParticleSystem();
 	Vector3 deviationPos = Vector3(5, 0.01, 5);
-	Vector3 deviationVel = Vector3(3, 8, 3);
+	Vector3 deviationVel = Vector3(3, 1, 3);
 	base = new Particle();
-	FuenteGaussiana = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(0, 15, 0), 3, base, deviationPos, deviationVel, 10, 0.6);
-	FuenteUniforme = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(0, 20, 0), 3, base, deviationPos, deviationVel, 10, 0.6);
+	FuenteGaussiana = new GaussianParticleGenerator("FuenteGaussiana", boxt.p, Vector3(0, 3, 0), 3, base, deviationPos, deviationVel, 10, 0.6);
+	FuenteUniforme = new UniformParticleGenerator("FuenteUniforme", boxt.p, Vector3(0, 2, 0), 3, base, deviationPos, deviationVel, 10, 0.6);
 
 	//EJERCICIO 2
 	fSys = new FireworksSystem();
@@ -113,11 +115,11 @@ void initPhysics(bool interactive)
 #pragma region Practica_3
 	earthGravity = new GravityForceGenerator(Vector3(0, -9.8, 0));
 	moonGravity = new GravityForceGenerator(Vector3(0, -1.62, 0));
-	Vector3 windRegion = { boxt.p.x, boxt.p.y + 50, boxt.p.z };
-	wind = new WindForceGenerator({ 5,2,10 }, windRegion, 40, 2,2);
+	Vector3 windRegion = { boxt.p.x, boxt.p.y, boxt.p.z };
+	//wind = new WindForceGenerator({ 5,2,10 }, windRegion, 40, {0,1,0,0}, 2, 2);
+	wind2 = new WhirlwindForceGenerator({ 5,2,10 }, windRegion, 100, {1,0,0,0}, 2);
 	FuenteUniforme->addForceGenerator(earthGravity);
-	FuenteGaussiana->addForceGenerator(earthGravity);
-	FuenteUniforme->addForceGenerator(wind);
+	FuenteUniforme->addForceGenerator(wind2);
 #pragma endregion
 
 

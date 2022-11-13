@@ -23,7 +23,7 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 			Vector3 newPos = Vector3(_poswidth.x * dist(gen), _poswidth.y * dist(gen), _poswidth.z* dist(gen));
 			Vector3 newVel = Vector3(_velwidth.x * dist(gen), _velwidth.y * dist(gen), _velwidth.z* dist(gen));
 			p->setPos(newPos+_origin); p->setVel(newVel+_velMedia); p->setAcc(Vector3(0,0,0)); p->setmaxLifeTime(_lifetime_media);
-			p->setMass(5.0);
+			p->setMass(1.0);
 			particles.push_back(p);
 		}
 	}

@@ -1,10 +1,10 @@
 #include "WindForceGenerator.h"
 #include <iostream>
-WindForceGenerator::WindForceGenerator(const Vector3& windVel, const Vector3& windPos, double r, float k1, float k2) :
+WindForceGenerator::WindForceGenerator(const Vector3& windVel, const Vector3& windPos, double r, const Vector4& color, float k1, float k2) :
 	_k1(k1), _k2(k2), regionRadius(r)
 {
 	regionTransform = Transform(windPos);
-	region = new RenderItem(CreateShape(physx::PxSphereGeometry(regionRadius)), &regionTransform, { 0, 1, 0, 0 });
+	region = new RenderItem(CreateShape(physx::PxSphereGeometry(regionRadius)), &regionTransform, color);
 	setWindVel(windVel);
 }
 

@@ -4,7 +4,7 @@ class WindForceGenerator :
     public ForceGenerator
 {
 public:
-    WindForceGenerator(const Vector3& windVel, const Vector3& windPos, double windRadius, float k1, float k2 = 0);
+    WindForceGenerator(const Vector3& windVel, const Vector3& windPos, double windRadius, const Vector4& color, float k1, float k2 = 0);
     ~WindForceGenerator();
     virtual void updateForce(Particle* particle, double t);
     inline void setWindVel(Vector3 w) { _windVelocity = w; }

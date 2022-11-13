@@ -34,7 +34,12 @@
     <ClCompile Include="GravityForceGenerator.cpp">
       <Filter>Force Generators</Filter>
     </ClCompile>
-    <ClCompile Include="WindForceGenerator.cpp" />
+    <ClCompile Include="WhirlwindForceGenerator.cpp">
+      <Filter>Force Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="WindForceGenerator.cpp">
+      <Filter>Force Generators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -83,7 +88,12 @@
     <ClInclude Include="ParticleForceRegistry.h">
       <Filter>Force Generators</Filter>
     </ClInclude>
-    <ClInclude Include="WindForceGenerator.h" />
+    <ClInclude Include="WindForceGenerator.h">
+      <Filter>Force Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="WhirlwindForceGenerator.h">
+      <Filter>Force Generators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
