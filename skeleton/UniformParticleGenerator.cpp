@@ -17,7 +17,7 @@ list<Particle*> UniformParticleGenerator::generateParticles()
 		int r = rand() % 100;
 		if (_probability * 100 >= r) {
 			//genera una particula
-			_baseParticle->setColor(Vector4(1, 0.5, 0, 1));
+			_baseParticle->setColor(_color);
 			auto p = _baseParticle->clone();
 			//siguiente valor de velocidad y posicion origen segun la distribucion gaussiana
 			Vector3 newPos = Vector3(_poswidth.x * dist(gen), _poswidth.y * dist(gen), _poswidth.z* dist(gen));

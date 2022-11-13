@@ -7,8 +7,8 @@ using namespace std;
 
 class ParticleGenerator {
 public:
-	ParticleGenerator(string Name, Vector3 pos, Vector3 vel, int n, Particle* b, double lifetime = -1, double prob = 1.0) :
-		_origin(pos), _velMedia(vel), _nParticles(n), _name(Name), _probability(prob), _lifetime_media(lifetime)
+	ParticleGenerator(string Name, Vector3 pos, Vector3 vel, Vector4 color, int n, Particle* b, double lifetime = -1, double prob = 1.0) :
+		_origin(pos), _velMedia(vel), _nParticles(n), _name(Name), _probability(prob), _lifetime_media(lifetime), _color(color)
 	{
 		setBaseParticle(b);
 	}
@@ -54,6 +54,7 @@ protected:
 	int _nParticles;
 	Particle* _baseParticle = nullptr;
 	list<ForceGenerator*> _forceGeneratorsPool;
+	Vector4 _color;
 
 
 };

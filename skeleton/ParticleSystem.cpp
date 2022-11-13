@@ -58,8 +58,13 @@ void ParticleSystem::erase(string name)
 			it++;
 	}
 
-	if (encontrado)
+	if (encontrado) {
+		auto lfg = (*it)->getForceGenerators();
+		for (auto fg : lfg) {
+			_particleForceRegistry.deleteParticleRegistry(fg);
+		}
 		_generatorsPool.erase(it);
+	}
 }
 
 /*
@@ -71,11 +76,11 @@ void ParticleSystem::checkParticles()
 	list<Particle*>::iterator it;
 	for (it = _particlePool.begin(); it != _particlePool.end();) {
 		Particle* p = (*it);
-		if (p != nullptr && p->isDead()) {
+		if (p->isDead()) {
 			//eliminará la particula en caso de que o haya pasado su tiempo de vida o haya salido de la zona de interes
 			_particleForceRegistry.deleteParticleRegistry(p);
+			delete(*it);
 			it = _particlePool.erase(it);
-			delete(p);
 		}
 		else
 			it++;
