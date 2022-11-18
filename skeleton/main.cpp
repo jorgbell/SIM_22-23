@@ -127,7 +127,7 @@ void initPhysics(bool interactive)
 	wind = new WindForceGenerator({ 2,2,10 }, windRegion, 40, { 0,1,0,0 }, 1,0.01);
 	whirlwind = new WhirlwindForceGenerator(whirlwindRegion, 100, { 1,0,0,0 }, 0.6);
 
-	explosion = new ExplosionForceGenerator(windRegion, { 0,0,1,0 }, 50, 50, 2, &exploded);
+	explosion = new ExplosionForceGenerator(windRegion, { 0,0,1,0 }, 100, 50, 2, &exploded);
 
 	FuenteWind->addForceGenerator(smokeGravity);
 	FuenteWind->addForceGenerator(wind);
@@ -170,6 +170,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	if (exploded)
+		exploded = false;
 }
 
 // Function to clean data
