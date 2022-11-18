@@ -65,6 +65,7 @@ FireworksSystem* fSys;
 #pragma region Practica_3
 GravityForceGenerator* earthGravity;
 GravityForceGenerator* moonGravity;
+GravityForceGenerator* smokeGravity;
 WindForceGenerator* wind;
 WhirlwindForceGenerator* whirlwind;
 ExplosionForceGenerator* explosion;
@@ -106,12 +107,11 @@ void initPhysics(bool interactive)
 #pragma region Practica_2
 	//EJERCICIO 1
 	sys = new ParticleSystem();
-	Vector3 deviationPos = Vector3(5, 0.01, 5);
-	Vector3 deviationVel = Vector3(3, 1, 3);
+
 	base = new Particle();
-	FuenteWind = new UniformParticleGenerator("FuenteWind", boxt.p, Vector3(0, 20, 0), { 0,1,0,1 }, 3, base, deviationPos, deviationVel, 10, 0.6);
-	FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", boxt.p, Vector3(0, 2, 0), { 1,0,0,1 }, 3, base, deviationPos, deviationVel, 10, 0.6);
-	FuenteExplosion = new UniformParticleGenerator("FuenteExplosion", boxt.p, Vector3(0, 20, 0), { 0,0,1,1 }, 1, base, deviationPos, deviationVel, 10, 0.6);
+	FuenteWind = new UniformParticleGenerator("FuenteWind", boxt.p, Vector3(0, 10, 0), { 0,1,0,1 }, 3, base, { 30,0.1,30 }, {3,0.1,3},0.6, 30);
+	FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", boxt.p, Vector3(0, 2, 0), { 1,0,0,1 }, 3, base, { 50,10,50 }, { 3,3,3 }, 2,10);
+	FuenteExplosion = new UniformParticleGenerator("FuenteExplosion", boxt.p, Vector3(0, 20, 0), { 0,0,1,1 }, 1, base, { 30,0.1,30 }, { 3,0.1,3 }, 0.6,10);
 
 	//EJERCICIO 2
 	fSys = new FireworksSystem();
@@ -120,21 +120,23 @@ void initPhysics(bool interactive)
 #pragma region Practica_3
 	earthGravity = new GravityForceGenerator(Vector3(0, -9.8, 0));
 	moonGravity = new GravityForceGenerator(Vector3(0, -1.62, 0));
-	Vector3 windRegion = { boxt.p.x, boxt.p.y + 55, boxt.p.z };
+	smokeGravity = new GravityForceGenerator(Vector3(0, -0.50, 0));
+	Vector3 windRegion = { boxt.p.x, boxt.p.y + 45, boxt.p.z };
+	Vector3 whirlwindRegion = { boxt.p.x+20, boxt.p.y, boxt.p.z-10 };
 
-	wind = new WindForceGenerator({ 15,10,30 }, windRegion, 40, { 0,1,0,0 }, 7);
-	whirlwind = new WhirlwindForceGenerator(boxt.p, 100, { 1,0,0,0 }, 2);
+	wind = new WindForceGenerator({ 2,2,10 }, windRegion, 40, { 0,1,0,0 }, 1,0.01);
+	whirlwind = new WhirlwindForceGenerator(whirlwindRegion, 100, { 1,0,0,0 }, 0.6);
 
-	explosion = new ExplosionForceGenerator(windRegion, { 0,0,1,0 }, 50, 50, 200, &exploded);
+	explosion = new ExplosionForceGenerator(windRegion, { 0,0,1,0 }, 50, 50, 2, &exploded);
 
-	FuenteWind->addForceGenerator(earthGravity);
+	FuenteWind->addForceGenerator(smokeGravity);
 	FuenteWind->addForceGenerator(wind);
 
 	FuenteWhirlWind->addForceGenerator(earthGravity);
 	FuenteWhirlWind->addForceGenerator(whirlwind);
 
 	FuenteExplosion->addForceGenerator(explosion);
-	//FuenteExplosion->addForceGenerator(earthGravity);
+	FuenteExplosion->addForceGenerator(moonGravity);
 	exploded = false;
 #pragma endregion
 

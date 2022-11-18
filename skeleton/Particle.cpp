@@ -58,7 +58,7 @@ void Particle::integrate(double t)
 	_lifeTime += t;
 #pragma endregion
 
-	if (_maxLifetime > 0 && _lifeTime > _maxLifetime || _transform.p.y < _limitY)
+	if ((_maxLifetime > 0 && _lifeTime > _maxLifetime) || _transform.p.y < _limitY)
 		_kill = true;
 
 }

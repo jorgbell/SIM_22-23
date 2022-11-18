@@ -29,7 +29,7 @@ list<Particle*> GaussianParticleGenerator::generateParticles()
 			Vector3 newpos = Vector3(posXDist(FuenteWind), posYDist(FuenteWind), posZDist(FuenteWind));
 			Vector3 newVel = Vector3(velXDist(FuenteWind), velYDist(FuenteWind), velZDist(FuenteWind));
 			p->setVel(newVel); p->setPos(newpos); p->setAcc(Vector3(0,0,0));p->setmaxLifeTime(_lifetime_media);
-			p->setMass(1.0);
+			p->setMass(_mass);
 			particles.push_back(p);
 		}
 	}

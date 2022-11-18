@@ -23,12 +23,10 @@ void WindForceGenerator::updateForce(Particle* particle, double t)
 	//Check that the particle has Finite mass
 	if (fabs(particle->getInverseMass()) < 1e-10 || !collides(particle->getPos()))
 		return;
-	Vector3 diff = _windVelocity - particle->getVel();
-	Vector3 absDiff = Vector3(fabs(diff.x), fabs(diff.y), fabs(diff.z));
+	Vector3 diff = _windVelocity - particle->getVel(); //(Vv - V)
 
 	Vector3 aux = _k1 * diff;  //k1*(Vv-V)
-	Vector3 aux2 = _k2 * absDiff; //k2*||Vv-v||
-	aux2.dot(diff);//K2*||Vv-v||*(Vv-v)
+	Vector3 aux2 = _k2 * diff.magnitude() * diff; //K2*||Vv-v||*(Vv-v)
 	aux += aux2;//Fv = k1*(Vv-V) + k2*||Vv-v||*(Vv-v)
 
 	particle->addForce(aux * particle->getMass());

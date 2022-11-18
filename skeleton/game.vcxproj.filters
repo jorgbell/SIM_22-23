@@ -88,9 +88,6 @@
     <ClInclude Include="GravityForceGenerator.h">
       <Filter>Force Generators</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleForceRegistry.h">
-      <Filter>Force Generators</Filter>
-    </ClInclude>
     <ClInclude Include="WindForceGenerator.h">
       <Filter>Force Generators</Filter>
     </ClInclude>
@@ -99,6 +96,9 @@
     </ClInclude>
     <ClInclude Include="ExplosionForceGenerator.h">
       <Filter>Force Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceRegistry.h">
+      <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

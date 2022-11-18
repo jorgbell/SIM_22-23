@@ -22,12 +22,9 @@ public:
 		bool encontrado = false;
 		auto it = begin();
 
-		while (!encontrado && it != end()) {
+		while (it != end()) {
 			if (it->second == p) {
-				auto r = (*it);
-				erase(it);
-				//delete de la fuerza? TODO
-				encontrado = true;
+				it = erase(it);
 			}
 			else
 				it++;
