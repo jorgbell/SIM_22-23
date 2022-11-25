@@ -43,6 +43,12 @@
     <ClCompile Include="ExplosionForceGenerator.cpp">
       <Filter>Force Generators</Filter>
     </ClCompile>
+    <ClCompile Include="SpringForceGenerator.cpp">
+      <Filter>Force Generators\Springs</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchoredSpringFG.cpp">
+      <Filter>Force Generators\Springs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -100,6 +106,12 @@
     <ClInclude Include="ParticleForceRegistry.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="SpringForceGenerator.h">
+      <Filter>Force Generators\Springs</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchoredSpringFG.h">
+      <Filter>Force Generators\Springs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -116,6 +128,9 @@
     </Filter>
     <Filter Include="Force Generators">
       <UniqueIdentifier>{42fb4a85-ec3d-4a19-b710-2c1b8af0948b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Force Generators\Springs">
+      <UniqueIdentifier>{788c5222-d0a5-4590-a343-c03622979e40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

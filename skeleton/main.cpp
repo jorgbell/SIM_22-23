@@ -17,6 +17,7 @@
 #include "WindForceGenerator.h"
 #include "WhirlwindForceGenerator.h"
 #include "ExplosionForceGenerator.h"
+#include "AnchoredSpringFG.h"
 #include <iostream>
 
 
@@ -71,6 +72,11 @@ WhirlwindForceGenerator* whirlwind;
 ExplosionForceGenerator* explosion;
 bool exploded;
 #pragma endregion
+
+#pragma region Practica_4
+AnchoredSpringFG* anchor;
+#pragma endregion
+
 
 
 // Initialize physics engine
@@ -138,6 +144,15 @@ void initPhysics(bool interactive)
 	FuenteExplosion->addForceGenerator(explosion);
 	FuenteExplosion->addForceGenerator(moonGravity);
 	exploded = false;
+#pragma endregion
+
+#pragma region Practica_4
+	anchor = new AnchoredSpringFG(1,10,{boxt.p.x, boxt.p.y+20, boxt.p.z});
+	Particle* p = new Particle({ boxt.p.x+30, boxt.p.y + 20, boxt.p.z });
+	sys->addToParticlePool(p);
+	sys->addToForceRegistry(anchor, p);
+	sys->addToForceRegistry(earthGravity, p);
+
 #pragma endregion
 
 
@@ -246,7 +261,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			}
 		}
 		else {
-			sys->add(FuenteWind);
+			sys->addParticleGenerator(FuenteWind);
 		}
 #pragma endregion
 		break;
@@ -258,7 +273,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			}
 		}
 		else {
-			sys->add(FuenteWhirlWind);
+			sys->addParticleGenerator(FuenteWhirlWind);
 		}
 #pragma endregion
 		break;
@@ -275,7 +290,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			}
 		}
 		else {
-			sys->add(FuenteExplosion);
+			sys->addParticleGenerator(FuenteExplosion);
 		}
 		break;
 #pragma endregion
