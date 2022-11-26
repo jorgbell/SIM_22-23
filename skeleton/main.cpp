@@ -114,13 +114,13 @@ void initPhysics(bool interactive)
 	//EJERCICIO 1
 	sys = new ParticleSystem();
 
-	base = new Particle();
-	FuenteWind = new UniformParticleGenerator("FuenteWind", boxt.p, Vector3(0, 10, 0), { 0,1,0,1 }, 3, base, { 30,0.1,30 }, {3,0.1,3},0.6, 30);
-	FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", boxt.p, Vector3(0, 2, 0), { 1,0,0,1 }, 3, base, { 50,10,50 }, { 3,3,3 }, 2,10);
-	FuenteExplosion = new UniformParticleGenerator("FuenteExplosion", boxt.p, Vector3(0, 20, 0), { 0,0,1,1 }, 1, base, { 30,0.1,30 }, { 3,0.1,3 }, 0.6,10);
+	//base = new Particle();
+	//FuenteWind = new UniformParticleGenerator("FuenteWind", boxt.p, Vector3(0, 10, 0), { 0,1,0,1 }, 3, base, { 30,0.1,30 }, {3,0.1,3},0.6, 30);
+	//FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", boxt.p, Vector3(0, 2, 0), { 1,0,0,1 }, 3, base, { 50,10,50 }, { 3,3,3 }, 2,10);
+	//FuenteExplosion = new UniformParticleGenerator("FuenteExplosion", boxt.p, Vector3(0, 20, 0), { 0,0,1,1 }, 1, base, { 30,0.1,30 }, { 3,0.1,3 }, 0.6,10);
 
-	//EJERCICIO 2
-	fSys = new FireworksSystem();
+	////EJERCICIO 2
+	//fSys = new FireworksSystem();
 #pragma endregion
 
 #pragma region Practica_3
@@ -130,7 +130,7 @@ void initPhysics(bool interactive)
 	Vector3 windRegion = { boxt.p.x, boxt.p.y + 45, boxt.p.z };
 	Vector3 whirlwindRegion = { boxt.p.x+20, boxt.p.y, boxt.p.z-10 };
 
-	wind = new WindForceGenerator({ 2,2,10 }, windRegion, 40, { 0,1,0,0 }, 1,0.01);
+	/*wind = new WindForceGenerator({ 2,2,10 }, windRegion, 40, { 0,1,0,0 }, 1,0.01);
 	whirlwind = new WhirlwindForceGenerator(whirlwindRegion, 100, { 1,0,0,0 }, 0.6);
 
 	explosion = new ExplosionForceGenerator(windRegion, { 0,0,1,0 }, 100, 50, 2, &exploded);
@@ -142,7 +142,7 @@ void initPhysics(bool interactive)
 	FuenteWhirlWind->addForceGenerator(whirlwind);
 
 	FuenteExplosion->addForceGenerator(explosion);
-	FuenteExplosion->addForceGenerator(moonGravity);
+	FuenteExplosion->addForceGenerator(moonGravity);*/
 	exploded = false;
 #pragma endregion
 
@@ -180,7 +180,7 @@ void stepPhysics(bool interactive, double t)
 #pragma endregion
 #pragma region Practica_2
 	sys->update(t);
-	fSys->update(t);
+	//fSys->update(t);
 #pragma endregion
 
 	gScene->simulate(t);
@@ -207,16 +207,16 @@ void cleanupPhysics(bool interactive)
 #pragma endregion
 #pragma region Practica_2
 	delete sys;
-	delete FuenteWind;
+	/*delete FuenteWind;
 	delete FuenteWhirlWind;
-	delete fSys;
+	delete fSys;*/
 	delete base;
 	delete ground;
 	delete earthGravity;
 	delete moonGravity;
-	delete wind;
+	/*delete wind;
 	delete whirlwind;
-	delete explosion;
+	delete explosion;*/
 	delete anchor;
 #pragma endregion
 
@@ -256,47 +256,47 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		*/
 #pragma endregion
 #pragma region Practica2
-		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
-			if (sys->getParticleGenerator("FuenteWind")) {
-				sys->erase("FuenteWind");
-			}
-		}
-		else {
-			sys->addParticleGenerator(FuenteWind);
-		}
+		//if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+		//	if (sys->getParticleGenerator("FuenteWind")) {
+		//		sys->erase("FuenteWind");
+		//	}
+		//}
+		//else {
+		//	sys->addParticleGenerator(FuenteWind);
+		//}
 #pragma endregion
 		break;
 	case 'O':
 #pragma region Practica_2
-		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
-			if (sys->getParticleGenerator("FuenteWhirlWind")) {
-				sys->erase("FuenteWhirlWind");
-			}
-		}
-		else {
-			sys->addParticleGenerator(FuenteWhirlWind);
-		}
+		//if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+		//	if (sys->getParticleGenerator("FuenteWhirlWind")) {
+		//		sys->erase("FuenteWhirlWind");
+		//	}
+		//}
+		//else {
+		//	sys->addParticleGenerator(FuenteWhirlWind);
+		//}
 #pragma endregion
 		break;
 	case 'F':
 #pragma region Practica_2
-		fSys->startFire(boxt.p, Vector3(0, 20, 0), FIREWORK_5);
+		//fSys->startFire(boxt.p, Vector3(0, 20, 0), FIREWORK_5);
 #pragma endregion
 		break;
 	case 'I':
 #pragma region Practica_3
-		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
-			if (sys->getParticleGenerator("FuenteExplosion")) {
-				sys->erase("FuenteExplosion");
-			}
-		}
-		else {
-			sys->addParticleGenerator(FuenteExplosion);
-		}
-		break;
+		//if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+		//	if (sys->getParticleGenerator("FuenteExplosion")) {
+		//		sys->erase("FuenteExplosion");
+		//	}
+		//}
+		//else {
+		//	sys->addParticleGenerator(FuenteExplosion);
+		//}
+		//break;
 #pragma endregion
 	case 'E':
-		exploded = !exploded;
+		//exploded = !exploded;
 		break;
 	default:
 		break;
