@@ -19,6 +19,7 @@
 #include "ExplosionForceGenerator.h"
 #include "AnchoredSpringFG.h"
 #include "BungeeFG.h"
+#include "BuoyancyFG.h"
 #include <iostream>
 
 
@@ -76,6 +77,8 @@ bool exploded;
 
 #pragma region Practica_4
 AnchoredSpringFG* anchor;
+BuoyancyFG* buoyancy;
+Particle* cube;
 bool created = false;
 bool bungeeCreated = false;
 #pragma endregion
@@ -151,12 +154,20 @@ void initPhysics(bool interactive)
 
 #pragma region Practica_4
 	//una particula unida a un objeto estatico
-	anchor = new AnchoredSpringFG(1,10,{boxt.p.x, boxt.p.y+40, boxt.p.z});
-	Particle* p = new Particle({ boxt.p.x+5, boxt.p.y + 40, boxt.p.z });
+	anchor = new AnchoredSpringFG(1,10,{boxt.p.x+15, boxt.p.y+40, boxt.p.z});
+	Particle* p = new Particle({ boxt.p.x+20, boxt.p.y + 40, boxt.p.z });
 	sys->addToParticlePool(p);
 	sys->addToForceRegistry(anchor, p);
 	sys->addToForceRegistry(earthGravity, p);
-	//dos particulas unidas la una a la otra
+	//una particula flotando
+	cube = new Particle({ boxt.p.x, boxt.p.y + 20, boxt.p.z +10});
+	cube->setMass(1.0);
+	p->setColor({ 0.5,1,0.5,1 }); p->setShape(CreateShape(physx::PxBoxGeometry(2, 2, 2)));
+
+	sys->addToParticlePool(cube);
+	buoyancy = new BuoyancyFG(40, 8, 1000, { boxt.p.x, boxt.p.y + 20, boxt.p.z +10});
+	sys->addToForceRegistry(buoyancy, cube);
+
 	
 
 
@@ -226,6 +237,7 @@ void cleanupPhysics(bool interactive)
 	delete whirlwind;
 	delete explosion;*/
 	delete anchor;
+	delete buoyancy;
 #pragma endregion
 
 
@@ -246,7 +258,7 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
-
+	double m;
 	switch (toupper(key))
 	{
 	case 'P':
@@ -303,6 +315,24 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//	sys->addParticleGenerator(FuenteWhirlWind);
 		//}
 #pragma endregion
+#pragma region Practica_4
+		//+masa
+		cube->setMass(cube->getMass() + 2);
+		std::cout << "mass = " << cube->getMass() << '\n';
+
+#pragma endregion
+		break;
+
+	case 'L':
+#pragma region Practica_4
+		//-masa
+		m = cube->getMass();
+		m -= 2;
+		if (m <= 0)
+			m = 1;
+		cube->setMass(m);
+		std::cout << "mass = " << m << '\n';
+#pragma endregion
 		break;
 	case 'F':
 #pragma region Practica_2
@@ -319,8 +349,22 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//else {
 		//	sys->addParticleGenerator(FuenteExplosion);
 		//}
-		//break;
 #pragma endregion
+#pragma region Practica_4
+		//+volumen
+		buoyancy->setVolume(buoyancy->getVolume() + 2);
+		std::cout << "volume = " << buoyancy->getVolume() << '\n';
+
+#pragma endregion
+		break;
+	case 'K':
+#pragma region Practica_4
+		//-volume
+		buoyancy->setVolume(buoyancy->getVolume() - 2);
+		if (buoyancy->getVolume() <= 0) buoyancy->setVolume(1);
+		std::cout << "volume = " << buoyancy->getVolume() << '\n';
+#pragma endregion
+		break;
 	case 'E':
 #pragma region Practica_3
 		//exploded = !exploded;
@@ -341,8 +385,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			bungeeCreated = true;
 		}
 #pragma endregion
-
-
 		break;
 	default:
 		break;
