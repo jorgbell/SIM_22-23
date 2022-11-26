@@ -37,7 +37,7 @@ public:
 		_damping = d;
 	}
 	void setMass(float m) { _mass = m; }
-	void setColor(Vector4 c) { _color = c; }
+	void setColor(Vector4 c) { _color = c; DeregisterParticle(); initRenderItem(); }
 	void setmaxLifeTime(float l) { _maxLifetime = l; }
 	void setGroundLimit(float l) { _limitY = l; }
 	void setDead(bool b) { _kill = b; }

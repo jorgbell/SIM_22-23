@@ -49,6 +49,9 @@
     <ClCompile Include="AnchoredSpringFG.cpp">
       <Filter>Force Generators\Springs</Filter>
     </ClCompile>
+    <ClCompile Include="BungeeFG.cpp">
+      <Filter>Force Generators\Springs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -110,6 +113,9 @@
       <Filter>Force Generators\Springs</Filter>
     </ClInclude>
     <ClInclude Include="AnchoredSpringFG.h">
+      <Filter>Force Generators\Springs</Filter>
+    </ClInclude>
+    <ClInclude Include="BungeeFG.h">
       <Filter>Force Generators\Springs</Filter>
     </ClInclude>
   </ItemGroup>

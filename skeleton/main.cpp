@@ -18,6 +18,7 @@
 #include "WhirlwindForceGenerator.h"
 #include "ExplosionForceGenerator.h"
 #include "AnchoredSpringFG.h"
+#include "BungeeFG.h"
 #include <iostream>
 
 
@@ -76,6 +77,7 @@ bool exploded;
 #pragma region Practica_4
 AnchoredSpringFG* anchor;
 bool created = false;
+bool bungeeCreated = false;
 #pragma endregion
 
 
@@ -320,7 +322,27 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//break;
 #pragma endregion
 	case 'E':
+#pragma region Practica_3
 		//exploded = !exploded;
+#pragma endregion
+#pragma region Practica_4
+		if (!bungeeCreated) {
+			//dos particulas unidas por un elastico. A una solo le afecta la fuerza del elastico, mientras que a la otra se le aplica tambien la del viento y gravedad.
+			Particle* p1 = new Particle({ boxt.p.x - 10, boxt.p.y + 60, boxt.p.z });
+			Particle* p2 = new Particle({ boxt.p.x - 10, boxt.p.y + 45, boxt.p.z + 10 });
+			p1->setColor({ 1,0,0,1 }); p1->setDamp(0.85);
+			p2->setColor({ 0,1,0,1 }); p1->setDamp(0.85); p2->setMass(10.0);
+			BungeeFG* f1 = new BungeeFG(1, 10, p2);
+			BungeeFG* f2 = new BungeeFG(1, 10, p1);
+			sys->addToParticlePool(p1);	sys->addToParticlePool(p2);
+			sys->addToForceRegistry(f1, p1);	sys->addToForceRegistry(f2, p2);
+			sys->addToForceRegistry(wind, p1);
+			sys->addToForceRegistry(earthGravity, p1);
+			bungeeCreated = true;
+		}
+#pragma endregion
+
+
 		break;
 	default:
 		break;
