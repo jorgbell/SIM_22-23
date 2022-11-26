@@ -75,6 +75,7 @@ bool exploded;
 
 #pragma region Practica_4
 AnchoredSpringFG* anchor;
+bool created = false;
 #pragma endregion
 
 
@@ -130,13 +131,13 @@ void initPhysics(bool interactive)
 	Vector3 windRegion = { boxt.p.x, boxt.p.y + 45, boxt.p.z };
 	Vector3 whirlwindRegion = { boxt.p.x+20, boxt.p.y, boxt.p.z-10 };
 
-	/*wind = new WindForceGenerator({ 2,2,10 }, windRegion, 40, { 0,1,0,0 }, 1,0.01);
-	whirlwind = new WhirlwindForceGenerator(whirlwindRegion, 100, { 1,0,0,0 }, 0.6);
+	wind = new WindForceGenerator({ 2,2,10 }, windRegion, 40, { 0,1,0,0 }, 1,0.01);
+	/*whirlwind = new WhirlwindForceGenerator(whirlwindRegion, 100, {1,0,0,0}, 0.6);
+	FuenteWind->addForceGenerator(smokeGravity);
+	FuenteWind->addForceGenerator(wind);
 
 	explosion = new ExplosionForceGenerator(windRegion, { 0,0,1,0 }, 100, 50, 2, &exploded);
 
-	FuenteWind->addForceGenerator(smokeGravity);
-	FuenteWind->addForceGenerator(wind);
 
 	FuenteWhirlWind->addForceGenerator(earthGravity);
 	FuenteWhirlWind->addForceGenerator(whirlwind);
@@ -147,11 +148,16 @@ void initPhysics(bool interactive)
 #pragma endregion
 
 #pragma region Practica_4
+	//una particula unida a un objeto estatico
 	anchor = new AnchoredSpringFG(1,10,{boxt.p.x, boxt.p.y+40, boxt.p.z});
 	Particle* p = new Particle({ boxt.p.x+5, boxt.p.y + 40, boxt.p.z });
 	sys->addToParticlePool(p);
 	sys->addToForceRegistry(anchor, p);
 	sys->addToForceRegistry(earthGravity, p);
+	//dos particulas unidas la una a la otra
+	
+
+
 
 #pragma endregion
 
@@ -265,6 +271,24 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//	sys->addParticleGenerator(FuenteWind);
 		//}
 #pragma endregion
+#pragma region Practica_4
+		if (!created) {
+			//dos particulas unidas por un muelle. A una le afecta la gravedad de la Tierra, a otra la de la Luna, y a ambas la fuerza del viento por igual.
+			Particle* p1 = new Particle({ boxt.p.x-10, boxt.p.y + 60, boxt.p.z });
+			Particle* p2 = new Particle({ boxt.p.x-10, boxt.p.y + 45, boxt.p.z + 10 });
+			p1->setColor({ 1,0,1,1 }); p1->setDamp(0.85);
+			p2->setColor({ 1,1,0,1 }); p1->setDamp(0.85); p2->setMass(10.0);
+			SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
+			SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1);			
+			sys->addToParticlePool(p1);	sys->addToParticlePool(p2);
+			sys->addToForceRegistry(f1, p1);	sys->addToForceRegistry(f2, p2);
+			sys->addToForceRegistry(wind, p1);	sys->addToForceRegistry(wind, p2);
+			sys->addToForceRegistry(earthGravity, p1);	sys->addToForceRegistry(moonGravity, p2);
+			created = true;
+		}
+		
+#pragma endregion
+
 		break;
 	case 'O':
 #pragma region Practica_2
