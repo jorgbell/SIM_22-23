@@ -11,7 +11,7 @@ void SpringForceGenerator::updateForce(Particle* particle, double t)
 
 	const float delta_x = length - _resting_length;
 
-	force *= delta_x * _k;
+	force *= (delta_x * _k);
 
 	particle->addForce(force * particle->getMass());
 }

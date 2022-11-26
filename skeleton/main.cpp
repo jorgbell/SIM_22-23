@@ -147,8 +147,8 @@ void initPhysics(bool interactive)
 #pragma endregion
 
 #pragma region Practica_4
-	anchor = new AnchoredSpringFG(1,10,{boxt.p.x, boxt.p.y+20, boxt.p.z});
-	Particle* p = new Particle({ boxt.p.x+30, boxt.p.y + 20, boxt.p.z });
+	anchor = new AnchoredSpringFG(1,10,{boxt.p.x, boxt.p.y+40, boxt.p.z});
+	Particle* p = new Particle({ boxt.p.x+5, boxt.p.y + 40, boxt.p.z });
 	sys->addToParticlePool(p);
 	sys->addToForceRegistry(anchor, p);
 	sys->addToForceRegistry(earthGravity, p);
@@ -217,6 +217,7 @@ void cleanupPhysics(bool interactive)
 	delete wind;
 	delete whirlwind;
 	delete explosion;
+	delete anchor;
 #pragma endregion
 
 

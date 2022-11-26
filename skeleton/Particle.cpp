@@ -1,13 +1,13 @@
 #include "Particle.h"
 #include <iostream>
-Particle::Particle(Vector3 pos, Vector3 v, Vector3 a,Vector4 c, double d, float l, float lim, float mass, Shape geometry) :
- _vel(v), _acceleration(a), _damping(d), _color(c), _maxLifetime(l), _limitY(lim), _mass(mass), _geometry (geometry)
+Particle::Particle(Vector3 pos, Vector3 v, Vector3 a,Vector4 c, double d, float l, float lim, float mass, physx::PxShape* shape) :
+ _vel(v), _acceleration(a), _damping(d), _color(c), _maxLifetime(l), _limitY(lim), _mass(mass), _shape (shape)
 {
 	setPos(pos);
-	setGeometry(_geometry);
 	initRenderItem();
 	force = Vector3(0, 0, 0);
 }
+
 
 Particle::~Particle()
 {
@@ -64,15 +64,14 @@ void Particle::integrate(double t)
 
 }
 
+void Particle::setShape(physx::PxShape* s) {
+	_shape = s;
+	DeregisterParticle();
+	initRenderItem();
+}
+
 //sólo se llamara de manera privada para evitar descontrol de memoria
 void Particle::initRenderItem()
 {
-	switch (_geometry) {
-	case BOX:
-		_renderItem = new RenderItem(CreateShape(physx::PxBoxGeometry()), &_transform, _color);
-		break;
-	case SPHERE:
-		_renderItem = new RenderItem(CreateShape(physx::PxSphereGeometry(1.0)), &_transform, _color);
-		break;
-	}
+	_renderItem = new RenderItem(_shape, &_transform, _color);
 }
