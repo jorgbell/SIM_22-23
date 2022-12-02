@@ -34,5 +34,5 @@ void BuoyancyFG::updateForce(Particle* particle, double t) {
 
 	f.y = _liquid_density * _volume * inmersed*9.8;
 
-	particle->addForce(f*particle->getMass());
+	particle->addForce(f);
 }
