@@ -17,9 +17,6 @@
 #include "WindForceGenerator.h"
 #include "WhirlwindForceGenerator.h"
 #include "ExplosionForceGenerator.h"
-#include "AnchoredSpringFG.h"
-#include "BungeeFG.h"
-#include "BuoyancyFG.h"
 #include <iostream>
 
 
@@ -75,15 +72,6 @@ ExplosionForceGenerator* explosion;
 bool exploded;
 #pragma endregion
 
-#pragma region Practica_4
-AnchoredSpringFG* anchor;
-BuoyancyFG* buoyancy;
-Particle* cube;
-bool created = false;
-bool bungeeCreated = false;
-#pragma endregion
-
-
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -120,10 +108,10 @@ void initPhysics(bool interactive)
 	//EJERCICIO 1
 	sys = new ParticleSystem();
 
-	//base = new Particle();
-	//FuenteWind = new UniformParticleGenerator("FuenteWind", boxt.p, Vector3(0, 10, 0), { 0,1,0,1 }, 3, base, { 30,0.1,30 }, {3,0.1,3},0.6, 30);
-	//FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", boxt.p, Vector3(0, 2, 0), { 1,0,0,1 }, 3, base, { 50,10,50 }, { 3,3,3 }, 2,10);
-	//FuenteExplosion = new UniformParticleGenerator("FuenteExplosion", boxt.p, Vector3(0, 20, 0), { 0,0,1,1 }, 1, base, { 30,0.1,30 }, { 3,0.1,3 }, 0.6,10);
+	base = new Particle();
+	FuenteWind = new UniformParticleGenerator("FuenteWind", boxt.p, Vector3(0, 10, 0), { 0,1,0,1 }, 3, base, { 30,0.1,30 }, {3,0.1,3},0.6, 30);
+	FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", boxt.p, Vector3(0, 2, 0), { 1,0,0,1 }, 3, base, { 50,10,50 }, { 3,3,3 }, 2,10);
+	FuenteExplosion = new UniformParticleGenerator("FuenteExplosion", boxt.p, Vector3(0, 20, 0), { 0,0,1,1 }, 1, base, { 30,0.1,30 }, { 3,0.1,3 }, 0.6,10);
 
 	////EJERCICIO 2
 	//fSys = new FireworksSystem();
@@ -134,10 +122,10 @@ void initPhysics(bool interactive)
 	moonGravity = new GravityForceGenerator(Vector3(0, -1.62, 0));
 	smokeGravity = new GravityForceGenerator(Vector3(0, -0.50, 0));
 	Vector3 windRegion = { boxt.p.x, boxt.p.y + 45, boxt.p.z };
-	Vector3 whirlwindRegion = { boxt.p.x+20, boxt.p.y, boxt.p.z-10 };
+	Vector3 whirlwindRegion = { boxt.p.x + 20, boxt.p.y, boxt.p.z - 10 };
 
-	wind = new WindForceGenerator({ 2,2,10 }, windRegion, 40, { 0,1,0,0 }, 1,0.01);
-	/*whirlwind = new WhirlwindForceGenerator(whirlwindRegion, 100, {1,0,0,0}, 0.6);
+	wind = new WindForceGenerator({ 2,2,10 }, windRegion, 40, { 0,1,0,0 }, 1, 0.01);
+	whirlwind = new WhirlwindForceGenerator(whirlwindRegion, 100, {1,0,0,0}, 0.6);
 	FuenteWind->addForceGenerator(smokeGravity);
 	FuenteWind->addForceGenerator(wind);
 
@@ -148,30 +136,8 @@ void initPhysics(bool interactive)
 	FuenteWhirlWind->addForceGenerator(whirlwind);
 
 	FuenteExplosion->addForceGenerator(explosion);
-	FuenteExplosion->addForceGenerator(moonGravity);*/
+	FuenteExplosion->addForceGenerator(moonGravity);
 	exploded = false;
-#pragma endregion
-
-#pragma region Practica_4
-	//una particula unida a un objeto estatico
-	anchor = new AnchoredSpringFG(1,10,{boxt.p.x+15, boxt.p.y+40, boxt.p.z});
-	Particle* p = new Particle({ boxt.p.x+20, boxt.p.y + 40, boxt.p.z });
-	sys->addToParticlePool(p);
-	sys->addToForceRegistry(anchor, p);
-	sys->addToForceRegistry(earthGravity, p);
-	//una particula flotando
-	cube = new Particle({ boxt.p.x, boxt.p.y + 20, boxt.p.z +10});
-	cube->setMass(1.0);
-	p->setColor({ 0.5,1,0.5,1 }); p->setShape(CreateShape(physx::PxBoxGeometry(2, 2, 2)));
-
-	sys->addToParticlePool(cube);
-	buoyancy = new BuoyancyFG(40, 8, 1000, { boxt.p.x, boxt.p.y + 20, boxt.p.z +10});
-	sys->addToForceRegistry(buoyancy, cube);
-
-	
-
-
-
 #pragma endregion
 
 
@@ -226,18 +192,16 @@ void cleanupPhysics(bool interactive)
 #pragma endregion
 #pragma region Practica_2
 	delete sys;
-	/*delete FuenteWind;
+	delete FuenteWind;
 	delete FuenteWhirlWind;
-	delete fSys;*/
+	//delete fSys;
 	delete base;
 	delete ground;
 	delete earthGravity;
 	delete moonGravity;
-	/*delete wind;
+	delete wind;
 	delete whirlwind;
-	delete explosion;*/
-	delete anchor;
-	delete buoyancy;
+	delete explosion;
 #pragma endregion
 
 
@@ -258,7 +222,7 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
-	double m;
+
 	switch (toupper(key))
 	{
 	case 'P':
@@ -276,62 +240,26 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		*/
 #pragma endregion
 #pragma region Practica2
-		//if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
-		//	if (sys->getParticleGenerator("FuenteWind")) {
-		//		sys->erase("FuenteWind");
-		//	}
-		//}
-		//else {
-		//	sys->addParticleGenerator(FuenteWind);
-		//}
-#pragma endregion
-#pragma region Practica_4
-		if (!created) {
-			//dos particulas unidas por un muelle. A una le afecta la gravedad de la Tierra, a otra la de la Luna, y a ambas la fuerza del viento por igual.
-			Particle* p1 = new Particle({ boxt.p.x-10, boxt.p.y + 60, boxt.p.z });
-			Particle* p2 = new Particle({ boxt.p.x-10, boxt.p.y + 45, boxt.p.z + 10 });
-			p1->setColor({ 1,0,1,1 }); p1->setDamp(0.85);
-			p2->setColor({ 1,1,0,1 }); p1->setDamp(0.85); p2->setMass(10.0);
-			SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
-			SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1);			
-			sys->addToParticlePool(p1);	sys->addToParticlePool(p2);
-			sys->addToForceRegistry(f1, p1);	sys->addToForceRegistry(f2, p2);
-			sys->addToForceRegistry(wind, p1);	sys->addToForceRegistry(wind, p2);
-			sys->addToForceRegistry(earthGravity, p1);	sys->addToForceRegistry(moonGravity, p2);
-			created = true;
+		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+			if (sys->getParticleGenerator("FuenteWind")) {
+				sys->erase("FuenteWind");
+			}
 		}
-		
+		else {
+			sys->add(FuenteWind);
+		}
 #pragma endregion
-
 		break;
 	case 'O':
 #pragma region Practica_2
-		//if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
-		//	if (sys->getParticleGenerator("FuenteWhirlWind")) {
-		//		sys->erase("FuenteWhirlWind");
-		//	}
-		//}
-		//else {
-		//	sys->addParticleGenerator(FuenteWhirlWind);
-		//}
-#pragma endregion
-#pragma region Practica_4
-		//+masa
-		cube->setMass(cube->getMass() + 2);
-		std::cout << "mass = " << cube->getMass() << '\n';
-
-#pragma endregion
-		break;
-
-	case 'L':
-#pragma region Practica_4
-		//-masa
-		m = cube->getMass();
-		m -= 2;
-		if (m <= 0)
-			m = 1;
-		cube->setMass(m);
-		std::cout << "mass = " << m << '\n';
+		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+			if (sys->getParticleGenerator("FuenteWhirlWind")) {
+				sys->erase("FuenteWhirlWind");
+			}
+		}
+		else {
+			sys->add(FuenteWhirlWind);
+		}
 #pragma endregion
 		break;
 	case 'F':
@@ -341,50 +269,18 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case 'I':
 #pragma region Practica_3
-		//if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
-		//	if (sys->getParticleGenerator("FuenteExplosion")) {
-		//		sys->erase("FuenteExplosion");
-		//	}
-		//}
-		//else {
-		//	sys->addParticleGenerator(FuenteExplosion);
-		//}
-#pragma endregion
-#pragma region Practica_4
-		//+volumen
-		buoyancy->setVolume(buoyancy->getVolume() + 2);
-		std::cout << "volume = " << buoyancy->getVolume() << '\n';
-
-#pragma endregion
-		break;
-	case 'K':
-#pragma region Practica_4
-		//-volume
-		buoyancy->setVolume(buoyancy->getVolume() - 2);
-		if (buoyancy->getVolume() <= 0) buoyancy->setVolume(1);
-		std::cout << "volume = " << buoyancy->getVolume() << '\n';
-#pragma endregion
-		break;
-	case 'E':
-#pragma region Practica_3
-		//exploded = !exploded;
-#pragma endregion
-#pragma region Practica_4
-		if (!bungeeCreated) {
-			//dos particulas unidas por un elastico. A una solo le afecta la fuerza del elastico, mientras que a la otra se le aplica tambien la del viento y gravedad.
-			Particle* p1 = new Particle({ boxt.p.x - 10, boxt.p.y + 60, boxt.p.z });
-			Particle* p2 = new Particle({ boxt.p.x - 10, boxt.p.y + 45, boxt.p.z + 10 });
-			p1->setColor({ 1,0,0,1 }); p1->setDamp(0.85);
-			p2->setColor({ 0,1,0,1 }); p1->setDamp(0.85); p2->setMass(10.0);
-			BungeeFG* f1 = new BungeeFG(1, 10, p2);
-			BungeeFG* f2 = new BungeeFG(1, 10, p1);
-			sys->addToParticlePool(p1);	sys->addToParticlePool(p2);
-			sys->addToForceRegistry(f1, p1);	sys->addToForceRegistry(f2, p2);
-			sys->addToForceRegistry(wind, p1);
-			sys->addToForceRegistry(earthGravity, p1);
-			bungeeCreated = true;
+		if (sys->getNumGenerators() > 0) {//si hay alguno en pantalla, no puede añadirlo. Si el que esta en pantalla es el mismo, se desactiva con este boton
+			if (sys->getParticleGenerator("FuenteExplosion")) {
+				sys->erase("FuenteExplosion");
+			}
 		}
+		else {
+			sys->add(FuenteExplosion);
+		}
+		break;
 #pragma endregion
+	case 'E':
+		exploded = !exploded;
 		break;
 	default:
 		break;

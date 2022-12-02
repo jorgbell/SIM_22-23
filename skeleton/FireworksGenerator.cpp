@@ -3,7 +3,7 @@
 #include <random>
 
 
-FireworksGenerator::FireworksGenerator() : ParticleGenerator("fireworksGen", Vector3(0, 0, 0), Vector3(0, 0, 0), Vector4(0, 0, 1, 1), 0, new Particle(), 0.5)
+FireworksGenerator::FireworksGenerator() : ParticleGenerator("fireworksGen", Vector3(0, 0, 0), Vector3(0, 0, 0), Vector4(0, 0, 1, 1), 0, new Particle())
 {
 	GravityForceGenerator* earth = new GravityForceGenerator({ 0,-9.8,0 });
 	addForceGenerator(earth);

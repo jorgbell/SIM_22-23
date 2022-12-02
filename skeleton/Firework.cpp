@@ -5,7 +5,7 @@ Firework::Firework(Vector3 initPos, Vector3 initVel, FireworksType t) : Particle
 	//valores de una particula generica
 
 	double dump = 0.999f;
-	float mass = 0.5f; float groundlim = INT_MIN;
+	float mass = 1.0f; float groundlim = INT_MIN;
 	setDamp(dump); setMass(mass); setGroundLimit(groundlim);
 }
 
