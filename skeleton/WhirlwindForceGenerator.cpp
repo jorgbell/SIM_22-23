@@ -19,6 +19,6 @@ void WhirlwindForceGenerator::updateForce(Particle* particle, double t)
 	Vector3 torbellinoForce = Vector3(x, y, z);
 	torbellinoForce *= _k1;
 
-	particle->addForce(torbellinoForce * particle->getMass());
+	particle->addForce(torbellinoForce);
 
 }

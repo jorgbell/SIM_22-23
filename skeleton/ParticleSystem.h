@@ -14,7 +14,13 @@ public:
 	~ParticleSystem();
 	virtual void update(double t);
 	ParticleGenerator* getParticleGenerator(string name);
-	virtual void add(ParticleGenerator* p) { _generatorsPool.push_back(p); }
+	virtual void addParticleGenerator(ParticleGenerator* p) { _generatorsPool.push_back(p); }
+	virtual void addToForceRegistry(ForceGenerator* fg, Particle* p) { _particleForceRegistry.addRegistry(fg, p); 
+	if (!isInPool(p)) 
+		addToParticlePool(p);
+	}
+	virtual void addToParticlePool(Particle* p) { _particlePool.push_back(p); }
+	virtual bool isInPool(Particle* p) { return (std::find(_particlePool.begin(), _particlePool.end(), p)!=_particlePool.end()); }
 	virtual void erase(string name);
 	int getNumGenerators() { return _generatorsPool.size(); }
 protected:

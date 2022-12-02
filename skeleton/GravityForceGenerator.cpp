@@ -13,6 +13,6 @@ void GravityForceGenerator::updateForce(Particle* particle, double t)
 		return;
 
 	//Apply the mass scaled gravity
-	particle->addForce(_gravity * particle->getMass());
+	particle->addForce(_gravity);
 
 }

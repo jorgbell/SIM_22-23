@@ -49,10 +49,10 @@ protected:
 	string _name;
 	Vector3 _origin;
 	Vector3 _velMedia;
+	double _mass;
 	double _probability;
 	double _lifetime_media;
 	int _nParticles;
-	double _mass;
 	Particle* _baseParticle = nullptr;
 	list<ForceGenerator*> _forceGeneratorsPool;
 	Vector4 _color;

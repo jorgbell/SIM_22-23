@@ -24,16 +24,16 @@ void ExplosionForceGenerator::updateForce(Particle* particle, double t)
 	Vector3 c = regionTransform.p;
 	Vector3 diff = p - c;
 	//𝑟=√(𝑥−𝑥𝑐)2+(𝑦−𝑦𝑐)2+(𝑧−𝑧𝑐)2
-	double r = sqrt((diff.x * diff.x + diff.y * diff.y + diff.z * diff.z));
-
+	double r = sqrt((diff.x * diff.x + diff.y * diff.y + diff.z*diff.z));
+	
 	if (r >= regionRadius)
 		return;
-
-	double kr = intensity / r * r; //𝐾/𝑟2
+	
+	double kr = intensity / r*r; //𝐾/𝑟2
 	double ett = std::exp(-t / timeConstant); //𝑒(−𝑡/𝜏)
 	Vector3 force = kr * diff * ett;
 
-	particle->addForce(force * particle->getMass());
+	particle->addForce(force);
 
 
 }
