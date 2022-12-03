@@ -1,5 +1,6 @@
 #pragma once
 #include <ctype.h>
+#include <stack>
 #include <iostream>
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
@@ -7,14 +8,15 @@ using namespace physx;
 
 class Scene {
 public:
-	Scene(PxFoundation* gFoundation, PxPvd* gPvd, std::string name);
-	void Init();
-	void Release();
-	void update(double t);
+	Scene(PxFoundation* gFoundation, PxPvd* gPvd, std::stack<Scene*> sceneManager, std::string name);
+	virtual void Init() = 0;
+	virtual void Release() = 0;
+	virtual void update(double t) = 0;
+	virtual void keyPress(unsigned char key) = 0;
+	virtual void onCollision(physx::PxActor* actor1, physx::PxActor* actor2) = 0;
+	
 	void stepPhysics(bool interactive, double t);
 	void cleanupPhysics(bool interactive);
-	void keyPress(unsigned char key);
-	void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
 
 
 	//getters
@@ -34,7 +36,7 @@ private:
 	PxPvd* gPvd = NULL;
 	std::string id = "";
 	PxMaterial* actualMaterial;
-
+	std::stack<Scene*> sceneManager;
 
 
 };

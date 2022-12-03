@@ -1,8 +1,8 @@
 #include "Scene.h"
 
 
-Scene::Scene(PxFoundation* gF, PxPvd* gP, std::string name) : 
-	gFoundation(gF), gPvd(gP), id(name)
+Scene::Scene(PxFoundation* gF, PxPvd* gP,std::stack<Scene*> sMng, std::string name) :
+	gFoundation(gF), gPvd(gP), id(name), sceneManager(sMng)
 {
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), true, gPvd);
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
@@ -15,19 +15,6 @@ Scene::Scene(PxFoundation* gF, PxPvd* gP, std::string name) :
 	gScene = gPhysics->createScene(sceneDesc);
 
 	Init();
-}
-
-void Scene::Init() {
-
-}
-
-void Scene::Release()
-{
-}
-
-void Scene::update(double t)
-{
-	;
 }
 
 void Scene::stepPhysics(bool interactive, double t)
@@ -47,17 +34,4 @@ void Scene::cleanupPhysics(bool interactive)
 	gPvd->release();
 	transport->release();
 	gFoundation->release();
-}
-
-void Scene::keyPress(unsigned char key)
-{
-	switch (toupper(key))
-	{
-	default:
-		break;
-	}
-}
-
-void Scene::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
-{
 }

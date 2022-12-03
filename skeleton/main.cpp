@@ -1,6 +1,5 @@
-#include <stack>
 #include <iostream>
-#include "Scene.h"
+#include "P5Scene.h"
 
 PxDefaultAllocator		gAllocator;
 PxDefaultErrorCallback	gErrorCallback;
@@ -19,7 +18,7 @@ void initPhysics(bool interactive)
 	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
 	gPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
 	
-	sceneStack.push(new Scene(gFoundation, gPvd, "Practica_5"));
+	sceneStack.push(new P5Scene(gFoundation, gPvd, sceneStack));
 	gPhysics = sceneStack.top()->_gPhysics();
 	gMaterial = sceneStack.top()->_gMaterial();
 }
@@ -49,7 +48,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 	sceneStack.top()->keyPress(key);
-
+	/*switch (toupper(key))
+	{
+	default:
+		break;
+	}*/
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

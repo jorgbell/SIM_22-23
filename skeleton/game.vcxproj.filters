@@ -2,149 +2,182 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Render\Camera.cpp">
-      <Filter>Render</Filter>
+      <Filter>Motor\Render</Filter>
     </ClCompile>
     <ClCompile Include="Render\Render.cpp">
-      <Filter>Render</Filter>
+      <Filter>Motor\Render</Filter>
     </ClCompile>
-    <ClCompile Include="RenderUtils.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp">
-      <Filter>Projectiles</Filter>
+      <Filter>Motor\Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="GaussianParticleGenerator.cpp">
-      <Filter>Particle Generators</Filter>
+      <Filter>Motor\Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="UniformParticleGenerator.cpp">
-      <Filter>Particle Generators</Filter>
+      <Filter>Motor\Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="FireworksSystem.cpp">
-      <Filter>Systems</Filter>
+      <Filter>Motor\Systems</Filter>
     </ClCompile>
     <ClCompile Include="FireworksGenerator.cpp">
-      <Filter>Particle Generators</Filter>
+      <Filter>Motor\Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="Firework.cpp">
-      <Filter>Projectiles</Filter>
+      <Filter>Motor\Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Systems</Filter>
+      <Filter>Motor\Systems</Filter>
     </ClCompile>
     <ClCompile Include="GravityForceGenerator.cpp">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClCompile>
     <ClCompile Include="WhirlwindForceGenerator.cpp">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClCompile>
     <ClCompile Include="WindForceGenerator.cpp">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClCompile>
     <ClCompile Include="ExplosionForceGenerator.cpp">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClCompile>
     <ClCompile Include="SpringForceGenerator.cpp">
-      <Filter>Force Generators\Springs</Filter>
+      <Filter>Motor\Force Generators\Springs</Filter>
     </ClCompile>
     <ClCompile Include="AnchoredSpringFG.cpp">
-      <Filter>Force Generators\Springs</Filter>
+      <Filter>Motor\Force Generators\Springs</Filter>
     </ClCompile>
     <ClCompile Include="BungeeFG.cpp">
-      <Filter>Force Generators\Springs</Filter>
+      <Filter>Motor\Force Generators\Springs</Filter>
     </ClCompile>
     <ClCompile Include="BuoyancyFG.cpp">
-      <Filter>Force Generators\Springs</Filter>
+      <Filter>Motor\Force Generators\Springs</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="callbacks.cpp">
+      <Filter>Motor</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderUtils.cpp">
+      <Filter>Motor</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Motor</Filter>
+    </ClCompile>
+    <ClCompile Include="P5Scene.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core.hpp" />
     <ClInclude Include="Render\Camera.h">
-      <Filter>Render</Filter>
+      <Filter>Motor\Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Render.h">
-      <Filter>Render</Filter>
+      <Filter>Motor\Render</Filter>
     </ClInclude>
-    <ClInclude Include="RenderUtils.hpp" />
-    <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Projectile_Pistol.h">
-      <Filter>Projectiles</Filter>
+      <Filter>Motor\Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
-      <Filter>Projectiles</Filter>
+      <Filter>Motor\Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="ParticleGenerator.h">
-      <Filter>Particle Generators</Filter>
+      <Filter>Motor\Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="GaussianParticleGenerator.h">
-      <Filter>Particle Generators</Filter>
+      <Filter>Motor\Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="UniformParticleGenerator.h">
-      <Filter>Particle Generators</Filter>
+      <Filter>Motor\Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="FireworksSystem.h">
-      <Filter>Systems</Filter>
+      <Filter>Motor\Systems</Filter>
     </ClInclude>
     <ClInclude Include="FireworksGenerator.h">
-      <Filter>Particle Generators</Filter>
+      <Filter>Motor\Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="Firework.h">
-      <Filter>Projectiles</Filter>
+      <Filter>Motor\Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
-      <Filter>Systems</Filter>
+      <Filter>Motor\Systems</Filter>
     </ClInclude>
     <ClInclude Include="ForceGenerator.h">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClInclude>
-    <ClInclude Include="checkML.h" />
     <ClInclude Include="GravityForceGenerator.h">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="WindForceGenerator.h">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="WhirlwindForceGenerator.h">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="ExplosionForceGenerator.h">
-      <Filter>Force Generators</Filter>
+      <Filter>Motor\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="ParticleForceRegistry.h">
-      <Filter>Systems</Filter>
+      <Filter>Motor\Systems</Filter>
     </ClInclude>
     <ClInclude Include="SpringForceGenerator.h">
-      <Filter>Force Generators\Springs</Filter>
+      <Filter>Motor\Force Generators\Springs</Filter>
     </ClInclude>
     <ClInclude Include="AnchoredSpringFG.h">
-      <Filter>Force Generators\Springs</Filter>
+      <Filter>Motor\Force Generators\Springs</Filter>
     </ClInclude>
     <ClInclude Include="BungeeFG.h">
-      <Filter>Force Generators\Springs</Filter>
+      <Filter>Motor\Force Generators\Springs</Filter>
     </ClInclude>
     <ClInclude Include="BuoyancyFG.h">
-      <Filter>Force Generators\Springs</Filter>
+      <Filter>Motor\Force Generators\Springs</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="callbacks.hpp">
+      <Filter>Motor</Filter>
+    </ClInclude>
+    <ClInclude Include="checkML.h">
+      <Filter>Motor</Filter>
+    </ClInclude>
+    <ClInclude Include="core.hpp">
+      <Filter>Motor</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderUtils.hpp">
+      <Filter>Motor</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Motor</Filter>
+    </ClInclude>
+    <ClInclude Include="P5Scene.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Render">
-      <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    <Filter Include="Motor">
+      <UniqueIdentifier>{3a691a38-b282-4429-9c43-4a04e9275b27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Projectiles">
-      <UniqueIdentifier>{d1d13227-f86f-4778-951a-7b1a51c67985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems">
-      <UniqueIdentifier>{2d3a15f3-ab14-4c7d-8328-b4be06a8f803}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Particle Generators">
-      <UniqueIdentifier>{0f7c64cf-b24b-4e5c-b0d3-07aa990cce05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Force Generators">
+    <Filter Include="Motor\Force Generators">
       <UniqueIdentifier>{42fb4a85-ec3d-4a19-b710-2c1b8af0948b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Force Generators\Springs">
+    <Filter Include="Motor\Force Generators\Springs">
       <UniqueIdentifier>{788c5222-d0a5-4590-a343-c03622979e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Particle Generators">
+      <UniqueIdentifier>{0f7c64cf-b24b-4e5c-b0d3-07aa990cce05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Projectiles">
+      <UniqueIdentifier>{d1d13227-f86f-4778-951a-7b1a51c67985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Render">
+      <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Systems">
+      <UniqueIdentifier>{2d3a15f3-ab14-4c7d-8328-b4be06a8f803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{397d3e1e-274e-47f9-b5b4-0f78edb5b7d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scenes">
+      <UniqueIdentifier>{cad981b6-d03d-471e-bd00-53baf9694d97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
