@@ -145,12 +145,10 @@ void Scene::initP5()
 void Scene::releaseP5()
 {
 	while (!statics.empty()) {
-
 		auto o = statics.back();
 		auto rs = o->_rigidStatic();
 		gScene->removeActor(*rs);
 		delete o;
-
 		statics.pop_back();
 	}
 	while (!dynamics.empty()) {
