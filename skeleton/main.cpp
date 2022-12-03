@@ -1,5 +1,5 @@
 #include <iostream>
-#include "P5Scene.h"
+#include "Scene.h"
 
 
 PxDefaultAllocator		gAllocator;
@@ -11,7 +11,7 @@ PxPvd* gPvd = NULL;
 PxDefaultCpuDispatcher* gDispatcher = NULL;
 PxScene* gScene = NULL;
 ContactReportCallback gContactReportCallback;
-std::stack<Scene*> sceneStack;
+Scene* scene;
 
 
 // Initialize physics engine
@@ -34,7 +34,7 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	//*******************************************************************************
-	sceneStack.push(new P5Scene(gPhysics, gScene, gMaterial, GetCamera(), sceneStack));
+	scene = new Scene(gPhysics, gScene, gMaterial, GetCamera());
 
 }
 
@@ -45,7 +45,7 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-	sceneStack.top()->update(t);
+	scene->update(t);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 }
@@ -55,7 +55,7 @@ void stepPhysics(bool interactive, double t)
 void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
-	sceneStack.top()->Release();
+	delete scene;
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
@@ -72,7 +72,7 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
-	sceneStack.top()->keyPress(key);
+	scene->keyPress(key);
 
 }
 

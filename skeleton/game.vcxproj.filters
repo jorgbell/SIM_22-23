@@ -59,9 +59,6 @@
       <Filter>Motor</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Motor</Filter>
-    </ClCompile>
-    <ClCompile Include="P5Scene.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -145,9 +142,6 @@
       <Filter>Motor</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Motor</Filter>
-    </ClInclude>
-    <ClInclude Include="P5Scene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
