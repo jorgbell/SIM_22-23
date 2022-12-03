@@ -4,13 +4,8 @@
 #include <iostream>
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
-#include "GravityForceGenerator.h"
-#include "WindForceGenerator.h"
-#include "WhirlwindForceGenerator.h"
-#include "ExplosionForceGenerator.h"
-#include "ParticleSystem.h"
-#include "UniformParticleGenerator.h"
-
+#include <list>
+#include "Static_Dynamic_Body.h"
 using namespace physx;
 
 enum SCENES {
@@ -20,7 +15,7 @@ enum SCENES {
 class Scene
 {
 public:
-	Scene(PxPhysics* gPhys, PxScene* gSc, PxMaterial* gMat, Camera* cam);
+	Scene(PxPhysics* gPhys, PxScene* gSc, PxMaterial* gMat, Camera* cam, SCENES initScene = SCENES::DEFAULT);
 	~Scene();
 	// Heredado vía Scene
 	void Init();
@@ -44,7 +39,7 @@ public:
 
 
 private:
-	SCENES actualScene = SCENES::DEFAULT;
+	SCENES actualScene;
 	PxPhysics* gPhysics;
 	PxScene* gScene;
 	PxMaterial* gMaterial;
@@ -55,27 +50,22 @@ private:
 			++++++++++++++++++++++++++++++++++DEFAULT SCENE++++++++++++++++++++++++++++++++++++++++++++++++
 	*/
 #pragma region DEFAULT
-	GravityForceGenerator* earthGravity;
-	GravityForceGenerator* moonGravity;
-	GravityForceGenerator* smokeGravity;
-	WindForceGenerator* wind;
-	WhirlwindForceGenerator* whirlwind;
-	ExplosionForceGenerator* explosion;
-	bool exploded;
 	//datos del plano usado como referencia
 	RenderItem* ground;
-	Transform boxt = { 200, 100, 0 };
-
-	//ejercicio 1
-	Particle* base;
-	ParticleSystem* sys;
-	UniformParticleGenerator* FuenteWind;
-	UniformParticleGenerator* FuenteWhirlWind;
-	UniformParticleGenerator* FuenteExplosion;
+	Transform boxt = { 0, 0, 0 };
 #pragma endregion
 	/*
 			++++++++++++++++++++++++++++++++++P5 SCENE++++++++++++++++++++++++++++++++++++++++++++++++
 	*/
-	
+#pragma region P5
+	std::list<DynamicRigidBody*> dynamics;
+	std::list<StaticRigidBody*> statics;
+
+	StaticRigidBody* suelo;
+	StaticRigidBody* pared;
+
+
+#pragma endregion
+
 };
 

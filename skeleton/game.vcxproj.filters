@@ -64,6 +64,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Static_Dynamic_Body.cpp">
+      <Filter>Motor\Solid/Rigid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="Scene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Static_Dynamic_Body.h">
+      <Filter>Motor\Solid/Rigid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Motor">
@@ -172,6 +178,9 @@
     </Filter>
     <Filter Include="Game\Scenes">
       <UniqueIdentifier>{cad981b6-d03d-471e-bd00-53baf9694d97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Solid/Rigid">
+      <UniqueIdentifier>{a31bfd62-cbe1-4d64-bab2-a36f8e422ecc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
