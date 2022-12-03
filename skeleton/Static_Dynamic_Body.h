@@ -31,6 +31,7 @@ class RigidBody {
 public:
 	RigidBody(SHAPE info, Vector3 p = {0,0,0}, Vector4 c = {1,1,1,1}, float mL = -1, float limY = 0);
 	~RigidBody();
+
 protected:
 	PxShape* shape;
 	RenderItem* RI;
@@ -40,6 +41,7 @@ protected:
 	Vector4 color;
 	float lifeTime, maxLifeTime, limitY;
 	bool kill = false;
+
 };
 
 class StaticRigidBody : RigidBody {
@@ -59,6 +61,8 @@ public:
 		Vector3 p = { 0,0,0 }, Vector4 c = { 1,1,1,1 }, float mL = -1, float limY = 0);
 	~DynamicRigidBody();
 	PxRigidDynamic* _rigidDynamic() { return rigidDynamic; }
+	bool isDead() { return kill; }
+	void update(double t);
 
 private:
 	PxRigidDynamic* rigidDynamic;

@@ -52,3 +52,9 @@ DynamicRigidBody::DynamicRigidBody(PxPhysics* gphysics, SHAPE shapeInfo, Vector3
 DynamicRigidBody::~DynamicRigidBody() {
 	;
 }
+
+void DynamicRigidBody::update(double t) {
+	lifeTime += t;
+	if ((maxLifeTime > 0 && lifeTime > maxLifeTime) || rigidDynamic->getGlobalPose().p.y < limitY)
+		kill = true;
+}

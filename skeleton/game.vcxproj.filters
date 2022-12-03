@@ -8,49 +8,49 @@
       <Filter>Motor\Render</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
-      <Filter>Motor\Projectiles</Filter>
+      <Filter>Motor\Particle-Based\Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="GaussianParticleGenerator.cpp">
-      <Filter>Motor\Particle Generators</Filter>
+      <Filter>Motor\Particle-Based\Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="UniformParticleGenerator.cpp">
-      <Filter>Motor\Particle Generators</Filter>
+      <Filter>Motor\Particle-Based\Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="FireworksSystem.cpp">
-      <Filter>Motor\Systems</Filter>
+      <Filter>Motor\Particle-Based\Systems</Filter>
     </ClCompile>
     <ClCompile Include="FireworksGenerator.cpp">
-      <Filter>Motor\Particle Generators</Filter>
+      <Filter>Motor\Particle-Based\Particle Generators</Filter>
     </ClCompile>
     <ClCompile Include="Firework.cpp">
-      <Filter>Motor\Projectiles</Filter>
+      <Filter>Motor\Particle-Based\Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Motor\Systems</Filter>
+      <Filter>Motor\Particle-Based\Systems</Filter>
     </ClCompile>
     <ClCompile Include="GravityForceGenerator.cpp">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClCompile>
     <ClCompile Include="WhirlwindForceGenerator.cpp">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClCompile>
     <ClCompile Include="WindForceGenerator.cpp">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClCompile>
     <ClCompile Include="ExplosionForceGenerator.cpp">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClCompile>
     <ClCompile Include="SpringForceGenerator.cpp">
-      <Filter>Motor\Force Generators\Springs</Filter>
+      <Filter>Motor\Particle-Based\Force Generators\Springs</Filter>
     </ClCompile>
     <ClCompile Include="AnchoredSpringFG.cpp">
-      <Filter>Motor\Force Generators\Springs</Filter>
+      <Filter>Motor\Particle-Based\Force Generators\Springs</Filter>
     </ClCompile>
     <ClCompile Include="BungeeFG.cpp">
-      <Filter>Motor\Force Generators\Springs</Filter>
+      <Filter>Motor\Particle-Based\Force Generators\Springs</Filter>
     </ClCompile>
     <ClCompile Include="BuoyancyFG.cpp">
-      <Filter>Motor\Force Generators\Springs</Filter>
+      <Filter>Motor\Particle-Based\Force Generators\Springs</Filter>
     </ClCompile>
     <ClCompile Include="callbacks.cpp">
       <Filter>Motor</Filter>
@@ -65,7 +65,10 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Static_Dynamic_Body.cpp">
-      <Filter>Motor\Solid/Rigid</Filter>
+      <Filter>Motor\RigidBody-Based\Solid/Rigid</Filter>
+    </ClCompile>
+    <ClCompile Include="RBSystem.cpp">
+      <Filter>Motor\RigidBody-Based\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,61 +79,61 @@
       <Filter>Motor\Render</Filter>
     </ClInclude>
     <ClInclude Include="Projectile_Pistol.h">
-      <Filter>Motor\Projectiles</Filter>
+      <Filter>Motor\Particle-Based\Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
-      <Filter>Motor\Projectiles</Filter>
+      <Filter>Motor\Particle-Based\Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="ParticleGenerator.h">
-      <Filter>Motor\Particle Generators</Filter>
+      <Filter>Motor\Particle-Based\Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="GaussianParticleGenerator.h">
-      <Filter>Motor\Particle Generators</Filter>
+      <Filter>Motor\Particle-Based\Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="UniformParticleGenerator.h">
-      <Filter>Motor\Particle Generators</Filter>
+      <Filter>Motor\Particle-Based\Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="FireworksSystem.h">
-      <Filter>Motor\Systems</Filter>
+      <Filter>Motor\Particle-Based\Systems</Filter>
     </ClInclude>
     <ClInclude Include="FireworksGenerator.h">
-      <Filter>Motor\Particle Generators</Filter>
+      <Filter>Motor\Particle-Based\Particle Generators</Filter>
     </ClInclude>
     <ClInclude Include="Firework.h">
-      <Filter>Motor\Projectiles</Filter>
+      <Filter>Motor\Particle-Based\Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
-      <Filter>Motor\Systems</Filter>
+      <Filter>Motor\Particle-Based\Systems</Filter>
     </ClInclude>
     <ClInclude Include="ForceGenerator.h">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="GravityForceGenerator.h">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="WindForceGenerator.h">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="WhirlwindForceGenerator.h">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="ExplosionForceGenerator.h">
-      <Filter>Motor\Force Generators</Filter>
+      <Filter>Motor\Particle-Based\Force Generators</Filter>
     </ClInclude>
     <ClInclude Include="ParticleForceRegistry.h">
-      <Filter>Motor\Systems</Filter>
+      <Filter>Motor\Particle-Based\Systems</Filter>
     </ClInclude>
     <ClInclude Include="SpringForceGenerator.h">
-      <Filter>Motor\Force Generators\Springs</Filter>
+      <Filter>Motor\Particle-Based\Force Generators\Springs</Filter>
     </ClInclude>
     <ClInclude Include="AnchoredSpringFG.h">
-      <Filter>Motor\Force Generators\Springs</Filter>
+      <Filter>Motor\Particle-Based\Force Generators\Springs</Filter>
     </ClInclude>
     <ClInclude Include="BungeeFG.h">
-      <Filter>Motor\Force Generators\Springs</Filter>
+      <Filter>Motor\Particle-Based\Force Generators\Springs</Filter>
     </ClInclude>
     <ClInclude Include="BuoyancyFG.h">
-      <Filter>Motor\Force Generators\Springs</Filter>
+      <Filter>Motor\Particle-Based\Force Generators\Springs</Filter>
     </ClInclude>
     <ClInclude Include="callbacks.hpp">
       <Filter>Motor</Filter>
@@ -148,30 +151,27 @@
       <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Static_Dynamic_Body.h">
-      <Filter>Motor\Solid/Rigid</Filter>
+      <Filter>Motor\RigidBody-Based\Solid/Rigid</Filter>
+    </ClInclude>
+    <ClInclude Include="RBForceRegistry.h">
+      <Filter>Motor\RigidBody-Based\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="RBForceGenerator.h">
+      <Filter>Motor\RigidBody-Based\Force Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="RBGenerator.h">
+      <Filter>Motor\RigidBody-Based\RigidBodyGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="RBSystem.h">
+      <Filter>Motor\RigidBody-Based\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Motor">
       <UniqueIdentifier>{3a691a38-b282-4429-9c43-4a04e9275b27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Motor\Force Generators">
-      <UniqueIdentifier>{42fb4a85-ec3d-4a19-b710-2c1b8af0948b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Motor\Force Generators\Springs">
-      <UniqueIdentifier>{788c5222-d0a5-4590-a343-c03622979e40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Motor\Particle Generators">
-      <UniqueIdentifier>{0f7c64cf-b24b-4e5c-b0d3-07aa990cce05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Motor\Projectiles">
-      <UniqueIdentifier>{d1d13227-f86f-4778-951a-7b1a51c67985}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Motor\Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Motor\Systems">
-      <UniqueIdentifier>{2d3a15f3-ab14-4c7d-8328-b4be06a8f803}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{397d3e1e-274e-47f9-b5b4-0f78edb5b7d9}</UniqueIdentifier>
@@ -179,8 +179,38 @@
     <Filter Include="Game\Scenes">
       <UniqueIdentifier>{cad981b6-d03d-471e-bd00-53baf9694d97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Motor\Solid/Rigid">
+    <Filter Include="Motor\Particle-Based">
+      <UniqueIdentifier>{bf689265-a294-46c8-b471-fe53af7946b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\RigidBody-Based">
+      <UniqueIdentifier>{173dc2f9-a3d9-4bf1-80ec-e1030a25c912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Particle-Based\Force Generators">
+      <UniqueIdentifier>{42fb4a85-ec3d-4a19-b710-2c1b8af0948b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Particle-Based\Force Generators\Springs">
+      <UniqueIdentifier>{788c5222-d0a5-4590-a343-c03622979e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\RigidBody-Based\Solid/Rigid">
       <UniqueIdentifier>{a31bfd62-cbe1-4d64-bab2-a36f8e422ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Particle-Based\Particle Generators">
+      <UniqueIdentifier>{0f7c64cf-b24b-4e5c-b0d3-07aa990cce05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Particle-Based\Projectiles">
+      <UniqueIdentifier>{d1d13227-f86f-4778-951a-7b1a51c67985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\Particle-Based\Systems">
+      <UniqueIdentifier>{2d3a15f3-ab14-4c7d-8328-b4be06a8f803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\RigidBody-Based\Force Generators">
+      <UniqueIdentifier>{e37e39e9-810b-42bc-b270-9a851558d7e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\RigidBody-Based\Systems">
+      <UniqueIdentifier>{60561ac5-964e-4769-84b5-e06cba72e1a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Motor\RigidBody-Based\RigidBodyGenerators">
+      <UniqueIdentifier>{f94f0f71-bdc9-4fed-b5f5-3cd89d253247}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
