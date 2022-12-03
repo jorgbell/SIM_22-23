@@ -1,13 +1,18 @@
 #include <iostream>
 #include "P5Scene.h"
 
+
 PxDefaultAllocator		gAllocator;
 PxDefaultErrorCallback	gErrorCallback;
 PxFoundation* gFoundation = NULL;
+PxPhysics* gPhysics = NULL;
+PxMaterial* gMaterial = NULL;
 PxPvd* gPvd = NULL;
+PxDefaultCpuDispatcher* gDispatcher = NULL;
+PxScene* gScene = NULL;
+ContactReportCallback gContactReportCallback;
 std::stack<Scene*> sceneStack;
-PxPhysics* gPhysics;
-PxMaterial* gMaterial;
+
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -17,10 +22,20 @@ void initPhysics(bool interactive)
 	gPvd = PxCreatePvd(*gFoundation);
 	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
 	gPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
-	
-	sceneStack.push(new P5Scene(gFoundation, gPvd, sceneStack));
-	gPhysics = sceneStack.top()->_gPhysics();
-	gMaterial = sceneStack.top()->_gMaterial();
+	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), true, gPvd);
+	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
+	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
+	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
+	gDispatcher = PxDefaultCpuDispatcherCreate(2);
+	sceneDesc.cpuDispatcher = gDispatcher;
+	sceneDesc.filterShader = contactReportFilterShader;
+	sceneDesc.simulationEventCallback = &gContactReportCallback;
+	gScene = gPhysics->createScene(sceneDesc);
+	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+
+	//*******************************************************************************
+	sceneStack.push(new P5Scene(gPhysics, gScene, gMaterial, GetCamera(), sceneStack));
+
 }
 
 
@@ -31,7 +46,8 @@ void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
 	sceneStack.top()->update(t);
-	sceneStack.top()->stepPhysics(interactive,t);
+	gScene->simulate(t);
+	gScene->fetchResults(true);
 }
 
 // Function to clean data
@@ -40,7 +56,16 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 	sceneStack.top()->Release();
-	sceneStack.top()->cleanupPhysics(interactive);
+	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
+	gScene->release();
+	gDispatcher->release();
+	// -----------------------------------------------------
+	gPhysics->release();
+	PxPvdTransport* transport = gPvd->getTransport();
+	gPvd->release();
+	transport->release();
+
+	gFoundation->release();
 }
 
 // Function called when a key is pressed
@@ -48,18 +73,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 	sceneStack.top()->keyPress(key);
-	/*switch (toupper(key))
-	{
-	default:
-		break;
-	}*/
+
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
-	sceneStack.top()->onCollision(actor1, actor2);
 
 }
 
