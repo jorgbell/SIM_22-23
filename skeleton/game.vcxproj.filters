@@ -70,6 +70,9 @@
     <ClCompile Include="RBSystem.cpp">
       <Filter>Motor\RigidBody-Based\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="RBShootGenerator.cpp">
+      <Filter>Motor\RigidBody-Based\RigidBodyGenerators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="RBSystem.h">
       <Filter>Motor\RigidBody-Based\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="RBShootGenerator.h">
+      <Filter>Motor\RigidBody-Based\RigidBodyGenerators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

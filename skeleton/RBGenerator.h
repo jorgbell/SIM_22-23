@@ -7,8 +7,8 @@ using namespace std;
 
 class RBGenerator {
 public:
-	RBGenerator(string Name, Vector3 pos, Vector3 vel, Vector4 color = {1,1,1,1}, int n = 10, int mRB = 100, double mass = 1, double lifetime = -1, double prob = 1.0) :
-		_origin(pos), _velMedia(vel), _nRigidBodies(n), _maxRigidBodies(mRB), _name(Name), _probability(prob), _lifetime_media(lifetime), _color(color), _mass(mass)
+	RBGenerator(string Name, PxPhysics* gphy, Vector3 pos, Vector3 vel, Vector4 color = {1,1,1,1}, int n = 10, int mRB = 100, double mass = 1, double lifetime = -1, double prob = 1.0) :
+		gphysics(gphy), _origin(pos), _velMedia(vel), _nRigidBodies(n), _maxRigidBodies(mRB), _name(Name), _probability(prob), _lifetime_media(lifetime), _color(color), _mass(mass)
 	{
 	}
 
@@ -39,7 +39,7 @@ public:
 protected:
 	string _name;
 	Vector3 _origin;
-	Vector3 _velMedia;
+	Vector3 _velMedia, _avelmedia;
 	double _mass;
 	double _probability;
 	double _lifetime_media;
@@ -47,6 +47,8 @@ protected:
 	int _maxRigidBodies;
 	list<RBForceGenerator*> _forceGeneratorsPool;
 	Vector4 _color;
+	PxPhysics* gphysics;
+	double _ldamp, _adamp;
 
 
 };
