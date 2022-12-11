@@ -1,7 +1,7 @@
 #include "Static_Dynamic_Body.h"
 #include <iostream>
 RigidBody::RigidBody(SHAPE info, Vector3 p, Vector4 c, float mL, float limY) :
-	pos(p), color(c),pxshapeInfo(info), maxLifeTime(mL), limitY(limY)
+	pos(p), color(c),pxshapeInfo(info), maxLifeTime(mL), limitY(limY), RI(nullptr)
 {
 	createshape(info);
 };
@@ -27,10 +27,9 @@ void RigidBody::createshape(SHAPE info) {
 	}
 }
 
-StaticRigidBody::StaticRigidBody(PxPhysics* gphysics, SHAPE shapeInfo, Vector3 p, Vector4 c, float mL, float limY) :
+StaticRigidBody::StaticRigidBody(SHAPE shapeInfo, Vector3 p, Vector4 c, float mL, float limY) :
 	RigidBody(shapeInfo, p, c, mL, limY)
 {
-	Init(gphysics);
 }
 
 StaticRigidBody::~StaticRigidBody() {
@@ -59,12 +58,11 @@ void StaticRigidBody::changeColor(Vector4 c) {
 }
 
 
-DynamicRigidBody::DynamicRigidBody(PxPhysics* gphysics, SHAPE shapeInfo, Vector3 lVel, Vector3 aVel,
-	double ldamp, double adamp, double m ,
-	Vector3 p, Vector4 c, float mL, float limY) :
+DynamicRigidBody::DynamicRigidBody(SHAPE shapeInfo, Vector3 p ,Vector4 c ,
+	Vector3 lVel , Vector3 aVel, double ldamp ,double adamp,double m,
+	float mL, float limY):
 	RigidBody(shapeInfo, p, c, mL, limY), linearVel(lVel), angularVel(aVel), linearDamping(ldamp), angularDamping(adamp), mass(m)
 {
-	Init(gphysics);
 }
 
 DynamicRigidBody::~DynamicRigidBody() {
@@ -82,8 +80,10 @@ bool DynamicRigidBody::Init(PxPhysics* gphysics) {
 	rigidDynamic->attachShape(*shape);
 
 	//PxRigidBodyExt::updateMassAndInertia(*rigidDynamic, 1);
-	rigidDynamic->setLinearVelocity(linearVel); rigidDynamic->setAngularVelocity(angularVel);
-	rigidDynamic->setLinearDamping(linearDamping); rigidDynamic->setAngularDamping(angularDamping);
+	rigidDynamic->setLinearVelocity(linearVel);
+	rigidDynamic->setAngularVelocity(angularVel);
+	rigidDynamic->setLinearDamping(linearDamping);
+	rigidDynamic->setAngularDamping(angularDamping);
 	rigidDynamic->setMass(mass);
 	rigidDynamic->setMassSpaceInertiaTensor({ 0.f,0.f,1.f });
 
@@ -103,6 +103,7 @@ void DynamicRigidBody::changeColor(Vector4 c) {
 
 
 void DynamicRigidBody::update(double t) {
+
 	lifeTime += t;
 	if ((maxLifeTime > 0 && lifeTime > maxLifeTime) || rigidDynamic->getGlobalPose().p.y < limitY)
 		kill = true;

@@ -73,6 +73,9 @@
     <ClCompile Include="RBShootGenerator.cpp">
       <Filter>Motor\RigidBody-Based\RigidBodyGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="ExplosionRBFG.cpp">
+      <Filter>Motor\RigidBody-Based\Force Generators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -170,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="RBShootGenerator.h">
       <Filter>Motor\RigidBody-Based\RigidBodyGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionRBFG.h">
+      <Filter>Motor\RigidBody-Based\Force Generators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

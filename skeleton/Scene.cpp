@@ -64,9 +64,12 @@ void Scene::keyPress(unsigned char key)
 	{
 	case '5':
 		changeScene(SCENES::P5);
+		return;
 		break;
 	case '0':
 		changeScene(SCENES::DEFAULT);
+		return;
+		break;
 	default:
 		break;
 	};
@@ -132,15 +135,26 @@ void Scene::initP5()
 {
 	//+++++++++++++++++++++++CREATE STATIC BODIES++++++++++++++++++++++++++++++++
 	SHAPE shapeInfo; shapeInfo.type = box; shapeInfo.box = { 1000,0.1,1000 };
-	suelo = new StaticRigidBody(gPhysics, { 0,0,0 }, { 0.1,0.3,0.8,1 }, shapeInfo);
+	suelo = new StaticRigidBody(shapeInfo, { 0,0,0 }, { 0.1,0.3,0.8,1 });
 	shapeInfo.box = { 40,20,5 };
-	pared = new StaticRigidBody(gPhysics, { 10,20,-30 }, { 0.8,0.3,0.1,1 }, shapeInfo);
+	pared = new StaticRigidBody(shapeInfo, { 10,20,-30 }, { 0.8,0.3,0.1,1 });
 
 	statics.push_back(suelo);
 	statics.push_back(pared);
-
+	for (auto s : statics) {
+		s->Init(gPhysics);
+	}
 	gScene->addActor(*suelo->_rigidStatic());
 	gScene->addActor(*pared->_rigidStatic());
+
+
+	//Sistema de rb
+	sys = new RBSystem(gScene);
+	RBShootGenerator* gen = new RBShootGenerator("ShootGenerator", gPhysics, GetCamera(), { 3,-2,-5 }, &shoot, { 0,0,0 }, { 0,0,20 }, { 0,0,0 }, { 0.5, 1, 0.5, 1 });
+	ExplosionRBFG* explosion = new ExplosionRBFG({ 10, -0, 10 }, { 1,0,0,0 }, 1000, 20, 2, &exploded);
+	gen->addForceGenerator(explosion);
+	sys->addParticleGenerator(gen);
+
 }
 void Scene::releaseP5()
 {
@@ -156,17 +170,25 @@ void Scene::releaseP5()
 		auto rd = o->_rigidDynamic();
 		gScene->removeActor(*rd);
 		delete o;
-		statics.pop_back();
+		dynamics.pop_back();
 	}
+	delete sys;
 }
 void Scene::updateP5(double t)
 {
-	;
+	sys->update(t);
+	shoot = false; exploded = false;
 }
 void Scene::keyP5(unsigned char key)
 {
 	switch (toupper(key))
 	{
+	case 'V':
+		shoot = true;
+		break;
+	case 'E':
+		exploded = true;
+		break;
 	default:
 		break;
 	}

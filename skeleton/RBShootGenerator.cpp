@@ -12,18 +12,27 @@ list<DynamicRigidBody*> RBShootGenerator::generateParticles() {
 		int r = rand() % 100;
 		if (_probability * 100 >= r) {
 			//genera una particula
-			DynamicRigidBody* rb = new DynamicRigidBody(gphysics);
-			//siguiente valor de velocidad y posicion origen segun la distribucion gaussiana
-			Vector3 newPos = _origin + offset_To_Origin;
-			rb->setPos(newPos); rb->setLinearVel(_velMedia); rb->setAngularVel(_avelmedia); 
-			rb->setLinearDamping(_ldamp); rb->setAngularDamping(_adamp);
-			rb->setMaxLifeTime(_lifetime_media); rb->setMass(_mass);
+			Vector3 newPos = _cam->getEye() + offset_To_Origin;
+			Vector3 dir = _cam->getDir();
+			if (!dir.isNormalized()) {
+				dir.normalize();
+			}
+			Vector3 newVel = dir * 50.0f;
+			SHAPE s; s.type = sphere;  s.sphere = { 0.4 };
 
-			SHAPE s = SHAPE(TYPESHAPE::sphere); s.sphere = { 5 };
-			rb->createshape(s);
+			DynamicRigidBody* rb = new DynamicRigidBody(
+				s,
+				newPos,
+				_color,
+				newVel,
+				_avelmedia,
+				_ldamp,
+				_adamp,
+				_mass,
+				-1.0f,
+				0.0F
+			);
 			rb->Init(gphysics);
-			rb->changeColor(_color);
-
 			rbs.push_back(rb);
 		}
 	}

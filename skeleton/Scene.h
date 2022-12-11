@@ -6,6 +6,9 @@
 #include "callbacks.hpp"
 #include <list>
 #include "Static_Dynamic_Body.h"
+#include "RBSystem.h"
+#include "RBShootGenerator.h"
+#include "ExplosionRBFG.h"
 using namespace physx;
 
 enum SCENES {
@@ -63,6 +66,9 @@ private:
 
 	StaticRigidBody* suelo;
 	StaticRigidBody* pared;
+	RBSystem* sys;
+	bool shoot = false;
+	bool exploded = false;
 
 
 #pragma endregion

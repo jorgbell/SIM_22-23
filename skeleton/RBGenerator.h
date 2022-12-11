@@ -7,8 +7,12 @@ using namespace std;
 
 class RBGenerator {
 public:
-	RBGenerator(string Name, PxPhysics* gphy, Vector3 pos, Vector3 vel, Vector4 color = {1,1,1,1}, int n = 10, int mRB = 100, double mass = 1, double lifetime = -1, double prob = 1.0) :
-		gphysics(gphy), _origin(pos), _velMedia(vel), _nRigidBodies(n), _maxRigidBodies(mRB), _name(Name), _probability(prob), _lifetime_media(lifetime), _color(color), _mass(mass)
+	RBGenerator(string Name, PxPhysics* gphy, Vector3 pos, Vector3 lvel, Vector3 avel, 
+		Vector4 color = {1,1,1,1}, int n = 10, int mRB = 100, double mass = 1, double ldamp = 0.99, double adamp = 0.05,
+		double lifetime = -1, double prob = 1.0) :
+		gphysics(gphy), _origin(pos), _velMedia(lvel), _nRigidBodies(n), _maxRigidBodies(mRB), 
+		_name(Name), _probability(prob), _lifetime_media(lifetime), _color(color), _mass(mass), _avelmedia(avel),
+		_ldamp(ldamp), _adamp(adamp)
 	{
 	}
 

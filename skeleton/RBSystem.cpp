@@ -4,6 +4,8 @@ RBSystem::~RBSystem() {
 	while (!_rbPool.empty()) {
 		auto rb = _rbPool.back();
 		_rbPool.pop_back();
+		auto rd = rb->_rigidDynamic();
+		_gScene->removeActor(*rd);
 		delete rb;
 	}
 }
@@ -91,7 +93,7 @@ void RBSystem::checkRB()
 		auto l = g->generateParticles();
 		auto lfg = g->getForceGenerators();
 		for (auto p : l) {
-			_rbPool.push_back(p);
+			addToParticlePool(p);
 			//añade las particulas al registro de fuerzas.
 			//cada generador de particulas tiene generadores de fuerzas asociados, y añadira todas sus particulas generadas junto con esos generadores de particulas
 			for (auto fg : lfg) {

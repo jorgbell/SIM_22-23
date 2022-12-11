@@ -10,7 +10,7 @@ using namespace std;
 
 class RBSystem {
 public:
-	RBSystem() {};
+	RBSystem(PxScene* gScene) { _gScene = gScene; };
 	~RBSystem();
 	virtual void update(double t);
 	RBGenerator* getParticleGenerator(string name);
@@ -20,7 +20,10 @@ public:
 		if (!isInPool(p))
 			addToParticlePool(p);
 	}
-	virtual void addToParticlePool(DynamicRigidBody* p) { _rbPool.push_back(p); }
+	virtual void addToParticlePool(DynamicRigidBody* p) {
+		_gScene->addActor(*p->_rigidDynamic());
+		_rbPool.push_back(p);
+	}
 	virtual bool isInPool(DynamicRigidBody* p) { return (std::find(_rbPool.begin(), _rbPool.end(), p) != _rbPool.end()); }
 	virtual void erase(string name);
 	int getNumGenerators() { return _generatorsPool.size(); }
@@ -29,7 +32,7 @@ protected:
 	list<RBGenerator*> _generatorsPool;
 	virtual void checkRB();
 	RBForceRegistry _rbForceRegistry;
-
+	PxScene* _gScene;
 private:
 
 };
