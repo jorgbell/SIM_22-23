@@ -81,7 +81,7 @@ private:
 class DynamicRigidBody : public RigidBody {
 public:
 	DynamicRigidBody(SHAPE shapeInfo = SHAPE(), Vector3 p = {0,0,0}, Vector4 c = {1,1,1,1},
-		Vector3 lVel = {0,0,0}, Vector3 aVel = {0,0,0}, double ldamp = 0.99, double adamp = 0.05, double mass = 5,
+		Vector3 lVel = {0,0,0}, Vector3 aVel = {0,0,0}, double ldamp = 0.99, double adamp = 0.05, double mass = 10,
 		float mL = -1, float limY = 0);
 	~DynamicRigidBody();
 	PxRigidDynamic* _rigidDynamic() { return rigidDynamic; }

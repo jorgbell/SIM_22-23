@@ -1,16 +1,10 @@
 #pragma once
-#include "RBShootGenerator.h"
 
-/*
-Clase que genera el disparo de una escopeta, formando una circunferencia de nVertices
-Si ponemos pocos vertices, generamos otras formas (ej: 3 vertices = triangulo)
-*/
-class Shotgun : 
-	public RBShootGenerator{
+#include "RadialShotGenerator.h"
+
+class Shotgun : public RadialShotGenerator {
+
 public:
-	Shotgun(physx::PxPhysics* gp, Camera* cam, bool* shoot, double radius, int nVertex);
-
+	Shotgun(physx::PxPhysics* gp, Camera* cam, bool* shoot);
 protected:
-	virtual list<DynamicRigidBody*> shoot() override;
-	double _radius;
 };

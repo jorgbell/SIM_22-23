@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Shotgun.h"
+#include "NailGun.h"
 
 Scene::Scene(PxPhysics* gPhys, PxScene* gSc, PxMaterial* gMat, Camera* cam, SCENES initScene) :
 	gPhysics(gPhys), gScene(gSc), gMaterial(gMat), actualScene(initScene)
@@ -100,8 +101,21 @@ void Scene::initDefault()
 	gScene->addActor(*suelo->_rigidStatic());
 	sys = new RBSystem(gScene);
 	
-	Shotgun* shotgun = new Shotgun(gPhysics, GetCamera(), &shoot, 2, 3);
+	//creamos las pistolas
+	Shotgun* shotgun = new Shotgun(gPhysics, GetCamera(), &shotgunBool);
 	sys->addParticleGenerator(shotgun);
+	NailGun* nailgun = new NailGun(gPhysics, GetCamera(), &nailgunBool, 80, 3, 1);
+	sys->addParticleGenerator(nailgun);
+	//crea la pelota
+	shapeInfo.type = sphere; shapeInfo.sphere = { 5 };
+	DynamicRigidBody* ball = new DynamicRigidBody(shapeInfo, { 0,5,0 }, { 0.5,0.7,0.2,1 });
+	ball->Init(gPhysics);
+	dynamics.push_back(ball);
+	gScene->addActor(*ball->_rigidDynamic());
+
+	//crea la mirilla
+	mirilla = new Particle(GetCamera()->getEye(), { 0,0,0 }, { 0,0,0 }, { 0,1,0,1 } , 0.99,-1.0f,0.0f,1000000.0F,
+		CreateShape(((physx::PxSphereGeometry)(0.01))));
 	
 }
 void Scene::releaseDefault()
@@ -125,13 +139,20 @@ void Scene::releaseDefault()
 void Scene::updateDefault(double t)
 {
 	sys->update(t);
+	Vector3 pos = GetCamera()->getEye() + GetCamera()->getDir().getNormalized() * 2;
+
+	mirilla->setPos(pos);
 }
 void Scene::keyDefault(unsigned char key)
 {
 	switch (toupper(key))
 	{
-	case 'B':
-		shoot = true;
+	case 'C':
+		shotgunBool = true;
+		break;
+	case 'X':
+		nailgunBool = true;
+		break;
 	default:
 		break;
 	}

@@ -9,6 +9,7 @@
 #include "RBSystem.h"
 #include "RBShootGenerator.h"
 #include "ExplosionRBFG.h"
+#include "Particle.h"
 using namespace physx;
 
 enum SCENES {
@@ -49,7 +50,9 @@ private:
 	std::list<DynamicRigidBody*> dynamics;
 	std::list<StaticRigidBody*> statics;
 	StaticRigidBody* suelo;	//plano usado como referencia
-	bool shoot = false; //para gestionar los disparos
+	bool shotgunBool = false; //para gestionar los disparos
+	bool nailgunBool = false; //para gestionar los disparos
+	Particle* mirilla;
 #pragma endregion
 
 

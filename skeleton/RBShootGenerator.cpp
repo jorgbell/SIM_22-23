@@ -40,19 +40,16 @@ list<DynamicRigidBody*> RBShootGenerator::shoot() {
 	list<DynamicRigidBody*> rbs;
 	//Creara un solo rb, porque cuando dispara debe salir y contar el tiempo para saber si puede seguir disparando
 	//genera una particula
-	Vector3 newPos = _cam->getEye() + offset_To_Origin;
-	Vector3 dir = _cam->getDir();
-	if (!dir.isNormalized()) {
-		dir.normalize();
-	}
-	Vector3 newVel = dir * 50.0f;
+	Vector3 newPos = GetCamera()->getEye() + GetCamera()->getDir().getNormalized() * 2;
+	Vector3 vel = 20 * GetCamera()->getDir();
+
 	SHAPE s; s.type = sphere;  s.sphere = { 0.4 };
 
 	DynamicRigidBody* rb = new DynamicRigidBody(
 		s,
 		newPos,
 		_color,
-		newVel,
+		vel,
 		_avelmedia,
 		_ldamp,
 		_adamp,

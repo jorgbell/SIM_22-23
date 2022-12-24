@@ -265,6 +265,7 @@
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NailGun.cpp" />
     <ClCompile Include="RBShootGenerator.cpp" />
     <ClCompile Include="RBSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -273,6 +274,7 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="RadialShotGenerator.cpp" />
     <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="Static_Dynamic_Body.cpp" />
@@ -295,6 +297,7 @@
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="GravityForceGenerator.h" />
+    <ClInclude Include="NailGun.h" />
     <ClInclude Include="RBForceGenerator.h" />
     <ClInclude Include="RBForceRegistry.h" />
     <ClInclude Include="RBGenerator.h" />
@@ -309,6 +312,7 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="RadialShotGenerator.h" />
     <ClInclude Include="Shotgun.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Static_Dynamic_Body.h" />
