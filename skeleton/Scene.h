@@ -12,7 +12,7 @@
 using namespace physx;
 
 enum SCENES {
-	DEFAULT, P5
+	DEFAULT
 };
 
 class Scene
@@ -33,13 +33,6 @@ public:
 	void updateDefault(double t);
 	void keyDefault(unsigned char key);
 #pragma endregion
-#pragma region P5
-	void initP5();
-	void releaseP5();
-	void updateP5(double t);
-	void keyP5(unsigned char key);
-#pragma endregion
-
 
 private:
 	SCENES actualScene;
@@ -48,30 +41,17 @@ private:
 	PxMaterial* gMaterial;
 	Camera* camera;
 
-
 	/*
 			++++++++++++++++++++++++++++++++++DEFAULT SCENE++++++++++++++++++++++++++++++++++++++++++++++++
 	*/
 #pragma region DEFAULT
-	//datos del plano usado como referencia
-	RenderItem* ground;
-	Transform boxt = { 0, 0, 0 };
-#pragma endregion
-	/*
-			++++++++++++++++++++++++++++++++++P5 SCENE++++++++++++++++++++++++++++++++++++++++++++++++
-	*/
-#pragma region P5
+	RBSystem* sys;
 	std::list<DynamicRigidBody*> dynamics;
 	std::list<StaticRigidBody*> statics;
-
-	StaticRigidBody* suelo;
-	StaticRigidBody* pared;
-	RBSystem* sys;
-	bool shoot = false;
-	bool exploded = false;
-
-
+	StaticRigidBody* suelo;	//plano usado como referencia
+	bool shoot = false; //para gestionar los disparos
 #pragma endregion
+
 
 };
 

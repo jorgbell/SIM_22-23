@@ -16,7 +16,9 @@ void RBSystem::update(double t)
 	_rbForceRegistry.updateForces(t);
 	for (auto rb : _rbPool)
 		rb->update(t);
-
+	for (auto gen : _generatorsPool) {
+		gen->update(t);
+	}
 }
 
 /*

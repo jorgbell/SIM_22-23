@@ -40,6 +40,8 @@ public:
 	}
 
 	list<RBForceGenerator*> getForceGenerators() { return _forceGeneratorsPool; }
+
+	virtual void update(double t) = 0 {};
 protected:
 	string _name;
 	Vector3 _origin;
