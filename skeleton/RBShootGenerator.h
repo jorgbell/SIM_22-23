@@ -10,12 +10,14 @@ public:
 		int n = 1, int mRB = 10, double mass = 1,double ldamp = 0.99, double adamp = 0.05,
 		double lifetime = -1, double prob = 1.0):
 	RBGenerator(Name, gphy, pos, vel, avel, color, n, mRB, mass, ldamp, adamp, lifetime, prob),
-		_cam(cam),isShooting(shoot), offset_To_Origin(offsetToOrigin), _COOLDOWN(cooldown), _TIME_BETWEEN_SHOOTS(shootTime) , _NUM_RAFAGAS(nShoots) {};
+		_cam(cam),isShooting(shoot), offset_To_Origin(offsetToOrigin), 
+		_COOLDOWN(cooldown), _TIME_BETWEEN_SHOOTS(shootTime) , _NUM_RAFAGAS(nShoots) {};
+	
 	list<DynamicRigidBody*> generateParticles();
 
 	virtual void update(double t);
+protected:
 	virtual list<DynamicRigidBody*> shoot();
-private:
 	bool* isShooting;
 	Vector3 offset_To_Origin;
 	Camera* _cam;

@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Shotgun.h"
 
 Scene::Scene(PxPhysics* gPhys, PxScene* gSc, PxMaterial* gMat, Camera* cam, SCENES initScene) :
 	gPhysics(gPhys), gScene(gSc), gMaterial(gMat), actualScene(initScene)
@@ -98,11 +99,9 @@ void Scene::initDefault()
 	}
 	gScene->addActor(*suelo->_rigidStatic());
 	sys = new RBSystem(gScene);
-	RBShootGenerator* gen = new RBShootGenerator(
-		"PlayerGun", gPhysics, GetCamera(), { 3,-2,-5 }, &shoot,
-		{ 0,0,0 }, { 0,0,20 }, { 0,0,0 }, { 0.5, 1, 0.5, 1 },
-		2, 1, 2);
-	sys->addParticleGenerator(gen);
+	
+	Shotgun* shotgun = new Shotgun(gPhysics, GetCamera(), &shoot, 2, 3);
+	sys->addParticleGenerator(shotgun);
 	
 }
 void Scene::releaseDefault()

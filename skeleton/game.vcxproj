@@ -273,6 +273,7 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="Static_Dynamic_Body.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
@@ -308,6 +309,7 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="Shotgun.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Static_Dynamic_Body.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
