@@ -10,6 +10,7 @@
 #include "RBShootGenerator.h"
 #include "ExplosionRBFG.h"
 #include "Particle.h"
+#include "ParticleSystem.h"
 using namespace physx;
 
 enum SCENES {
@@ -46,13 +47,17 @@ private:
 			++++++++++++++++++++++++++++++++++DEFAULT SCENE++++++++++++++++++++++++++++++++++++++++++++++++
 	*/
 #pragma region DEFAULT
-	RBSystem* sys;
+	RBSystem* RBsys;
+	ParticleSystem* PSys;
 	std::list<DynamicRigidBody*> dynamics;
 	std::list<StaticRigidBody*> statics;
 	StaticRigidBody* suelo;	//plano usado como referencia
 	bool shotgunBool = false; //para gestionar los disparos
 	bool nailgunBool = false; //para gestionar los disparos
 	Particle* mirilla;
+	//Posiciones para los generadores
+	Vector3 whirlPos = { 10,0,10 };	int whirlRadius = 100;
+	Vector3 windPos = { 30,45,30 }; int windRadius = 40;
 #pragma endregion
 
 

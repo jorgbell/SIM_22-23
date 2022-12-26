@@ -85,6 +85,12 @@
     <ClCompile Include="NailGun.cpp">
       <Filter>Motor\RigidBody-Based\RigidBodyGenerators</Filter>
     </ClCompile>
+    <ClCompile Include="WindRBFG.cpp">
+      <Filter>Motor\RigidBody-Based\Force Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="WhirlwindRBFG.cpp">
+      <Filter>Motor\RigidBody-Based\Force Generators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -194,6 +200,12 @@
     </ClInclude>
     <ClInclude Include="NailGun.h">
       <Filter>Motor\RigidBody-Based\RigidBodyGenerators</Filter>
+    </ClInclude>
+    <ClInclude Include="WindRBFG.h">
+      <Filter>Motor\RigidBody-Based\Force Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="WhirlwindRBFG.h">
+      <Filter>Motor\RigidBody-Based\Force Generators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

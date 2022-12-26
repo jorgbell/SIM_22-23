@@ -69,8 +69,6 @@ public:
 	virtual Vector3 getPos() { return rigidStatic->getGlobalPose().p; }
 	virtual float getInverseMass() { return 1e-10; }
 
-
-
 	virtual void setPos(Vector3 p) { RigidBody::setPos(p); }
 	virtual void setMaxLifeTime(float t) { RigidBody::setMaxLifeTime(t); }
 	virtual void setLimitY(float y) { RigidBody::setLimitY(y); }
@@ -98,7 +96,7 @@ public:
 	//+++++++++++++++++++++GETTERS++++++++++++++++++++++
 	virtual Vector3 getPos() { return rigidDynamic->getGlobalPose().p; }
 	virtual float getInverseMass() { return rigidDynamic->getInvMass(); }
-
+	virtual Vector3 getVel() { return rigidDynamic->getLinearVelocity(); }
 
 	//++++++++++++++++++++++SETTERS++++++++++++++++++
 	void setLinearDamping(double ld) { linearDamping = ld; }

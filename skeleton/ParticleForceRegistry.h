@@ -3,7 +3,7 @@
 #include <map>
 #include "ForceGenerator.h"
 
-typedef std::pair<ForceGenerator*, Particle*> FRPair;
+typedef std::pair<ForceGenerator*, Particle*> FRPair_P;
 
 class ParticleForceRegistry : public std::multimap<ForceGenerator*, Particle*> {
 public:
@@ -14,7 +14,7 @@ public:
 	}
 
 	void addRegistry(ForceGenerator* fg, Particle* p) {
-		insert(FRPair( fg, p ));
+		insert(FRPair_P( fg, p ));
 	}
 
 	void deleteParticleRegistry(Particle* p) {

@@ -4,9 +4,12 @@ RBSystem::~RBSystem() {
 	while (!_rbPool.empty()) {
 		auto rb = _rbPool.back();
 		_rbPool.pop_back();
-		auto rd = rb->_rigidDynamic();
-		_gScene->removeActor(*rd);
-		delete rb;
+		if (rb != nullptr) {
+			auto rd = rb->_rigidDynamic();
+			_gScene->removeActor(*rd);
+			delete rb;
+			rb = nullptr;
+		}
 	}
 }
 

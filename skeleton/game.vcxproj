@@ -280,7 +280,9 @@
     <ClCompile Include="Static_Dynamic_Body.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
     <ClCompile Include="WhirlwindForceGenerator.cpp" />
+    <ClCompile Include="WhirlwindRBFG.cpp" />
     <ClCompile Include="WindForceGenerator.cpp" />
+    <ClCompile Include="WindRBFG.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnchoredSpringFG.h" />
@@ -318,7 +320,9 @@
     <ClInclude Include="Static_Dynamic_Body.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
     <ClInclude Include="WhirlwindForceGenerator.h" />
+    <ClInclude Include="WhirlwindRBFG.h" />
     <ClInclude Include="WindForceGenerator.h" />
+    <ClInclude Include="WindRBFG.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
