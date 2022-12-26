@@ -34,6 +34,7 @@ public:
 	void releaseDefault();
 	void updateDefault(double t);
 	void keyDefault(unsigned char key);
+	bool blasted();
 #pragma endregion
 
 private:
@@ -52,12 +53,17 @@ private:
 	std::list<DynamicRigidBody*> dynamics;
 	std::list<StaticRigidBody*> statics;
 	StaticRigidBody* suelo;	//plano usado como referencia
+	DynamicRigidBody* ball; //pelota de juego
+	bool win = false;
 	bool shotgunBool = false; //para gestionar los disparos
 	bool nailgunBool = false; //para gestionar los disparos
 	Particle* mirilla;
 	//Posiciones para los generadores
 	Vector3 whirlPos = { 10,0,10 };	int whirlRadius = 100;
 	Vector3 windPos = { 30,45,30 }; int windRadius = 40;
+	Transform blastZone = { 200,10,-150 }; int blastRadius = 20; RenderItem* blast;
+
+
 #pragma endregion
 
 

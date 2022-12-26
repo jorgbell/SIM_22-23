@@ -115,7 +115,7 @@ void Scene::initDefault()
 	RBsys->addParticleGenerator(nailgun);
 	//crea la pelota
 	shapeInfo.type = sphere; shapeInfo.sphere = { 5 };
-	DynamicRigidBody* ball = new DynamicRigidBody(shapeInfo, { 0,5,0 }, { 0.5,0.7,0.2,1 });
+	ball = new DynamicRigidBody(shapeInfo, { 0,5,0 }, { 0.5,0.7,0.2,1 });
 	ball->Init(gPhysics);
 	gScene->addActor(*ball->_rigidDynamic());
 	RBsys->addToParticlePool(ball);
@@ -125,6 +125,11 @@ void Scene::initDefault()
 	WindRBFG* wind = new WindRBFG({ 0,30,0 }, windPos, windRadius, { 0,1,0,0 }, 10, 2);
 	RBsys->addToForceRegistry(wind, ball);
 	
+	blast = new RenderItem(CreateShape(physx::PxBoxGeometry(30, 30, 30)), &blastZone, Vector4(0.5, 0.5, 0.5, 0.1));
+	RegisterRenderItem(blast);
+
+
+
 
 
 	/*PARTICLES*/
@@ -172,8 +177,13 @@ void Scene::updateDefault(double t)
 	RBsys->update(t);
 	PSys->update(t);
 	Vector3 pos = GetCamera()->getEye() + GetCamera()->getDir().getNormalized() * 2;
-
 	mirilla->setPos(pos);
+
+	//comprobaciones
+	if (blasted()) {
+		win = true;
+		std::cout << "GOL\n";
+	}
 }
 void Scene::keyDefault(unsigned char key)
 {
@@ -188,5 +198,10 @@ void Scene::keyDefault(unsigned char key)
 	default:
 		break;
 	}
+}
+
+
+bool Scene::blasted() {
+	return (blastZone.p - ball->getPos()).magnitude() < blastRadius;
 }
 #pragma endregion
