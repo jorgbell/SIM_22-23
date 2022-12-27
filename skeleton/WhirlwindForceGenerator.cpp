@@ -1,7 +1,7 @@
 #include "WhirlwindForceGenerator.h"
 
-WhirlwindForceGenerator::WhirlwindForceGenerator(const Vector3& windPos, double windRadius, const Vector4& color, float k1, float k2) :
-	WindForceGenerator({0,0,0}, windPos, windRadius, color, k1, k2)
+WhirlwindForceGenerator::WhirlwindForceGenerator(bool render, const Vector3& windPos, double windRadius, const Vector4& color, float k1, float k2) :
+	WindForceGenerator(render, {0,0,0}, windPos, windRadius, color, k1, k2)
 {
 
 }

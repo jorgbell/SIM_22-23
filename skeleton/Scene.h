@@ -90,15 +90,14 @@ private:
 	bool nailgunBool = false; //para gestionar los disparos
 	bool win = false;
 	Particle* mirilla;
+	Transform blastZone; int blastRadius; RenderItem* blast;
 #pragma endregion
 	/*
 		++++++++++++++++++++++++++++++++++LEVEL 1++++++++++++++++++++++++++++++++++++++++++++++++
 */
 #pragma region LEVEL1
 //Posiciones para los generadores
-	Vector3 whirlPos = { 10,0,10 };	int whirlRadius = 100;
-	Vector3 windPos = { 30,45,30 }; int windRadius = 40;
-	Transform blastZone = { 200,10,-150 }; int blastRadius = 20; RenderItem* blast;
+
 
 #pragma endregion
 /*

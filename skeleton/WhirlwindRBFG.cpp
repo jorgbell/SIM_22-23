@@ -1,7 +1,7 @@
 #include "WhirlwindRBFG.h"
 
-WhirlwindRBFG::WhirlwindRBFG(const Vector3& windPos, double windRadius, const Vector4& color, float k1, float k2) :
-	WindRBFG({ 0,0,0 }, windPos, windRadius, color, k1, k2)
+WhirlwindRBFG::WhirlwindRBFG(bool render, const Vector3& windPos, double windRadius, const Vector4& color, float k1, float k2) :
+	WindRBFG(render, { 0,0,0 }, windPos, windRadius, color, k1, k2)
 {
 
 }

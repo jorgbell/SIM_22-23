@@ -1,15 +1,15 @@
 #include "WindRBFG.h"
 #include <iostream>
-WindRBFG::WindRBFG(const Vector3& windVel, const Vector3& windPos, double r, const Vector4& color, float k1, float k2) :
+WindRBFG::WindRBFG(bool render, const Vector3& windVel, const Vector3& windPos, double r, const Vector4& color, float k1, float k2) :
 	_k1(k1), _k2(k2), regionRadius(r)
 {
 	regionTransform = Transform(windPos);
-	region = new RenderItem(CreateShape(physx::PxSphereGeometry(regionRadius)), &regionTransform, color);
+	if(render) region = new RenderItem(CreateShape(physx::PxSphereGeometry(regionRadius)), &regionTransform, color);
 	setWindVel(windVel);
 }
 
 WindRBFG::~WindRBFG() {
-	region->release();
+	if (region != nullptr)region->release();
 }
 
 void WindRBFG::updateForce(DynamicRigidBody* rb, double t)
