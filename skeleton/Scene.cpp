@@ -164,6 +164,10 @@ void Scene::changeScene(SCENES newScene)
 void Scene::initDefault()
 {
 	RBsys = new RBSystem(gScene); 	PSys = new ParticleSystem();
+	baseParticle = new Particle();
+	//creamos los generadores de fuerzas
+	smokeGravity = new GravityForceGenerator({ 0,-0.50,0 });
+	earthGravity = new GravityForceGenerator({ 0,-9.8,0 });
 	/*+++++++++++++++++++++RIGIDBODY++++++++++++++++++++++++++++*/
 	//RB ESTATICOS
 	SHAPE shapeInfo; shapeInfo.type = box; shapeInfo.box = { 400,7,400 };
@@ -213,10 +217,12 @@ void Scene::releaseDefault()
 		//elimina los seleccionadores de niveles
 		for (int i = 0; i < 3; i++) {
 			auto o = statics.back();
+			statics.pop_back();
+			o->setPos({ -800,-800,-800 });
+			o->actualiza();
 			auto rd = o->_rigidStatic();
 			gScene->removeActor(*rd);
 			delete o;
-			statics.pop_back();
 		}
 	}
 	else {
@@ -262,7 +268,6 @@ void Scene::onCollisionDefault(physx::PxActor* actor1, physx::PxActor* actor2) {
 		
 }
 
-
 bool Scene::blasted(Transform t, Vector3 obj, int r) {
 	return (t.p - obj).magnitude() < r;
 }
@@ -277,7 +282,6 @@ void Scene::initLevel1() {
 	blastZone = { 200, 10, 250 }; blastRadius = 30;
 	blast = new RenderItem(CreateShape(physx::PxBoxGeometry(blastRadius, blastRadius, blastRadius)), &blastZone, Vector4(1, 1, 1, 1));
 	RegisterRenderItem(blast);
-	
 	//crea la pelota
 	SHAPE shapeInfo;  shapeInfo.type = sphere; shapeInfo.sphere = { 5 };
 	ball = new DynamicRigidBody("ball", shapeInfo, {-300,30,-200}, {0.5,0.7,0.2,1});
@@ -286,29 +290,25 @@ void Scene::initLevel1() {
 	RBsys->addToParticlePool(ball);
 	
 	//crea los generadores de fuerzas
-
 	Vector3 whirlPos = {0,30,0}; double whirlRadius = 200;
 	Vector3 windPos = {130,30,100}; double windRadius = 50;
 
-	WhirlwindRBFG* whirl = new WhirlwindRBFG(false, whirlPos, whirlRadius, { 1,0,0,0 }, 5, 0.3);
-	RBsys->addToForceRegistry(whirl, ball);
-	WindRBFG* wind = new WindRBFG(false, { 0,30,0 }, windPos, windRadius, { 0,1,0,0 }, 15, 2);
-	RBsys->addToForceRegistry(wind, ball);
+	rbWhirlL1 = new WhirlwindRBFG(false, whirlPos, whirlRadius, { 1,0,0,0 }, 5, 0.3);
+	RBsys->addToForceRegistry(rbWhirlL1, ball);
+	rbWindL1 = new WindRBFG(false, { 0,30,0 }, windPos, windRadius, { 0,1,0,0 }, 15, 2);
+	RBsys->addToForceRegistry(rbWindL1, ball);
 
 
 	//creamos los generadores de partículas
-	Particle* baseParticle = new Particle();
-	UniformParticleGenerator* FuenteWind = new UniformParticleGenerator("FuenteWind", {windPos.x, 0, windPos.z}, Vector3(0, 10, 0), {0,1,0,1}, 1, baseParticle, {50,0.1,50}, {3,0.1,3}, 0.6, 5);
-	UniformParticleGenerator* FuenteWhirlWind = new UniformParticleGenerator("FuenteWhirlWind", { whirlPos.x, whirlPos.y-20, whirlPos.z }, Vector3(0, 2, 0), { 1,0,0,1 }, 1, baseParticle, { 100,0.1,100 }, { 3,8,3 }, 2, 4);
-	//creamos los generadores de fuerzas
-	GravityForceGenerator* smokeGravity = new GravityForceGenerator({ 0,-0.50,0 });
-	GravityForceGenerator* earthGravity = new GravityForceGenerator({ 0,-9.8,0 });
-	WhirlwindForceGenerator* particleWhirl = new WhirlwindForceGenerator(false, whirlPos, whirlRadius, { 1,0,0,0 }, 0.6);
-	WindForceGenerator* particleWind = new WindForceGenerator(false, { 0,10,0 }, windPos, windRadius, { 0,1,0,0 }, 1, 0.01);
+	fuenteWindL1 = new UniformParticleGenerator("FuenteWind", {windPos.x, 0, windPos.z}, Vector3(0, 10, 0), {0,1,0,1}, 1, baseParticle, {50,0.1,50}, {3,0.1,3}, 0.6, 5);
+	fuenteWhirlL1 = new UniformParticleGenerator("FuenteWhirlWind", { whirlPos.x, whirlPos.y-20, whirlPos.z }, Vector3(0, 2, 0), { 1,0,0,1 }, 1, baseParticle, { 100,0.1,100 }, { 3,8,3 }, 2, 4);
+
+	particleWhirlL1 = new WhirlwindForceGenerator(false, whirlPos, whirlRadius, { 1,0,0,0 }, 0.6);
+	particleWindL1 = new WindForceGenerator(false, { 0,10,0 }, windPos, windRadius, { 0,1,0,0 }, 1, 0.01);
 	//añadimos todo al sistema
-	FuenteWind->addForceGenerator(smokeGravity); FuenteWhirlWind->addForceGenerator(earthGravity);
-	FuenteWhirlWind->addForceGenerator(particleWhirl); FuenteWind->addForceGenerator(particleWind);
-	PSys->addParticleGenerator(FuenteWind); PSys->addParticleGenerator(FuenteWhirlWind);
+	fuenteWindL1->addForceGenerator(smokeGravity); fuenteWhirlL1->addForceGenerator(earthGravity);
+	fuenteWhirlL1->addForceGenerator(particleWhirlL1); fuenteWindL1->addForceGenerator(particleWindL1);
+	PSys->addParticleGenerator(fuenteWindL1); PSys->addParticleGenerator(fuenteWhirlL1);
 
 }
 void Scene::releaseLevel1() {
@@ -321,6 +321,8 @@ void Scene::releaseLevel1() {
 		dynamics.pop_back();
 	}
 	//eliminar los generadores de particulas
+	delete rbWhirlL1; delete rbWindL1; delete particleWhirlL1; delete particleWindL1;
+	delete fuenteWhirlL1; delete fuenteWindL1;
 }
 void Scene::updateLevel1(double t) {
 
@@ -347,16 +349,83 @@ void Scene::onCollisionLevel1(physx::PxActor* actor1, physx::PxActor* actor2) {
 
 #pragma region LEVEL2
 void Scene::initLevel2() {
+	blastZone = { 0, 130, 0 }; blastRadius = 30;
+	blast = new RenderItem(CreateShape(physx::PxBoxGeometry(blastRadius, blastRadius, blastRadius)), &blastZone, Vector4(1, 1, 1, 1));
+	RegisterRenderItem(blast);
+	//crea la pelota
+	SHAPE shapeInfo;  shapeInfo.type = sphere; shapeInfo.sphere = { 5 };
+	ball = new DynamicRigidBody("ball", shapeInfo, {0,30,0}, { 0.5,0.7,0.2,1 });
+	ball->Init(gPhysics);
+	gScene->addActor(*ball->_rigidDynamic());
+	RBsys->addToParticlePool(ball);
+
+	//crea los generadores de fuerzas
+	double whirlRadius = 200; double windRadius = 80;
+	Vector3 whirlPos = { 0,330,0 }; 
+	Vector3 windPos_0 = { -130,50,130 }; Vector3 windPos_1 = { 130,50,130 };
+	Vector3 windPos_2 = { -130,50,-130 }; Vector3 windPos_3 = { 130,50,-130 };
+
+	rbWhirlL2 = new WhirlwindRBFG(false, whirlPos, whirlRadius, { 1,0,0,0 }, 5, 0.3);
+	RBsys->addToForceRegistry(rbWhirlL2, ball);
+	rbWindL2_0 = new WindRBFG(false, { 0,50,0 }, windPos_0, windRadius, { 0,1,0,0 }, 15, 2);
+	rbWindL2_1 = new WindRBFG(false, { 0,50,0 }, windPos_1, windRadius, { 0,1,0,0 }, 15, 2);
+	rbWindL2_2 = new WindRBFG(false, { 0,50,0 }, windPos_2, windRadius, { 0,1,0,0 }, 15, 2);
+	rbWindL2_3 = new WindRBFG(false, { 0,50,0 }, windPos_3, windRadius, { 0,1,0,0 }, 15, 2);
+	RBsys->addToForceRegistry(rbWindL2_0, ball); RBsys->addToForceRegistry(rbWindL2_1, ball);
+	RBsys->addToForceRegistry(rbWindL2_2, ball); RBsys->addToForceRegistry(rbWindL2_3, ball);
+
+
+	//creamos los generadores de partículas
+	fuenteWhirlL2 = new UniformParticleGenerator("FuenteWhirlWindL2", { whirlPos.x, whirlPos.y - 70, whirlPos.z }, Vector3(0, 2, 0), { 1,0,0,1 }, 1, baseParticle, { 100,0.1,100 }, { 3,8,3 }, 2, 4);
+	particleWhirlL2 = new WhirlwindForceGenerator(false, whirlPos, whirlRadius, { 1,0,0,0 }, 0.6);
+	fuenteWhirlL2->addForceGenerator(earthGravity); fuenteWhirlL2->addForceGenerator(particleWhirlL2);
+	PSys->addParticleGenerator(fuenteWhirlL2);
+	float wr = (float)windRadius-30;
+	fuenteWindL2_0 = new UniformParticleGenerator("FuenteWindL2_0", { windPos_0.x,0,windPos_0.z }, Vector3(0, 10, 0), { 0,1,0,1 }, 1, baseParticle, { wr,0.1,wr }, { 3,0.1,3 }, 0.6, 10);
+	fuenteWindL2_1 = new UniformParticleGenerator("FuenteWindL2_1", { windPos_1.x,0,windPos_1.z }, Vector3(0, 10, 0), { 0,1,0,1 }, 1, baseParticle, { wr,0.1,wr }, { 3,0.1,3 }, 0.6, 10);
+	fuenteWindL2_2 = new UniformParticleGenerator("FuenteWindL2_2", { windPos_2.x,0,windPos_2.z }, Vector3(0, 10, 0), { 0,1,0,1 }, 1, baseParticle, { wr,0.1,wr }, { 3,0.1,3 }, 0.6, 10);
+	fuenteWindL2_3 = new UniformParticleGenerator("FuenteWindL2_3", { windPos_3.x,0,windPos_3.z }, Vector3(0, 10, 0), { 0,1,0,1 }, 1, baseParticle, { wr,0.1,wr }, { 3,0.1,3 }, 0.6, 10);
+	particleWindL2_0 = new WindForceGenerator(false, { 0,10,0 }, windPos_0, windRadius, { 0,1,0,0 }, 1, 0.01);
+	particleWindL2_1 = new WindForceGenerator(false, { 0,10,0 }, windPos_1, windRadius, { 0,1,0,0 }, 1, 0.01);
+	particleWindL2_2 = new WindForceGenerator(false, { 0,10,0 }, windPos_2, windRadius, { 0,1,0,0 }, 1, 0.01);
+	particleWindL2_3 = new WindForceGenerator(false, { 0,10,0 }, windPos_3, windRadius, { 0,1,0,0 }, 1, 0.01);
+	//añadimos todo al sistema
+	fuenteWindL2_0->addForceGenerator(smokeGravity);	fuenteWindL2_0->addForceGenerator(particleWindL2_0);
+	fuenteWindL2_1->addForceGenerator(smokeGravity);	fuenteWindL2_1->addForceGenerator(particleWindL2_1);
+	fuenteWindL2_2->addForceGenerator(smokeGravity);	fuenteWindL2_2->addForceGenerator(particleWindL2_2);
+	fuenteWindL2_3->addForceGenerator(smokeGravity);	fuenteWindL2_3->addForceGenerator(particleWindL2_3);
+
+	PSys->addParticleGenerator(fuenteWindL2_0); PSys->addParticleGenerator(fuenteWindL2_1);
+	PSys->addParticleGenerator(fuenteWindL2_2); PSys->addParticleGenerator(fuenteWindL2_3);
 
 }
 void Scene::releaseLevel2() {
-
+	releaseDefault();
+	while (!dynamics.empty()) {
+		auto o = dynamics.back();
+		auto rd = o->_rigidDynamic();
+		gScene->removeActor(*rd);
+		delete o;
+		dynamics.pop_back();
+	}
+	//eliminar los generadores de particulas
+	delete rbWhirlL2; delete particleWhirlL2; delete fuenteWhirlL2;
+	delete rbWindL2_0;delete rbWindL2_1;delete rbWindL2_2;delete rbWindL2_3;
+	delete particleWindL2_0; delete particleWindL2_1; delete particleWindL2_2; delete particleWindL2_3;
+	delete fuenteWindL2_0; delete fuenteWindL2_1; delete fuenteWindL2_2; delete fuenteWindL2_3; 
 }
 void Scene::updateLevel2(double t) {
 
+	updateDefault(t);
+	//comprobaciones
+	if (blasted(blastZone, ball->getPos(), blastRadius)) {
+		win = true;
+		std::cout << "GOL\n";
+	}
 }
 void Scene::keyLevel2(unsigned char key) {
-
+	keyDefault(key);
+	//...
 }
 void Scene::onCollisionLevel2(physx::PxActor* actor1, physx::PxActor* actor2) {
 	;

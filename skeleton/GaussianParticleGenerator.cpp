@@ -6,7 +6,7 @@
 list<Particle*> GaussianParticleGenerator::generateParticles()
 {
 	std::random_device rd{};
-	std::mt19937 FuenteWind{ rd() };
+	std::mt19937 fuenteWindL1{ rd() };
 
 	list<Particle*> particles;
 	//utilizaremos una distribucion gaussiana para cada uno de los componentes de velocidad y posicion origen.
@@ -26,8 +26,8 @@ list<Particle*> GaussianParticleGenerator::generateParticles()
 			_baseParticle->setColor(_color);
 			auto p = _baseParticle->clone();
 			//siguiente valor de velocidad y posicion origen segun la distribucion gaussiana
-			Vector3 newpos = Vector3(posXDist(FuenteWind), posYDist(FuenteWind), posZDist(FuenteWind));
-			Vector3 newVel = Vector3(velXDist(FuenteWind), velYDist(FuenteWind), velZDist(FuenteWind));
+			Vector3 newpos = Vector3(posXDist(fuenteWindL1), posYDist(fuenteWindL1), posZDist(fuenteWindL1));
+			Vector3 newVel = Vector3(velXDist(fuenteWindL1), velYDist(fuenteWindL1), velZDist(fuenteWindL1));
 			p->setVel(newVel); p->setPos(newpos); p->setAcc(Vector3(0,0,0));p->setmaxLifeTime(_lifetime_media);
 			p->setMass(_mass);
 			particles.push_back(p);

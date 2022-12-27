@@ -14,7 +14,7 @@ protected:
     float _k2; //coeficiente de rozamiento 1
     Vector3 _windVelocity;
     Transform regionTransform;
-    RenderItem* region;
+    RenderItem* region = nullptr;;
     double regionRadius;
     bool collides(const Vector3& pos);
 

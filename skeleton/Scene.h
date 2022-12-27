@@ -11,6 +11,12 @@
 #include "ExplosionRBFG.h"
 #include "Particle.h"
 #include "ParticleSystem.h"
+#include "UniformParticleGenerator.h"
+#include "WindForceGenerator.h"
+#include "WhirlwindForceGenerator.h"
+#include "WindRBFG.h"
+#include "WhirlWindRBFG.h"
+#include "GravityForceGenerator.h"
 using namespace physx;
 
 enum SCENES {
@@ -73,9 +79,6 @@ private:
 	PxScene* gScene;
 	PxMaterial* gMaterial;
 	Camera* camera;
-	Transform t_level1 = { 200,10,-150 }; int level1radius = 20; RenderItem* level1;
-	Transform t_level2 = { 200,10,-150 }; int level2radius = 20; RenderItem* level2;
-	Transform t_level3 = { 200,10,-150 }; int level3radius = 20; RenderItem* level3;
 
 	/*
 			++++++++++++++++++++++++++++++++++DEFAULT SCENE++++++++++++++++++++++++++++++++++++++++++++++++
@@ -91,20 +94,29 @@ private:
 	bool win = false;
 	Particle* mirilla;
 	Transform blastZone; int blastRadius; RenderItem* blast;
+	Particle* baseParticle;
+	GravityForceGenerator* smokeGravity; GravityForceGenerator* earthGravity;
 #pragma endregion
 	/*
 		++++++++++++++++++++++++++++++++++LEVEL 1++++++++++++++++++++++++++++++++++++++++++++++++
 */
 #pragma region LEVEL1
 //Posiciones para los generadores
-
+	UniformParticleGenerator* fuenteWindL1; UniformParticleGenerator* fuenteWhirlL1;
+	WhirlwindForceGenerator* particleWhirlL1; WindForceGenerator* particleWindL1;
+	WhirlwindRBFG* rbWhirlL1; WindRBFG* rbWindL1;
 
 #pragma endregion
 /*
 	++++++++++++++++++++++++++++++++++LEVEL 2++++++++++++++++++++++++++++++++++++++++++++++++
 */
 #pragma region LEVEL2
-
+	UniformParticleGenerator* fuenteWindL2_0; UniformParticleGenerator* fuenteWindL2_1;
+	UniformParticleGenerator* fuenteWindL2_2; UniformParticleGenerator* fuenteWindL2_3;
+	WindForceGenerator* particleWindL2_0; WindForceGenerator* particleWindL2_1;
+	WindForceGenerator* particleWindL2_2; WindForceGenerator* particleWindL2_3;
+	WindRBFG* rbWindL2_0; WindRBFG* rbWindL2_1; WindRBFG* rbWindL2_2; WindRBFG* rbWindL2_3;
+	WhirlwindRBFG* rbWhirlL2; WhirlwindForceGenerator* particleWhirlL2; UniformParticleGenerator* fuenteWhirlL2;
 #pragma endregion
 /*
 ++++++++++++++++++++++++++++++++++LEVEL 3++++++++++++++++++++++++++++++++++++++++++++++++

@@ -70,6 +70,7 @@ public:
 	virtual float getInverseMass() { return 1e-10; }
 
 	virtual void setPos(Vector3 p) { RigidBody::setPos(p); }
+	virtual void actualiza() { rigidStatic->setGlobalPose(Transform(pos)); }
 	virtual void setMaxLifeTime(float t) { RigidBody::setMaxLifeTime(t); }
 	virtual void setLimitY(float y) { RigidBody::setLimitY(y); }
 private:
