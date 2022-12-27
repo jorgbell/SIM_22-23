@@ -15,12 +15,10 @@ Scene::Scene(PxPhysics* gPhys, PxScene* gSc, PxMaterial* gMat, Camera* cam, SCEN
 {
 	Init();
 }
-
 Scene::~Scene()
 {
 	Release();
 }
-
 void Scene::Init()
 {
 	switch (actualScene)
@@ -42,7 +40,6 @@ void Scene::Init()
 	}
 
 }
-
 void Scene::Release()
 {
 	switch (actualScene)
@@ -64,7 +61,6 @@ void Scene::Release()
 	}
 
 }
-
 void Scene::update(double t)
 {
 	switch (actualScene)
@@ -85,7 +81,6 @@ void Scene::update(double t)
 		break;
 	}
 }
-
 void Scene::keyPress(unsigned char key)
 {
 	switch (toupper(key))
@@ -129,7 +124,6 @@ void Scene::keyPress(unsigned char key)
 	}
 
 }
-
 void Scene::onCollision(physx::PxActor* actor1, physx::PxActor* actor2) {
 	switch (actualScene) {
 	case DEFAULT:
@@ -146,8 +140,6 @@ void Scene::onCollision(physx::PxActor* actor1, physx::PxActor* actor2) {
 		break;
 	}
 }
-
-
 void Scene::changeScene(SCENES newScene)
 {
 	if (actualScene == newScene)
@@ -163,11 +155,14 @@ void Scene::changeScene(SCENES newScene)
 #pragma region DEFAULT
 void Scene::initDefault()
 {
+	win = false;
 	RBsys = new RBSystem(gScene); 	PSys = new ParticleSystem();
 	baseParticle = new Particle();
 	//creamos los generadores de fuerzas
 	smokeGravity = new GravityForceGenerator({ 0,-0.50,0 });
 	earthGravity = new GravityForceGenerator({ 0,-9.8,0 });
+	fireworks = new FireworksSystem();
+	fireworks->setExploded(false);
 	/*+++++++++++++++++++++RIGIDBODY++++++++++++++++++++++++++++*/
 	//RB ESTATICOS
 	SHAPE shapeInfo; shapeInfo.type = box; shapeInfo.box = { 400,7,400 };
@@ -190,7 +185,7 @@ void Scene::initDefault()
 	RBsys->addParticleGenerator(nailgun);
 	/*PARTICLES*/
 	//crea la mirilla
-	mirilla = new Particle(GetCamera()->getEye(), { 0,0,0 }, { 0,0,0 }, { 0,1,0,1 }, 0.99, -1.0f, 0.0f, 1000000.0F,
+	if(mirilla==nullptr) mirilla = new Particle(GetCamera()->getEye(), { 0,0,0 }, { 0,0,0 }, { 0,1,0,1 }, 0.99, -1.0f, 0.0f, 1000000.0F,
 		CreateShape(((physx::PxSphereGeometry)(0.01))));
 
 	//creamos las zonas para elegir nivel
@@ -227,14 +222,26 @@ void Scene::releaseDefault()
 	}
 	else {
 		RBsys->clean(); PSys->clean();
+		delete blast;
 	}
 }
 void Scene::updateDefault(double t)
 {
 	RBsys->update(t);
 	PSys->update(t);
+	fireworks->update(t);
 	Vector3 pos = GetCamera()->getEye() + GetCamera()->getDir().getNormalized() * 2;
 	mirilla->setPos(pos);
+	if (actualScene != DEFAULT) {
+		//comprobaciones
+		if (!blasted(blastZone, ball->getPos(), blastRadius) && !win) {
+			win = true;
+			fireworks->startFire(blastZone.p, { 0,50,0 }, FIREWORK_5);
+			PSys->clear();
+		}
+		if (fireworks->isFinished())
+			changeScene(DEFAULT);
+	}
 
 }
 void Scene::keyDefault(unsigned char key)
@@ -267,7 +274,6 @@ void Scene::onCollisionDefault(physx::PxActor* actor1, physx::PxActor* actor2) {
 	}
 		
 }
-
 bool Scene::blasted(Transform t, Vector3 obj, int r) {
 	return (t.p - obj).magnitude() < r;
 }
@@ -279,9 +285,11 @@ bool Scene::blasted(Transform t, Vector3 obj, int r) {
 
 #pragma region LEVEL1
 void Scene::initLevel1() {
+	win = false;
+	fireworks->setExploded(false);
 	blastZone = { 200, 10, 250 }; blastRadius = 30;
-	blast = new RenderItem(CreateShape(physx::PxBoxGeometry(blastRadius, blastRadius, blastRadius)), &blastZone, Vector4(1, 1, 1, 1));
-	RegisterRenderItem(blast);
+	blast = new Particle(blastZone.p, { 0,0,0 }, { 0,0,0 }, { 1,1,1,1 }, 0.99, -1.0f, 0.0f, 1000000.0F,
+		CreateShape(physx::PxBoxGeometry(blastRadius, blastRadius, blastRadius)));
 	//crea la pelota
 	SHAPE shapeInfo;  shapeInfo.type = sphere; shapeInfo.sphere = { 5 };
 	ball = new DynamicRigidBody("ball", shapeInfo, {-300,30,-200}, {0.5,0.7,0.2,1});
@@ -313,13 +321,6 @@ void Scene::initLevel1() {
 }
 void Scene::releaseLevel1() {
 	releaseDefault();
-	while (!dynamics.empty()) {
-		auto o = dynamics.back();
-		auto rd = o->_rigidDynamic();
-		gScene->removeActor(*rd);
-		delete o;
-		dynamics.pop_back();
-	}
 	//eliminar los generadores de particulas
 	delete rbWhirlL1; delete rbWindL1; delete particleWhirlL1; delete particleWindL1;
 	delete fuenteWhirlL1; delete fuenteWindL1;
@@ -327,11 +328,6 @@ void Scene::releaseLevel1() {
 void Scene::updateLevel1(double t) {
 
 	updateDefault(t);
-	//comprobaciones
-	if (blasted(blastZone, ball->getPos(),blastRadius)) {
-		win = true;
-		std::cout << "GOL\n";
-	}
 }
 void Scene::keyLevel1(unsigned char key) {
 	keyDefault(key);
@@ -349,9 +345,11 @@ void Scene::onCollisionLevel1(physx::PxActor* actor1, physx::PxActor* actor2) {
 
 #pragma region LEVEL2
 void Scene::initLevel2() {
+	win = false;
+	fireworks->setExploded(false);
 	blastZone = { 0, 130, 0 }; blastRadius = 30;
-	blast = new RenderItem(CreateShape(physx::PxBoxGeometry(blastRadius, blastRadius, blastRadius)), &blastZone, Vector4(1, 1, 1, 1));
-	RegisterRenderItem(blast);
+	blast = new Particle(blastZone.p, { 0,0,0 }, { 0,0,0 }, { 1,1,1,1 }, 0.99, -1.0f, 0.0f, 1000000.0F,
+		CreateShape(physx::PxBoxGeometry(blastRadius, blastRadius, blastRadius)));
 	//crea la pelota
 	SHAPE shapeInfo;  shapeInfo.type = sphere; shapeInfo.sphere = { 5 };
 	ball = new DynamicRigidBody("ball", shapeInfo, {0,30,0}, { 0.5,0.7,0.2,1 });
@@ -401,13 +399,6 @@ void Scene::initLevel2() {
 }
 void Scene::releaseLevel2() {
 	releaseDefault();
-	while (!dynamics.empty()) {
-		auto o = dynamics.back();
-		auto rd = o->_rigidDynamic();
-		gScene->removeActor(*rd);
-		delete o;
-		dynamics.pop_back();
-	}
 	//eliminar los generadores de particulas
 	delete rbWhirlL2; delete particleWhirlL2; delete fuenteWhirlL2;
 	delete rbWindL2_0;delete rbWindL2_1;delete rbWindL2_2;delete rbWindL2_3;
@@ -415,13 +406,7 @@ void Scene::releaseLevel2() {
 	delete fuenteWindL2_0; delete fuenteWindL2_1; delete fuenteWindL2_2; delete fuenteWindL2_3; 
 }
 void Scene::updateLevel2(double t) {
-
 	updateDefault(t);
-	//comprobaciones
-	if (blasted(blastZone, ball->getPos(), blastRadius)) {
-		win = true;
-		std::cout << "GOL\n";
-	}
 }
 void Scene::keyLevel2(unsigned char key) {
 	keyDefault(key);

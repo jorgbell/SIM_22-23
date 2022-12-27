@@ -1,7 +1,7 @@
 #include "ParticleSystem.h"
 
 ParticleSystem::~ParticleSystem() {
-	clean();
+	clear();
 }
 
 void ParticleSystem::clean() {
@@ -10,6 +10,12 @@ void ParticleSystem::clean() {
 		_particlePool.pop_back();
 		delete p;
 	}
+}
+
+void ParticleSystem::clear() {
+	clean();
+	_generatorsPool.clear();
+	_particleForceRegistry.clear();
 }
 
 void ParticleSystem::update(double t)

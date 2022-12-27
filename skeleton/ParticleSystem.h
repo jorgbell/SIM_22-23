@@ -13,6 +13,7 @@ public:
 	ParticleSystem(){};
 	~ParticleSystem();
 	virtual void clean();
+	virtual void clear();
 	virtual void update(double t);
 	ParticleGenerator* getParticleGenerator(string name);
 	virtual void addParticleGenerator(ParticleGenerator* p) { _generatorsPool.push_back(p); }

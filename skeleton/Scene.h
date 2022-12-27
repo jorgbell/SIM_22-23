@@ -17,6 +17,7 @@
 #include "WindRBFG.h"
 #include "WhirlWindRBFG.h"
 #include "GravityForceGenerator.h"
+#include "FireworksSystem.h"
 using namespace physx;
 
 enum SCENES {
@@ -44,8 +45,8 @@ public:
 	void keyDefault(unsigned char key);
 	bool blasted(Transform t, Vector3 obj, int r);
 	void onCollisionDefault(physx::PxActor* actor1, physx::PxActor* actor2);
+	
 #pragma endregion
-
 #pragma region LEVEL1
 	void initLevel1();
 	void releaseLevel1();
@@ -53,8 +54,6 @@ public:
 	void keyLevel1(unsigned char key);
 	void onCollisionLevel1(physx::PxActor* actor1, physx::PxActor* actor2);
 #pragma endregion
-
-
 #pragma region LEVEL2
 	void initLevel2();
 	void releaseLevel2();
@@ -62,8 +61,6 @@ public:
 	void keyLevel2(unsigned char key);
 	void onCollisionLevel2(physx::PxActor* actor1, physx::PxActor* actor2);
 #pragma endregion
-
-
 #pragma region LEVEL3
 	void initLevel3();
 	void releaseLevel3();
@@ -91,11 +88,13 @@ private:
 	DynamicRigidBody* ball; //pelota de juego
 	bool shotgunBool = false; //para gestionar los disparos
 	bool nailgunBool = false; //para gestionar los disparos
+	bool shootFirework = false;
 	bool win = false;
-	Particle* mirilla;
-	Transform blastZone; int blastRadius; RenderItem* blast;
+	Particle* mirilla = nullptr;
+	Transform blastZone; int blastRadius; Particle* blast;
 	Particle* baseParticle;
 	GravityForceGenerator* smokeGravity; GravityForceGenerator* earthGravity;
+	FireworksSystem* fireworks;
 #pragma endregion
 	/*
 		++++++++++++++++++++++++++++++++++LEVEL 1++++++++++++++++++++++++++++++++++++++++++++++++

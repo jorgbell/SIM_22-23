@@ -1,7 +1,7 @@
 #include "RBSystem.h"
 
 RBSystem::~RBSystem() {
-	clean();
+	clear();
 }
 
 void RBSystem::clean() {
@@ -15,6 +15,12 @@ void RBSystem::clean() {
 			rb = nullptr;
 		}
 	}
+}
+
+void RBSystem::clear() {
+	clean();
+	_generatorsPool.clear();
+	_rbForceRegistry.clear();
 }
 
 void RBSystem::update(double t)

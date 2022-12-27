@@ -11,6 +11,7 @@ void FireworksSystem::startFire(Vector3 initPos, Vector3 initVel, FireworksType 
 	//generación de la primera particula. Actuará de base para el generador.
 	//solo funcionará si no hay particulas en pantalla
 	if (_particlePool.size() == 0) {
+		exploded = true;
 		if (!dynamic_cast<Firework*>(_fireworksGen->getBaseParticle())) {
 			_fireworksGen->setBaseParticle(new Firework());
 		}
@@ -40,6 +41,7 @@ void FireworksSystem::update(double t)
 	_particleForceRegistry.updateForces(t);
 	for (auto p : _particlePool)
 		p->integrate(t);
+	/*if (isFinished()) exploded = false;*/
 }
 
 void FireworksSystem::checkParticles()
