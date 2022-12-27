@@ -1,6 +1,10 @@
 #include "ParticleSystem.h"
 
 ParticleSystem::~ParticleSystem() {
+	clean();
+}
+
+void ParticleSystem::clean() {
 	while (!_particlePool.empty()) {
 		auto p = _particlePool.back();
 		_particlePool.pop_back();

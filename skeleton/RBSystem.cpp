@@ -1,6 +1,10 @@
 #include "RBSystem.h"
 
 RBSystem::~RBSystem() {
+	clean();
+}
+
+void RBSystem::clean() {
 	while (!_rbPool.empty()) {
 		auto rb = _rbPool.back();
 		_rbPool.pop_back();

@@ -30,7 +30,7 @@ struct SHAPE {
 
 class RigidBody {
 public:
-	RigidBody(SHAPE info = SHAPE(), Vector3 p = {0,0,0}, Vector4 c = {1,1,1,1}, float mL = -1, float limY = 0);
+	RigidBody(const char* id, SHAPE info = SHAPE(), Vector3 p = {0,0,0}, Vector4 c = {1,1,1,1}, float mL = -1, float limY = 0);
 	~RigidBody();
 	virtual void createshape(SHAPE info);
 	virtual bool Init(PxPhysics* gphysics) = 0;
@@ -53,12 +53,12 @@ protected:
 	Vector4 color;
 	float lifeTime = 0; float maxLifeTime, limitY;
 	bool kill = false;
-
+	const char* name;
 };
 
 class StaticRigidBody : public RigidBody {
 public:
-	StaticRigidBody(SHAPE shapeInfo = SHAPE(), Vector3 p = {0,0,0}, Vector4 c = {1,1,1,1}, float mL = -1, float limY = 0);
+	StaticRigidBody(const char* id, SHAPE shapeInfo = SHAPE(), Vector3 p = {0,0,0}, Vector4 c = {1,1,1,1}, float mL = -1, float limY = 0);
 	~StaticRigidBody();
 	PxRigidStatic* _rigidStatic() { return rigidStatic; };
 	virtual void createshape(SHAPE info) { RigidBody::createshape(info); }
@@ -78,7 +78,7 @@ private:
 
 class DynamicRigidBody : public RigidBody {
 public:
-	DynamicRigidBody(SHAPE shapeInfo = SHAPE(), Vector3 p = {0,0,0}, Vector4 c = {1,1,1,1},
+	DynamicRigidBody(const char* id, SHAPE shapeInfo = SHAPE(), Vector3 p = {0,0,0}, Vector4 c = {1,1,1,1},
 		Vector3 lVel = {0,0,0}, Vector3 aVel = {0,0,0}, double ldamp = 0.99, double adamp = 0.05, double mass = 10,
 		float mL = -1, float limY = 0);
 	~DynamicRigidBody();

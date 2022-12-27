@@ -1,7 +1,7 @@
 #include "Static_Dynamic_Body.h"
 #include <iostream>
-RigidBody::RigidBody(SHAPE info, Vector3 p, Vector4 c, float mL, float limY) :
-	pos(p), color(c),pxshapeInfo(info), maxLifeTime(mL), limitY(limY), RI(nullptr)
+RigidBody::RigidBody(const char * id, SHAPE info, Vector3 p, Vector4 c, float mL, float limY) :
+	pos(p), color(c),pxshapeInfo(info), maxLifeTime(mL), limitY(limY), RI(nullptr), name(id)
 {
 	createshape(info);
 };
@@ -27,8 +27,8 @@ void RigidBody::createshape(SHAPE info) {
 	}
 }
 
-StaticRigidBody::StaticRigidBody(SHAPE shapeInfo, Vector3 p, Vector4 c, float mL, float limY) :
-	RigidBody(shapeInfo, p, c, mL, limY)
+StaticRigidBody::StaticRigidBody(const char* id, SHAPE shapeInfo, Vector3 p, Vector4 c, float mL, float limY) :
+	RigidBody(id, shapeInfo, p, c, mL, limY)
 {
 }
 
@@ -43,6 +43,8 @@ bool StaticRigidBody::Init(PxPhysics* gphysics) {
 	}
 
 	rigidStatic = gphysics->createRigidStatic({ pos.x,pos.y, pos.z });
+	rigidStatic->setName(name);
+	const char* n = rigidStatic->getName();
 	rigidStatic->attachShape(*shape);
 	changeColor(color);
 }
@@ -58,10 +60,10 @@ void StaticRigidBody::changeColor(Vector4 c) {
 }
 
 
-DynamicRigidBody::DynamicRigidBody(SHAPE shapeInfo, Vector3 p ,Vector4 c ,
+DynamicRigidBody::DynamicRigidBody(const char* id, SHAPE shapeInfo, Vector3 p ,Vector4 c ,
 	Vector3 lVel , Vector3 aVel, double ldamp ,double adamp,double m,
 	float mL, float limY):
-	RigidBody(shapeInfo, p, c, mL, limY), linearVel(lVel), angularVel(aVel), linearDamping(ldamp), angularDamping(adamp), mass(m)
+	RigidBody(id, shapeInfo, p, c, mL, limY), linearVel(lVel), angularVel(aVel), linearDamping(ldamp), angularDamping(adamp), mass(m)
 {
 }
 
@@ -78,7 +80,7 @@ bool DynamicRigidBody::Init(PxPhysics* gphysics) {
 
 	rigidDynamic = gphysics->createRigidDynamic({ pos.x,pos.y, pos.z });
 	rigidDynamic->attachShape(*shape);
-
+	rigidDynamic->setName(name);
 	//PxRigidBodyExt::updateMassAndInertia(*rigidDynamic, 1);
 	rigidDynamic->setLinearVelocity(linearVel);
 	rigidDynamic->setAngularVelocity(angularVel);

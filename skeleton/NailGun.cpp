@@ -12,6 +12,7 @@ list<DynamicRigidBody*> NailGun::shoot() {
 	for (int i = 0; i < _nRigidBodies; i++) {
 		origin.x += i * _distance;
 		DynamicRigidBody* rb = new DynamicRigidBody(
+			_name.c_str(),
 			s,
 			origin,
 			_color,

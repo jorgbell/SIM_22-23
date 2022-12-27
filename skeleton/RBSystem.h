@@ -12,6 +12,7 @@ class RBSystem {
 public:
 	RBSystem(PxScene* gScene) { _gScene = gScene; };
 	~RBSystem();
+	virtual void clean();
 	virtual void update(double t);
 	RBGenerator* getParticleGenerator(string name);
 	virtual void addParticleGenerator(RBGenerator* p) { _generatorsPool.push_back(p); }

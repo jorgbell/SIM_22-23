@@ -38,6 +38,7 @@ list<DynamicRigidBody*> RadialShotGenerator::shoot() {
 		newPos.y += origin.y;
 
 		DynamicRigidBody* rb = new DynamicRigidBody(
+			_name.c_str(),
 			s,
 			newPos,
 			_color,

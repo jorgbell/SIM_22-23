@@ -46,6 +46,7 @@ list<DynamicRigidBody*> RBShootGenerator::shoot() {
 	SHAPE s; s.type = sphere;  s.sphere = { 0.4 };
 
 	DynamicRigidBody* rb = new DynamicRigidBody(
+		_name.c_str(),
 		s,
 		newPos,
 		_color,
