@@ -6,7 +6,7 @@ BuoyancyFG::BuoyancyFG(float V, float d, Vector3 liquid_pos) :
 	_liquid_particle = new Particle(liquid_pos, { 0,0,0 }, { 0,0,0 });
 	_liquid_particle->setMass(1e6);
 	_liquid_particle->setColor({ 0,0,1,1 });
-	_liquid_particle->setShape(CreateShape(physx::PxBoxGeometry(15, 1, 15)));
+	_liquid_particle->setShape(CreateShape(physx::PxBoxGeometry(40, 1, 40)));
 	_height = 1;
 }
 

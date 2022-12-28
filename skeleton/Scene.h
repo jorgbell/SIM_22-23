@@ -18,6 +18,7 @@
 #include "WhirlWindRBFG.h"
 #include "GravityForceGenerator.h"
 #include "FireworksSystem.h"
+#include "BuoyancyFG.h"
 using namespace physx;
 
 enum SCENES {
@@ -95,6 +96,9 @@ private:
 	Particle* baseParticle;
 	GravityForceGenerator* smokeGravity; GravityForceGenerator* earthGravity;
 	FireworksSystem* fireworks;
+
+	BuoyancyFG* buoyancy = nullptr;
+	Particle* backToDefault = nullptr; void createBackZone(); Vector3 backZonePos = { -360,10,-360 };
 #pragma endregion
 	/*
 		++++++++++++++++++++++++++++++++++LEVEL 1++++++++++++++++++++++++++++++++++++++++++++++++
@@ -121,7 +125,15 @@ private:
 ++++++++++++++++++++++++++++++++++LEVEL 3++++++++++++++++++++++++++++++++++++++++++++++++
 */
 #pragma region LEVEL3
+	std::vector<StaticRigidBody*> level3Rocks;
+	UniformParticleGenerator* fuenteWindL3_0; UniformParticleGenerator* fuenteWindL3_1;
+	UniformParticleGenerator* fuenteWindL3_2; 
+	WindForceGenerator* particleWindL3_0; WindForceGenerator* particleWindL3_1;
+	WindForceGenerator* particleWindL3_2;
+	WindRBFG* rbWindL3_0; WindRBFG* rbWindL3_1; WindRBFG* rbWindL3_2;
 
+	WhirlwindRBFG* rbWhirlL3_0; WhirlwindForceGenerator* particleWhirlL3_0; UniformParticleGenerator* fuenteWhirlL3_0;
+	WhirlwindRBFG* rbWhirlL3_1; WhirlwindForceGenerator* particleWhirlL3_1; UniformParticleGenerator* fuenteWhirlL3_1;
 #pragma endregion
 
 
