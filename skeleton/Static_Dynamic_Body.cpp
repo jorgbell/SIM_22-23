@@ -27,6 +27,11 @@ void RigidBody::createshape(SHAPE info) {
 	}
 }
 
+void RigidBody::deregisterRenderItem() {
+	DeregisterRenderItem(RI);
+	delete RI;
+	RI = nullptr;
+}
 StaticRigidBody::StaticRigidBody(const char* id, SHAPE shapeInfo, Vector3 p, Vector4 c, float mL, float limY) :
 	RigidBody(id, shapeInfo, p, c, mL, limY)
 {
@@ -52,12 +57,11 @@ bool StaticRigidBody::Init(PxPhysics* gphysics) {
 void StaticRigidBody::changeColor(Vector4 c) {
 	color = c;
 	if (RI != nullptr) {
-		DeregisterRenderItem(RI);
-		delete RI;
-		RI = nullptr;
+		deregisterRenderItem();
 	}
 	RI = new RenderItem(shape, rigidStatic, color);
 }
+
 
 
 DynamicRigidBody::DynamicRigidBody(const char* id, SHAPE shapeInfo, Vector3 p ,Vector4 c ,

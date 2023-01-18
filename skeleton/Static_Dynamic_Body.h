@@ -44,6 +44,7 @@ public:
 	virtual void setPos(Vector3 p) { pos = p; }
 	virtual void setMaxLifeTime(float t) { maxLifeTime = t; }
 	virtual void setLimitY(float y) { limitY = y; }
+	virtual void deregisterRenderItem();
 protected:
 	PxShape* shape;
 	RenderItem* RI;
@@ -73,6 +74,7 @@ public:
 	virtual void actualiza() { rigidStatic->setGlobalPose(Transform(pos)); }
 	virtual void setMaxLifeTime(float t) { RigidBody::setMaxLifeTime(t); }
 	virtual void setLimitY(float y) { RigidBody::setLimitY(y); }
+	virtual void deregisterRenderItem() { RigidBody::deregisterRenderItem(); }
 private:
 	PxRigidStatic* rigidStatic;
 };
@@ -91,6 +93,7 @@ public:
 	virtual void setPos(Vector3 p) { RigidBody::setPos(p); }
 	virtual void setMaxLifeTime(float t) { RigidBody::setMaxLifeTime(t); }
 	virtual void setLimitY(float y) { RigidBody::setLimitY(y); }
+	virtual void deregisterRenderItem() { RigidBody::deregisterRenderItem(); }
 	bool isDead() { return kill; }
 	void update(double t);
 

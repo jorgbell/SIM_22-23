@@ -264,6 +264,7 @@
     <ClCompile Include="FireworksSystem.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="GravityForceGenerator.cpp" />
+    <ClCompile Include="JetpackForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NailGun.cpp" />
     <ClCompile Include="RBShootGenerator.cpp" />
@@ -299,7 +300,9 @@
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="GravityForceGenerator.h" />
+    <ClInclude Include="JetpackForceGenerator.h" />
     <ClInclude Include="NailGun.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RBForceGenerator.h" />
     <ClInclude Include="RBForceRegistry.h" />
     <ClInclude Include="RBGenerator.h" />

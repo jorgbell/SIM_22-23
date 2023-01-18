@@ -4,6 +4,7 @@
 
 #include "core.hpp"
 #include "RenderUtils.hpp"
+#include <map>
 
 
 using namespace physx;
@@ -11,9 +12,11 @@ using namespace physx;
 extern void initPhysics(bool interactive);
 extern void stepPhysics(bool interactive, double t);	
 extern void cleanupPhysics(bool interactive);
-extern void keyPress(unsigned char key, const PxTransform& camera);
+extern void keyPress();
 extern PxPhysics* gPhysics;
 extern PxMaterial* gMaterial;
+extern std::map<char, bool> keyboardState;
+extern std::map<int, bool> mouseState;
 
 std::vector<const RenderItem*> gRenderItems;
 
@@ -47,23 +50,29 @@ namespace
 {
 	Camera*	sCamera;
 
-void motionCallback(int x, int y)
-{
-	sCamera->handleMotion(x, y);
-}
 
 void keyboardCallback(unsigned char key, int x, int y)
 {
 	if(key==27)
 		exit(0);
-
-	if(!sCamera->handleKey(key, x, y))
-		keyPress(key, sCamera->getTransform());
+	keyboardState[toupper(key)] = true;
 }
 
-void mouseCallback(int button, int state, int x, int y)
+void keyboardUpCallback(unsigned char key, int x, int y) {
+	keyboardState[toupper(key)] = false;
+}
+
+void mouseMotionCallback(int x, int y)
 {
-	sCamera->handleMouse(button, state, x, y);
+	sCamera->handleMotion(x, y);
+}
+void mouseClickCallback(int button, int state, int x, int y)
+{
+	if(state == GLUT_DOWN)
+		mouseState[button] = true;
+	else
+		mouseState[button] = false;
+
 }
 
 void idleCallback()
@@ -139,15 +148,17 @@ void renderLoop()
 	StartCounter();
 	sCamera = new Camera(PxVec3(50.0f, 50.0f, 50.0f), PxVec3(-0.6f,-0.2f,-0.7f));
 
-	setupDefaultWindow("Simulacion Fisica Videojuegos");
+	setupDefaultWindow("BLAST V0ID");
 	setupDefaultRenderState();
 
 	glutIdleFunc(idleCallback);
 	glutDisplayFunc(renderCallback);
 	glutKeyboardFunc(keyboardCallback);
-	glutMouseFunc(mouseCallback);
-	glutMotionFunc(motionCallback);
-	motionCallback(0,0);
+	glutKeyboardUpFunc(keyboardUpCallback);
+	glutMouseFunc(mouseClickCallback);
+	glutPassiveMotionFunc(mouseMotionCallback);
+	glutMotionFunc(mouseMotionCallback);
+	mouseMotionCallback(0,0);
 
 	atexit(exitCallback);
 

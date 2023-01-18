@@ -12,6 +12,9 @@ PxDefaultCpuDispatcher* gDispatcher = NULL;
 PxScene* gScene = NULL;
 ContactReportCallback gContactReportCallback;
 Scene* scene;
+std::map<int, bool> mouseState;
+std::map<char, bool> keyboardState;
+std::string display_text = "This is a test";
 
 
 // Initialize physics engine
@@ -34,7 +37,7 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	//*******************************************************************************
-	scene = new Scene(gPhysics, gScene, gMaterial, GetCamera());
+	scene = new Scene(gPhysics, gScene, gMaterial, GetCamera(), &display_text);
 
 }
 
@@ -45,6 +48,8 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
+	GetCamera()->handleKey(keyboardState);
+	scene->keyPress(keyboardState, mouseState);
 	scene->update(t);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
@@ -69,11 +74,9 @@ void cleanupPhysics(bool interactive)
 }
 
 // Function called when a key is pressed
-void keyPress(unsigned char key, const PxTransform& camera)
+void keyPress()
 {
-	PX_UNUSED(camera);
-	scene->keyPress(key);
-
+	;
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)

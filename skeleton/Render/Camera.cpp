@@ -46,28 +46,34 @@ Camera::Camera(const PxVec3& eye, const PxVec3& dir)
 	mMouseY = 0;
 }
 
-void Camera::handleMouse(int button, int state, int x, int y)
+void Camera::handleMouse(int x, int y)
 {
-	PX_UNUSED(state);
-	PX_UNUSED(button);
 	mMouseX = x;
 	mMouseY = y;
 }
 
-bool Camera::handleKey(unsigned char key, int x, int y, float speed)
+bool Camera::handleKey(std::map<char,bool> keyboard,float speed)
 {
-	PX_UNUSED(x);
-	PX_UNUSED(y);
 
 	PxVec3 viewY = mDir.cross(PxVec3(0,1,0)).getNormalized();
-	switch(toupper(key))
-	{
-	case 'W':	mEye += mDir*2.0f*speed;		break;
-	case 'S':	mEye -= mDir*2.0f*speed;		break;
-	case 'A':	mEye -= viewY*2.0f*speed;		break;
-	case 'D':	mEye += viewY*2.0f*speed;		break;
-	default:							return false;
-	}
+	if(keyboard['W']) 
+		mEye += physx::PxVec3(mDir.x, 0, mDir.z) * 1.2f * speed;
+	if(keyboard['S']) 
+		mEye -= physx::PxVec3(mDir.x, 0, mDir.z) * 1.2f * speed;
+	if(keyboard['A']) 
+		mEye -= viewY * 1.2f * speed;
+	if(keyboard['D']) 
+		mEye += viewY * 1.2f * speed;
+	
+	//switch(toupper(key))
+	//{
+	//case 'W':	mEye += physx::PxVec3(mDir.x, 0, mDir.z) * 2.0f * speed;		break;
+	//case 'S':	mEye -= physx::PxVec3(mDir.x, 0, mDir.z) *2.0f*speed;		break;
+	//case 'A':	mEye -= viewY*2.0f*speed;		break;
+	//case 'D':	mEye += viewY*2.0f*speed;		break;
+	//default:							return false;
+	//}
+
 	return true;
 }
 
@@ -116,6 +122,11 @@ PxVec3 Camera::getDir() const
 { 
 	return mDir; 
 }
+void Camera::setY(float y)
+{
+	mEye.y = y;
+}
+
 
 
 }

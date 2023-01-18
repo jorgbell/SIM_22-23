@@ -19,6 +19,7 @@
 #include "GravityForceGenerator.h"
 #include "FireworksSystem.h"
 #include "BuoyancyFG.h"
+#include "Player.h"
 using namespace physx;
 
 enum SCENES {
@@ -28,13 +29,13 @@ enum SCENES {
 class Scene
 {
 public:
-	Scene(PxPhysics* gPhys, PxScene* gSc, PxMaterial* gMat, Camera* cam, SCENES initScene = SCENES::DEFAULT);
+	Scene(PxPhysics* gPhys, PxScene* gSc, PxMaterial* gMat, Camera* cam, std::string *text,SCENES initScene = SCENES::DEFAULT);
 	~Scene();
 	// Heredado vía Scene
 	void Init();
 	void Release();
 	void update(double t);
-	void keyPress(unsigned char key);
+	void keyPress(std::map<char,bool> keyboard, std::map<int, bool> mouse);
 	void changeScene(SCENES newScene);
 	void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
 	SCENES getState() { return actualScene; }
@@ -43,7 +44,7 @@ public:
 	void initDefault();
 	void releaseDefault();
 	void updateDefault(double t);
-	void keyDefault(unsigned char key);
+	void keyDefault(std::map<char, bool> keyboard, std::map<int, bool> mouse);
 	bool blasted(Transform t, Vector3 obj, int r);
 	void onCollisionDefault(physx::PxActor* actor1, physx::PxActor* actor2);
 	
@@ -52,21 +53,21 @@ public:
 	void initLevel1();
 	void releaseLevel1();
 	void updateLevel1(double t);
-	void keyLevel1(unsigned char key);
+	void keyLevel1(std::map<char, bool> keyboard, std::map<int, bool> mouse);
 	void onCollisionLevel1(physx::PxActor* actor1, physx::PxActor* actor2);
 #pragma endregion
 #pragma region LEVEL2
 	void initLevel2();
 	void releaseLevel2();
 	void updateLevel2(double t);
-	void keyLevel2(unsigned char key);
+	void keyLevel2(std::map<char, bool> keyboard, std::map<int, bool> mouse);
 	void onCollisionLevel2(physx::PxActor* actor1, physx::PxActor* actor2);
 #pragma endregion
 #pragma region LEVEL3
 	void initLevel3();
 	void releaseLevel3();
 	void updateLevel3(double t);
-	void keyLevel3(unsigned char key);
+	void keyLevel3(std::map<char, bool> keyboard, std::map<int, bool> mouse);
 	void onCollisionLevel3(physx::PxActor* actor1, physx::PxActor* actor2);
 #pragma endregion
 
@@ -77,6 +78,7 @@ private:
 	PxScene* gScene;
 	PxMaterial* gMaterial;
 	Camera* camera;
+	std::string* display;
 
 	/*
 			++++++++++++++++++++++++++++++++++DEFAULT SCENE++++++++++++++++++++++++++++++++++++++++++++++++
@@ -88,7 +90,8 @@ private:
 	std::list<StaticRigidBody*> statics;
 	DynamicRigidBody* ball; //pelota de juego
 	bool shotgunBool = false; //para gestionar los disparos
-	bool nailgunBool = false; //para gestionar los disparos
+	bool nailgunBool = false; 
+	bool jetpackBool = false; 
 	bool shootFirework = false;
 	bool win = false;
 	Particle* mirilla = nullptr;
@@ -99,6 +102,8 @@ private:
 
 	BuoyancyFG* buoyancy = nullptr;
 	Particle* backToDefault = nullptr; void createBackZone(); Vector3 backZonePos = { -360,10,-360 };
+
+	Player* playerobj;
 #pragma endregion
 	/*
 		++++++++++++++++++++++++++++++++++LEVEL 1++++++++++++++++++++++++++++++++++++++++++++++++
